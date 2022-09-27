@@ -8,37 +8,45 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import entity.Course;
+import entity.Student;
+
 @SuppressWarnings("serial")
 public class Server extends UnicastRemoteObject implements ServerInterface {
 
-	protected Server() throws RemoteException {
-		super();
-	}
-
-	private static DataInterface data;
+	private DataInterface data;
+	private static Server server;
+	private Registry serverRegistry;
+	private Registry dataServerRegistry;
 	int result;
 
-	public static void main(String[] args) {
+	private Server() throws RemoteException {
+		serverRegistry = LocateRegistry.createRegistry(9000);
+		dataServerRegistry = LocateRegistry.getRegistry(9123);
+	}
 
+	public static Server getInstance() {
+		if (server == null) {
+			try {
+				server = new Server();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+		return server;
+	}
+
+	public void start() {
 		try {
-			Server server = new Server();
-			Registry registry1 = LocateRegistry.createRegistry(9000);
-			registry1.bind("Server", server);
-			System.out.println("Server ready");
+			data = (DataInterface) dataServerRegistry.lookup("dataServer");
+			serverRegistry.bind("Server", server);
 
-			Registry registry2 = LocateRegistry.getRegistry(9123);
-			data = (DataInterface) registry2.lookup("dataServer");
-
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (AlreadyBoundException e) {
+			System.out.println("Server is ready");
+		} catch (RemoteException | NotBoundException | AlreadyBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	@Override

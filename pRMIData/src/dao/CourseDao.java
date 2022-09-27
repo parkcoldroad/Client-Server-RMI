@@ -1,4 +1,4 @@
-package pRMI;
+package dao;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -6,10 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class CourseList {
+import entity.Course;
+
+public class CourseDao {
 protected ArrayList<Course> courseList;
 	
-	public CourseList(String courseFileName) throws FileNotFoundException, IOException {
+	public CourseDao(String courseFileName) throws FileNotFoundException, IOException {
 		BufferedReader objCourseFile = new BufferedReader(new FileReader(courseFileName));
 		this.courseList = new ArrayList<Course>();
 		while (objCourseFile.ready()) {
