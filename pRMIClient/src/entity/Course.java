@@ -22,6 +22,10 @@ public class Course implements Serializable {
 		}
 	}
 
+	public String getCoursesId() {
+		return this.courseId;
+	}
+	
 	public ArrayList<String> getPreCoursesId() {
 		return this.preCourseIdList;
 	}

@@ -22,10 +22,15 @@ public class Course implements Serializable {
 		}
 	}
 
+	public String getCoursesId() {
+		return this.courseId;
+	}
+	
 	public ArrayList<String> getPreCoursesId() {
 		return this.preCourseIdList;
 	}
 
+	@Override
 	public String toString() {
 		String stringReturn = this.courseId + " " + this.pLName + " " + this.courseName;
 		for (int i = 0; i < this.preCourseIdList.size(); i++) {

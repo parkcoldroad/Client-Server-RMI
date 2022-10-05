@@ -30,6 +30,10 @@ public class Student implements Serializable {
 		return this.name;
 	}
 
+	public String getStudentId() {
+		return this.studentId;
+	}
+
 	public ArrayList<String> getCompletedCourses() {
 		return this.completedCoursesList;
 	}

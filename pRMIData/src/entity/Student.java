@@ -26,6 +26,10 @@ public class Student implements Serializable {
 		return this.studentId.equals(studentId);
 	}
 
+	public String getStudentId() {
+		return this.studentId;
+	}
+
 	public String getName() {
 		return this.name;
 	}
