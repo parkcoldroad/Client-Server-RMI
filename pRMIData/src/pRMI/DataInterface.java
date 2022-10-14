@@ -4,11 +4,11 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import entity.Course;
-import entity.Student;
+import entity.Domain;
+import exception.NullDataException;
 
 public interface DataInterface extends Remote{
-	public ArrayList<Student> getAllStudentData() throws RemoteException;
+	public ArrayList<Domain> getAllStudentData() throws RemoteException, NullDataException;
 	
-	public ArrayList<Course> getAllCourseData() throws RemoteException;
+	public ArrayList<Domain> getAllCourseData() throws RemoteException, NullDataException;
 	}

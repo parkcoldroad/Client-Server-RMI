@@ -8,8 +8,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-import entity.Course;
-import entity.Student;
+import entity.Domain;
+import exception.NullDataException;
 
 @SuppressWarnings("serial")
 public class Server extends UnicastRemoteObject implements ServerInterface {
@@ -50,12 +50,12 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 	}
 
 	@Override
-	public ArrayList<Student> getAllStudentData() throws RemoteException {
+	public ArrayList<Domain> getAllStudentData() throws RemoteException, NullDataException {
 		return data.getAllStudentData();
 	}
 
 	@Override
-	public ArrayList<Course> getAllCourseData() throws RemoteException {
+	public ArrayList<Domain> getAllCourseData() throws RemoteException, NullDataException {
 		return data.getAllCourseData();
 	}
 

@@ -7,13 +7,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import entity.Course;
+import entity.Domain;
 
 public class CourseDao {
-protected ArrayList<Course> courseList;
+protected ArrayList<Domain> courseList;
 	
 	public CourseDao(String courseFileName) throws FileNotFoundException, IOException {
 		BufferedReader objCourseFile = new BufferedReader(new FileReader(courseFileName));
-		this.courseList = new ArrayList<Course>();
+		this.courseList = new ArrayList<Domain>();
 		while (objCourseFile.ready()) {
 			String courseInfo = objCourseFile.readLine();
 			if (!courseInfo.equals("")) {
@@ -23,7 +24,7 @@ protected ArrayList<Course> courseList;
 		objCourseFile.close();
 	}
 	
-	public ArrayList<Course> getAllCourseRecords() {
+	public ArrayList<Domain> getAllCourseRecords() {
 		return this.courseList;
 	}
 }

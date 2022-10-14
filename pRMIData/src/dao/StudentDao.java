@@ -6,27 +6,34 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import entity.Domain;
 import entity.Student;
+import exception.NullDataException;
 
 public class StudentDao {
-	protected ArrayList<Student> vStudent;
+	protected ArrayList<Domain> studentList;
 	
 	public StudentDao(String sStudentFileName) throws FileNotFoundException, IOException {
 		BufferedReader objStudentFile = new BufferedReader(new FileReader(sStudentFileName));
-		this.vStudent = new ArrayList<Student>();
+		this.studentList = new ArrayList<Domain>();
 		while (objStudentFile.ready()) {
 			String stuInfo = objStudentFile.readLine();
 			if (!stuInfo.equals("")) {
-				this.vStudent.add(new Student(stuInfo));
+				this.studentList.add(new Student(stuInfo));
 			}
 		}
 		objStudentFile.close();
 	}
 
-	public ArrayList<Student> getAllStudentRecords() {
-		return this.vStudent;
+	public ArrayList<Domain> getAllStudentRecords() throws NullDataException{
+		if(this.studentList.size()==0) throw new NullDataException("----------------- data is null... ------------------");
+		return this.studentList;
 	}
 
+	public boolean addStudentRecords(String studentInfo) {
+		if(this.studentList.add(new Student(studentInfo))) return true;
+		else return false;
+	}
 //	public boolean isRegisteredStudent(String sSID) {
 //		for (int i = 0; i < this.vStudent.size(); i++) {
 //			Student objStudent = (Student) this.vStudent.get(i);

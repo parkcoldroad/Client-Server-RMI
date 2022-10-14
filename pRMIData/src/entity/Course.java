@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 @SuppressWarnings("serial")
-public class Course implements Serializable {
+public class Course extends Domain implements Serializable {
 	protected String courseId;
 	protected String pLName;
 	protected String courseName;
@@ -22,10 +22,6 @@ public class Course implements Serializable {
 		}
 	}
 
-	public String getCoursesId() {
-		return this.courseId;
-	}
-	
 	public ArrayList<String> getPreCoursesId() {
 		return this.preCourseIdList;
 	}
@@ -37,5 +33,25 @@ public class Course implements Serializable {
 			stringReturn = stringReturn + " " + this.preCourseIdList.get(i).toString();
 		}
 		return stringReturn;
+	}
+
+	@Override
+	public boolean match(String courseId) {
+		return this.courseId.equals(courseId);
+	}
+
+	@Override
+	public String getName() {
+		return this.courseName;
+	}
+
+	@Override
+	public String getId() {
+		return this.courseId;
+	}
+
+	@Override
+	public void showAttributes() {
+		System.out.println("강좌번호  교수        강좌이름        	  선이수강좌번호");
 	}
 }

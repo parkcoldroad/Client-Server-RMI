@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class Student implements Serializable {
+public class Student extends Domain implements Serializable {
 	private static final long serialVersionUID = 1L;
 	protected String studentId;
 	protected String name;
@@ -22,20 +22,23 @@ public class Student implements Serializable {
 		}
 	}
 
+	public ArrayList<String> getCompletedCourses() {
+		return this.completedCoursesList;
+	}
+
+	@Override
 	public boolean match(String studentId) {
 		return this.studentId.equals(studentId);
 	}
 
-	public String getStudentId() {
-		return this.studentId;
-	}
-	
+	@Override
 	public String getName() {
 		return this.name;
 	}
 
-	public ArrayList<String> getCompletedCourses() {
-		return this.completedCoursesList;
+	@Override
+	public String getId() {
+		return this.studentId;
 	}
 
 	@Override
@@ -45,5 +48,10 @@ public class Student implements Serializable {
 			stringReturn = stringReturn + " " + this.completedCoursesList.get(i).toString();
 		}
 		return stringReturn;
+	}
+
+	@Override
+	public void showAttributes() {
+		System.out.println("학번      이름           전공   수강과목");
 	}
 }

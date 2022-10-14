@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 import dao.CourseDao;
 import dao.StudentDao;
-import entity.Course;
-import entity.Student;
+import entity.Domain;
+import exception.NullDataException;
 
 @SuppressWarnings("serial")
 public class DataImpl extends UnicastRemoteObject implements DataInterface {
@@ -54,12 +54,12 @@ public class DataImpl extends UnicastRemoteObject implements DataInterface {
 	}
 
 	@Override
-	public ArrayList<Student> getAllStudentData() throws RemoteException {
+	public ArrayList<Domain> getAllStudentData() throws RemoteException, NullDataException {
 		return studentDao.getAllStudentRecords();
 	}
 
 	@Override
-	public ArrayList<Course> getAllCourseData() throws RemoteException {
+	public ArrayList<Domain> getAllCourseData() throws RemoteException, NullDataException {
 		return courseDao.getAllCourseRecords();
 	}
 
