@@ -52,6 +52,6 @@ public class Course extends Domain implements Serializable {
 
 	@Override
 	public void showAttributes() {
-		System.out.println("°­ÁÂ¹øÈ£  ±³¼ö        °­ÁÂÀÌ¸§        	  ¼±ÀÌ¼ö°­ÁÂ¹øÈ£");
+		System.out.println("ê°•ì¢Œë²ˆí˜¸	êµìˆ˜		ê°•ì¢Œì´ë¦„							ì„ ì´ìˆ˜ê°•ì¢Œë²ˆí˜¸		");
 	}
 }

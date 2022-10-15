@@ -43,7 +43,6 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
 			System.out.println("Server is ready");
 		} catch (RemoteException | NotBoundException | AlreadyBoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

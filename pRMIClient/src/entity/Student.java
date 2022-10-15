@@ -16,7 +16,7 @@ public class Student extends Domain implements Serializable {
 		this.studentId = stringTokenizer.nextToken();
 		this.name = stringTokenizer.nextToken();
 		this.department = stringTokenizer.nextToken();
-		this.completedCoursesList = new ArrayList<String>();
+		this.completedCoursesList = new ArrayList<>();
 		while (stringTokenizer.hasMoreTokens()) {
 			this.completedCoursesList.add(stringTokenizer.nextToken());
 		}
@@ -44,14 +44,14 @@ public class Student extends Domain implements Serializable {
 	@Override
 	public String toString() {
 		String stringReturn = this.studentId + " " + this.name + " " + this.department;
-		for (int i = 0; i < this.completedCoursesList.size(); i++) {
-			stringReturn = stringReturn + " " + this.completedCoursesList.get(i).toString();
+		for (String s : this.completedCoursesList) {
+			stringReturn = stringReturn + " " + s;
 		}
 		return stringReturn;
 	}
 
 	@Override
 	public void showAttributes() {
-		System.out.println("ÇÐ¹ø      ÀÌ¸§           Àü°ø   ¼ö°­°ú¸ñ");
+		System.out.println("í•™ë²ˆ		  ì´ë¦„			ì „ê³µ		ì‹ ì²­ê³¼ëª©");
 	}
 }

@@ -52,6 +52,6 @@ public class Student extends Domain implements Serializable {
 
 	@Override
 	public void showAttributes() {
-		System.out.println("ÇĞ¹ø      ÀÌ¸§           Àü°ø   ¼ö°­°ú¸ñ");
+		System.out.println("í•™ë²ˆ      ì´ë¦„           ì „ê³µ   ìˆ˜ê°•ê³¼ëª©");
 	}
 }

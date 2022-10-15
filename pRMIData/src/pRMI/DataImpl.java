@@ -36,10 +36,9 @@ public class DataImpl extends UnicastRemoteObject implements DataInterface {
 	private DataImpl() throws RemoteException {
 		try {
 			registry = LocateRegistry.createRegistry(9123);
-			studentDao = new StudentDao("src/entity/Students.txt");
-			courseDao = new CourseDao("src/entity/Courses.txt");
+			studentDao = new StudentDao("pRMIData/src/entity/Students.txt");
+			courseDao = new CourseDao("pRMIData/src/entity/Courses.txt");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

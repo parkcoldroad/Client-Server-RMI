@@ -1,5 +1,6 @@
 package dao;
 
+import exception.NullDataException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,7 +25,13 @@ protected ArrayList<Domain> courseList;
 		objCourseFile.close();
 	}
 	
-	public ArrayList<Domain> getAllCourseRecords() {
+	public ArrayList<Domain> getAllCourseRecords() throws NullDataException {
+		if(this.courseList.size()==0) throw new NullDataException("----------------- data is null... ------------------");
 		return this.courseList;
+	}
+	
+	public boolean addCourseRecords(String courseInfo) {
+		if(this.courseList.add(new Course(courseInfo))) return true;
+		else return false;
 	}
 }
