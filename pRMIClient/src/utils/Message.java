@@ -10,7 +10,7 @@ public class Message {
     else System.out.println("FAIL");
   }
 
-  public static void print(List<Domain> domainList) {
+  public static void print(List<? extends Domain> domainList) {
     for (Domain domain : domainList) {
       System.out.println("------------------------------------------");
       domain.showAttributes();

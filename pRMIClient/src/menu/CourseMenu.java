@@ -1,7 +1,5 @@
 package menu;
 
-import java.io.IOException;
-import pRMI.Client;
 import service.CourseService;
 
 public enum CourseMenu implements Menu {
@@ -33,8 +31,8 @@ public enum CourseMenu implements Menu {
     System.out.println("\n-----------------MENU--------------------");
     System.out.println("1.Create");
     System.out.println("2.Read");
-    System.out.println("3.Search");
-    System.out.println("4.Update");
-    System.out.println("5.Delete");
+    System.out.println("3.Update");
+    System.out.println("4.Delete");
+    System.out.println("5.Search");
   }
 }

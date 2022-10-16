@@ -1,5 +1,10 @@
 package pRMI;
 
+import dao.CourseDao;
+import dao.StudentDao;
+import entity.Course;
+import entity.Student;
+import exception.NullDataException;
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -7,11 +12,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-
-import dao.CourseDao;
-import dao.StudentDao;
-import entity.Domain;
-import exception.NullDataException;
 
 @SuppressWarnings("serial")
 public class DataImpl extends UnicastRemoteObject implements DataInterface {
@@ -53,12 +53,12 @@ public class DataImpl extends UnicastRemoteObject implements DataInterface {
 	}
 
 	@Override
-	public ArrayList<Domain> getAllStudentData() throws RemoteException, NullDataException {
+	public ArrayList<Student> getAllStudentData() throws RemoteException, NullDataException {
 		return studentDao.getAllStudentRecords();
 	}
 
 	@Override
-	public ArrayList<Domain> getAllCourseData() throws RemoteException, NullDataException {
+	public ArrayList<Course> getAllCourseData() throws RemoteException, NullDataException {
 		return courseDao.getAllCourseRecords();
 	}
 
@@ -73,13 +73,13 @@ public class DataImpl extends UnicastRemoteObject implements DataInterface {
 	}
 
 	@Override
-	public void deleteStudentData(String studentId) throws RemoteException {
-		studentDao.deleteStudentRecords(studentId);
+	public boolean deleteStudentData(String studentId) throws RemoteException {
+		return studentDao.deleteStudentRecords(studentId);
 	}
 
 	@Override
-	public void deleteCourseData(String courseId) throws RemoteException {
-		courseDao.deleteCourseRecords(courseId);
+	public boolean deleteCourseData(String courseId) throws RemoteException {
+		return courseDao.deleteCourseRecords(courseId);
 	}
 
 

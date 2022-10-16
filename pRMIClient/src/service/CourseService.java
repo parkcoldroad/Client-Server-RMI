@@ -1,5 +1,6 @@
 package service;
 
+import entity.Course;
 import entity.Domain;
 import exception.NullDataException;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.util.List;
 import menu.CourseMenu;
 import pRMI.Client;
 import pRMI.ServerInterface;
+import utils.Input;
 import utils.Message;
 
 public class CourseService implements Service {
@@ -29,16 +31,12 @@ public class CourseService implements Service {
 
   public void initialize() {
     CourseMenu.printMenu();
-    try {
-      String choice = Client.getBufferedReader().readLine().trim();
-      Arrays.stream(CourseMenu.values())
-          .filter(courseMenu -> courseMenu.getChoice().equals(choice))
-          .findFirst()
-          .ifPresentOrElse(CourseMenu::execute,
-              () -> System.out.println("invalid enter"));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    String choice = Input.readLine();
+    Arrays.stream(CourseMenu.values())
+        .filter(courseMenu -> courseMenu.getChoice().equals(choice))
+        .findFirst()
+        .ifPresentOrElse(CourseMenu::execute,
+            () -> System.out.println("invalid enter"));
   }
 
   @Override
@@ -54,7 +52,7 @@ public class CourseService implements Service {
   @Override
   public void read() {
     try {
-      List<Domain> courseList = this.stub.getAllCourseData();
+      List<Course> courseList = this.stub.getAllCourseData();
       Message.print(courseList);
     } catch (RemoteException | NullDataException e) {
       throw new RuntimeException(e);
@@ -68,14 +66,21 @@ public class CourseService implements Service {
 
   @Override
   public void delete() {
-
+    try {
+      System.out.println("enter your Id to delete");
+      boolean result = this.stub.deleteCourseData(Input.readLine());
+      Message.print(result);
+    } catch (RemoteException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
   public void search() {
     try {
-      List<Domain> courseList = this.stub.getAllCourseData();
-      String courseId = Client.getBufferedReader().readLine().trim();
+      List<Course> courseList = this.stub.getAllCourseData();
+      System.out.println("enter your Id to search");
+      String courseId = Input.readLine();
 
       Domain searchedCourse = courseList.stream()
           .filter(course -> course.match(courseId))
@@ -91,13 +96,13 @@ public class CourseService implements Service {
   public String getCreationCourseScannerResult() throws IOException {
     System.out.println("------------Course Information------------");
     System.out.println("Course Id : ");
-    String courseId = Client.getBufferedReader().readLine().trim();
+    String courseId = Input.readLine();
     System.out.println("professor Last Name : ");
-    String professorLName = Client.getBufferedReader().readLine().trim();
+    String professorLName = Input.readLine();
     System.out.println("Course Name : ");
-    String courseName = Client.getBufferedReader().readLine().trim();
+    String courseName = Input.readLine();
     System.out.println("preCoursedList : ");
-    String preCourseList = Client.getBufferedReader().readLine().trim();
+    String preCourseList = Input.readLine();
     return courseId + " " + professorLName + " " + courseName + " " + preCourseList;
   }
 }

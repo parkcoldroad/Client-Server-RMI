@@ -28,7 +28,7 @@ public enum MainMenu implements Menu {//인터페이스 상속 후, 모든 메�
 	}
 
 	public static void printMenu(){
-			System.out.println("\n-----------------MENU--------------------");
+			System.out.println("\n-----------------Main Menu--------------------");
 			System.out.println("1.Student");
 			System.out.println("2.Course");
 			System.out.println("3.Quit");

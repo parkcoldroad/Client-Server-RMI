@@ -1,5 +1,8 @@
 package pRMI;
 
+import entity.Course;
+import entity.Student;
+import exception.NullDataException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -8,17 +11,12 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-import entity.Domain;
-import exception.NullDataException;
-
-@SuppressWarnings("serial")
 public class Server extends UnicastRemoteObject implements ServerInterface {
 
 	private DataInterface data;
 	private static Server server;
 	private final Registry serverRegistry;
 	private final Registry dataServerRegistry;
-	int result;
 
 	private Server() throws RemoteException {
 		serverRegistry = LocateRegistry.createRegistry(9000);
@@ -49,12 +47,12 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 	}
 
 	@Override
-	public ArrayList<Domain> getAllStudentData() throws RemoteException, NullDataException {
+	public ArrayList<Student> getAllStudentData() throws RemoteException, NullDataException {
 		return data.getAllStudentData();
 	}
 
 	@Override
-	public ArrayList<Domain> getAllCourseData() throws RemoteException, NullDataException {
+	public ArrayList<Course> getAllCourseData() throws RemoteException, NullDataException {
 		return data.getAllCourseData();
 	}
 
@@ -69,13 +67,13 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 	}
 
 	@Override
-	public void deleteStudentData(String studentId) throws RemoteException {
-		data.deleteStudentData(studentId);
+	public boolean deleteStudentData(String studentId) throws RemoteException {
+		return data.deleteStudentData(studentId);
 	}
 
 	@Override
-	public void deleteCourseData(String courseId) throws RemoteException {
-		data.deleteCourseData(courseId);
+	public boolean deleteCourseData(String courseId) throws RemoteException {
+		return data.deleteCourseData(courseId);
 	}
 
 }
