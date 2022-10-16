@@ -1,34 +1,36 @@
 package dao;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import entity.Domain;
 import entity.Student;
 import exception.NullDataException;
-import java.util.Locale.Builder;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class StudentDao {
 
-  protected ArrayList<Domain> studentList;
+  protected ArrayList<Student> studentList;
+  private final BufferedWriter bufferedWriter;
 
-  public StudentDao(String sStudentFileName) throws FileNotFoundException, IOException {
+  public StudentDao(String sStudentFileName) throws IOException {
     BufferedReader objStudentFile = new BufferedReader(new FileReader(sStudentFileName));
-    this.studentList = new ArrayList<Domain>();
+    this.studentList = new ArrayList<Student>();
     while (objStudentFile.ready()) {
       String stuInfo = objStudentFile.readLine();
       if (!stuInfo.equals("")) {
         this.studentList.add(new Student(stuInfo));
       }
     }
+    FileWriter fw = new FileWriter(sStudentFileName, true);
+    bufferedWriter = new BufferedWriter(fw);
     objStudentFile.close();
   }
 
-  public ArrayList<Domain> getAllStudentRecords() throws NullDataException {
+  public ArrayList<Student> getAllStudentRecords() throws NullDataException {
     if (this.studentList.size() == 0) {
       throw new NullDataException("----------------- data is null... ------------------");
     }
@@ -36,26 +38,37 @@ public class StudentDao {
   }
 
   public boolean createStudentRecords(String studentInfo) {
+    try {
+      bufferedWriter.newLine();
+      bufferedWriter.write(studentInfo);
+      bufferedWriter.newLine();
+      bufferedWriter.flush();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
     return this.studentList.add(new Student(studentInfo));
   }
 
-  public void deleteStudentRecords(String studentId) {
-    Optional<Domain> optionalStudent = studentList.stream()
+  public boolean deleteStudentRecords(String studentId) {
+    Optional<Student> optionalStudent = studentList.stream()
         .filter(student -> student.match(studentId))
         .findFirst();
 
-    optionalStudent.ifPresentOrElse(
-        student -> studentList.remove(student),
-        () -> System.out.println("your studentId is not found"));
-  }
-
-  public boolean isRegisteredStudent (String sSID){
-    for (Domain domain : this.studentList) {
-      Student objStudent = (Student) domain;
-      if (objStudent.match(sSID)) {
-        return true;
-      }
+    if (optionalStudent.isPresent()) {
+      studentList.remove(optionalStudent.get());
+      return true;
     }
+    System.out.println("your studentId is not found");
     return false;
   }
+
+//  public boolean isRegisteredStudent (String sSID){
+//    for (Domain domain : this.studentList) {
+//      Student objStudent = (Student) domain;
+//      if (objStudent.match(sSID)) {
+//        return true;
+//      }
+//    }
+//    return false;
+//  }
 }
