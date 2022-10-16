@@ -16,8 +16,8 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
 	private DataInterface data;
 	private static Server server;
-	private Registry serverRegistry;
-	private Registry dataServerRegistry;
+	private final Registry serverRegistry;
+	private final Registry dataServerRegistry;
 	int result;
 
 	private Server() throws RemoteException {
@@ -56,6 +56,26 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 	@Override
 	public ArrayList<Domain> getAllCourseData() throws RemoteException, NullDataException {
 		return data.getAllCourseData();
+	}
+
+	@Override
+	public boolean createStudentData(String studentInfo) throws RemoteException {
+		return data.createStudentData(studentInfo);
+	}
+
+	@Override
+	public boolean createCourseData(String courseInfo) throws RemoteException {
+		return data.createCourseData(courseInfo);
+	}
+
+	@Override
+	public void deleteStudentData(String studentId) throws RemoteException {
+		data.deleteStudentData(studentId);
+	}
+
+	@Override
+	public void deleteCourseData(String courseId) throws RemoteException {
+		data.deleteCourseData(courseId);
 	}
 
 }

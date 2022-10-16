@@ -1,9 +1,14 @@
 package pRMI;
 
+import global.CREATE;
 import global.MENU;
 import global.READ;
 import global.SEARCH;
 import global.MenuInterface;
+import java.awt.SystemColor;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -18,14 +23,14 @@ import entity.Domain;
 public class Client {
 	private static Client client;
 	private static ServerInterface stub;
-	private final Scanner sc;
+	private static BufferedReader bufferedReader;
 
 	private MenuInterface SI;
 
 	private Client() throws RemoteException, NotBoundException {
 		Registry clientRegistry = LocateRegistry.getRegistry(9000);
 		stub = (ServerInterface) clientRegistry.lookup("Server");
-		sc = new Scanner(System.in);
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 	}
 
 	public static Client getInstance() {
@@ -43,14 +48,16 @@ public class Client {
 		return stub;
 	}
 
-	public void start() {
+	public static BufferedReader getBufferedReader() { return bufferedReader;}
+
+	public void start() throws IOException {
 		boolean isStop = false;
 			while (!isStop) {
 				MENU.printMenu();
-				String choice = sc.next();
+				String choice = bufferedReader.readLine().trim();
 				
 				Optional<MENU> optionalCRUD = Arrays.stream(MENU.values())
-						.filter(menu -> menu.getKeyword().equals(choice))
+						.filter(menu -> menu.getChoice().equals(choice))
 						.findFirst();
 
 				optionalCRUD.ifPresentOrElse(MENU::execute,
@@ -64,28 +71,36 @@ public class Client {
 	}
 
 
-	public void create() {
+	public void create() throws IOException {
+		CREATE.printMenu();
+		String choice = bufferedReader.readLine().trim();
 
+		Optional<CREATE> optionalCREATE = Arrays.stream(CREATE.values())
+				.filter(create -> create.getChoice().equals(choice))
+				.findFirst();
+
+		optionalCREATE.ifPresentOrElse(CREATE::execute,
+				() -> System.out.println("invalid enter"));
 	}
 
-	public void read() {
+	public void read() throws IOException {
 		READ.printMenu();
-		String choice = sc.next();
+		String choice = bufferedReader.readLine().trim();
 
 		Optional<READ> optionalREAD = Arrays.stream(READ.values())
-				.filter(read -> read.getKeyword().equals(choice))
+				.filter(read -> read.getChoice().equals(choice))
 				.findFirst();
 
 		optionalREAD.ifPresentOrElse(READ::execute,
 				() -> System.out.println("invalid enter"));
 
 	}
-	public void search() {
+	public void search() throws IOException {
 		SEARCH.printMenu();
-		String choice = sc.next();
+		String choice = bufferedReader.readLine().trim();
 
 		Optional<SEARCH> optionalREAD = Arrays.stream(SEARCH.values())
-				.filter(search -> search.getKeyword().equals(choice))
+				.filter(search -> search.getChoice().equals(choice))
 				.findFirst();
 
 		System.out.println("enter your Id to search");
@@ -102,11 +117,16 @@ public class Client {
 
 	}
 
-	public void quit() {
-		sc.close();
+	public void quit() throws IOException {
+		bufferedReader.close();
 		System.out.println("system terminated..");
 	}
-	public void showDomainList(List<Domain> domainList) {
+	public void createDomain(boolean successorfail) throws RemoteException {
+		if(successorfail) {System.out.println("SUCCESS");}
+		else System.out.println("FAIL");
+	}
+
+	public void readDomainList(List<Domain> domainList) {
 		for (Domain domain : domainList) {
 			System.out.println("------------------------------------------");
 			domain.showAttributes();
@@ -125,7 +145,17 @@ public class Client {
 			System.out.println(domain);
 		}, () -> System.out.println("your id is no matched"));
 	}
-	public String getScannerResult(){
-		return sc.next();
+
+	public void deleteDomain(){
+
 	}
+
+//	public void updateDomain(){
+//
+//	}
+
+	public void makeReservations(){
+
+	}
+
 }

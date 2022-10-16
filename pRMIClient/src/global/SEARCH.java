@@ -1,6 +1,7 @@
 package global;
 
 import exception.NullDataException;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import pRMI.Client;
 
@@ -9,8 +10,8 @@ public enum SEARCH implements MenuInterface {
     try {
       Client.getInstance().searchDomain(
           Client.getStub().getAllStudentData(),
-          Client.getInstance().getScannerResult());
-    } catch (RemoteException | NullDataException e) {
+          Client.getBufferedReader().readLine().trim());
+    } catch (NullDataException | IOException e) {
       throw new RuntimeException(e);
     }
   }, "1" ),
@@ -18,8 +19,8 @@ public enum SEARCH implements MenuInterface {
     try {
       Client.getInstance().searchDomain(
           Client.getStub().getAllCourseData(),
-          Client.getInstance().getScannerResult());
-    } catch (RemoteException | NullDataException e) {
+          Client.getBufferedReader().readLine().trim());
+    } catch (NullDataException | IOException e) {
       throw new RuntimeException(e);
     }
   }, "2");
@@ -39,7 +40,7 @@ public enum SEARCH implements MenuInterface {
   }
 
   @Override
-  public String getKeyword() {
+  public String getChoice() {
     return this.keyword;
   }
 

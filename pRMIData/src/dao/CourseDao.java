@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import entity.Course;
 import entity.Domain;
+import java.util.Optional;
 
 public class CourseDao {
 protected ArrayList<Domain> courseList;
@@ -30,8 +31,17 @@ protected ArrayList<Domain> courseList;
 		return this.courseList;
 	}
 	
-	public boolean addCourseRecords(String courseInfo) {
-		if(this.courseList.add(new Course(courseInfo))) return true;
-		else return false;
+	public boolean createCourseRecords(String courseInfo) {
+		return this.courseList.add(new Course(courseInfo));
 	}
+	public void deleteCourseRecords(String courseId) {
+		Optional<Domain> optionalStudent = courseList.stream()
+				.filter(course -> course.match(courseId))
+				.findFirst();
+
+		optionalStudent.ifPresentOrElse(
+				course -> courseList.remove(course),
+				() -> System.out.println("your courseId is not found"));
+	}
+
 }
