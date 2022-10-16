@@ -1,6 +1,6 @@
-package global;
+package menu;
 
-public interface MenuInterface {
+public interface Menu {
 
   void execute();
 
