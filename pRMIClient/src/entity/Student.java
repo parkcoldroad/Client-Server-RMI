@@ -16,7 +16,7 @@ public class Student extends Domain implements Serializable {
 		this.studentId = stringTokenizer.nextToken();
 		this.name = stringTokenizer.nextToken();
 		this.department = stringTokenizer.nextToken();
-		this.completedCoursesList = new ArrayList<>();
+		this.completedCoursesList = new ArrayList<String>();
 		while (stringTokenizer.hasMoreTokens()) {
 			this.completedCoursesList.add(stringTokenizer.nextToken());
 		}
@@ -36,6 +36,10 @@ public class Student extends Domain implements Serializable {
 		return this.name;
 	}
 
+	public String getDepartment() {
+		return department;
+	}
+
 	@Override
 	public String getId() {
 		return this.studentId;
@@ -44,14 +48,14 @@ public class Student extends Domain implements Serializable {
 	@Override
 	public String toString() {
 		String stringReturn = this.studentId + " " + this.name + " " + this.department;
-		for (String s : this.completedCoursesList) {
-			stringReturn = stringReturn + " " + s;
+		for (int i = 0; i < this.completedCoursesList.size(); i++) {
+			stringReturn = stringReturn + " " + this.completedCoursesList.get(i).toString();
 		}
 		return stringReturn;
 	}
 
 	@Override
 	public void showAttributes() {
-		System.out.println("학번		  이름			전공		신청과목");
+		System.out.println("학번      이름           전공   수강과목");
 	}
 }

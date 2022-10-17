@@ -36,6 +36,10 @@ public class Student extends Domain implements Serializable {
 		return this.name;
 	}
 
+	public String getDepartment() {
+		return this.department;
+	}
+
 	@Override
 	public String getId() {
 		return this.studentId;

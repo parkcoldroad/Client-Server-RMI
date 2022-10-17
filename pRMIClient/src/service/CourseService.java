@@ -67,7 +67,7 @@ public class CourseService implements Service {
   @Override
   public void delete() {
     try {
-      System.out.println("enter your Id to delete");
+      System.out.println("enter your courseId to delete");
       boolean result = this.stub.deleteCourseData(Input.readLine());
       Message.print(result);
     } catch (RemoteException e) {
@@ -78,17 +78,11 @@ public class CourseService implements Service {
   @Override
   public void search() {
     try {
-      List<Course> courseList = this.stub.getAllCourseData();
-      System.out.println("enter your Id to search");
+      System.out.println("enter your courseId to search");
       String courseId = Input.readLine();
-
-      Domain searchedCourse = courseList.stream()
-          .filter(course -> course.match(courseId))
-          .findFirst()
-          .orElseThrow(() -> new NullDataException("your id is no matched"));
-
-      Message.print(searchedCourse);
-    } catch (NullDataException | IOException e) {
+      String seachedResult = this.stub.searchCourseData(courseId);
+      System.out.println(seachedResult);
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }

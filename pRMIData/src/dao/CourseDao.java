@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Course;
+import entity.Student;
 import exception.NullDataException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -37,6 +38,14 @@ public class CourseDao {
     return this.courseList;
   }
 
+  public String searchCourseRecords(String courseId) {
+    for (Course course : courseList) {
+      if (course.match(courseId)) {
+        return course.toString();
+      }
+    }
+    return "your courseId is not found";
+  }
   public boolean createCourseRecords(String courseInfo) {
     try {
       bufferedWriter.newLine();

@@ -4,6 +4,7 @@ import entity.Student;
 import exception.NullDataException;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import menu.StudentMenu;
@@ -64,7 +65,7 @@ public class StudentService implements Service{
   @Override
   public void delete() {
     try {
-      System.out.println("enter your Id to delete");
+      System.out.println("enter your studentId to delete");
       boolean result = this.stub.deleteStudentData(Input.readLine());
       Message.print(result);
     } catch (RemoteException e) {
@@ -75,18 +76,11 @@ public class StudentService implements Service{
   @Override
   public void search() {
     try {
-      List<Student> studentList = this.stub.getAllStudentData();
-      System.out.println("enter your Id to search");
+      System.out.println("enter your studentId to search");
       String studentId = Input.readLine();
-
-
-      Student searchedStudent = studentList.stream()
-          .filter(student -> student.match(studentId))
-          .findFirst()
-          .orElseThrow(() -> new NullDataException("your id is no matched"));
-
-      Message.print(searchedStudent);
-    } catch (NullDataException | IOException e) {
+      String seachedResult = this.stub.searchStudentData(studentId);
+      System.out.println(seachedResult);
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }

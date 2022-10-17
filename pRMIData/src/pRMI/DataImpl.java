@@ -63,6 +63,16 @@ public class DataImpl extends UnicastRemoteObject implements DataInterface {
 	}
 
 	@Override
+	public String searchStudentData(String studentId) throws RemoteException {
+		return studentDao.searchStudentRecords(studentId);
+	}
+
+	@Override
+	public String searchCourseData(String courseId) throws RemoteException {
+		return courseDao.searchCourseRecords(courseId);
+	}
+
+	@Override
 	public boolean createStudentData(String studentInfo) throws RemoteException {
 		return studentDao.createStudentRecords(studentInfo);
 	}

@@ -7,11 +7,21 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface ServerInterface extends Remote{
+public interface ServerInterface extends Remote {
+
 	public ArrayList<Student> getAllStudentData() throws RemoteException, NullDataException;
+
 	public ArrayList<Course> getAllCourseData() throws RemoteException, NullDataException;
+
+	public String searchStudentData(String studentId) throws RemoteException;
+
+	public String searchCourseData(String courseId) throws RemoteException;
+
 	public boolean createStudentData(String studentInfo) throws RemoteException;
+
 	public boolean createCourseData(String courseInfo) throws RemoteException;
+
 	public boolean deleteStudentData(String studentId) throws RemoteException;
+
 	public boolean deleteCourseData(String courseId) throws RemoteException;
 }

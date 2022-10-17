@@ -37,6 +37,15 @@ public class StudentDao {
     return this.studentList;
   }
 
+  public String searchStudentRecords(String studentId) {
+    for (Student student : studentList) {
+      if (student.match(studentId)) {
+        return student.toString();
+      }
+    }
+    return "your studentId is not found";
+  }
+
   public boolean createStudentRecords(String studentInfo) {
     try {
       bufferedWriter.newLine();

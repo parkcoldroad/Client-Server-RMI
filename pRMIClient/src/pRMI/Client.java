@@ -17,7 +17,7 @@ public class Client {
 
 
 	private Client() throws RemoteException, NotBoundException {
-		Registry clientRegistry = LocateRegistry.getRegistry(9000);
+		Registry clientRegistry = LocateRegistry.getRegistry(14000);
 		stub = (ServerInterface) clientRegistry.lookup("Server");
 	}
 
