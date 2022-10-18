@@ -1,6 +1,6 @@
 package dao;
 
-import entity.Enrolment;
+import entity.Enrollment;
 import exception.NullDataException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,17 +12,17 @@ import java.util.Optional;
 
 public class EnrolmentDao {
 
-  private ArrayList<Enrolment> enrolmentList;
+  private ArrayList<Enrollment> enrollmentList;
   private final BufferedWriter bufferedWriter;
 
   public EnrolmentDao() throws IOException {
-    String EnrolmentFileName = "pRMIData/src/entity/Enrolment.txt";
+    String EnrolmentFileName = "pRMIData/src/entity/Enrollment.txt";
     BufferedReader objEnrolmentFile = new BufferedReader(new FileReader(EnrolmentFileName));
-    this.enrolmentList = new ArrayList<Enrolment>();
+    this.enrollmentList = new ArrayList<Enrollment>();
     while (objEnrolmentFile.ready()) {
       String enrolmentInfo = objEnrolmentFile.readLine();
       if (!enrolmentInfo.equals("")) {
-        this.enrolmentList.add(new Enrolment(enrolmentInfo));
+        this.enrollmentList.add(new Enrollment(enrolmentInfo));
       }
     }
     FileWriter fw = new FileWriter(EnrolmentFileName, true);
@@ -39,32 +39,32 @@ public class EnrolmentDao {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-     this.enrolmentList.add(new Enrolment(enrolementInfo));
+     this.enrollmentList.add(new Enrollment(enrolementInfo));
   }
 
-  public ArrayList<Enrolment> getEnrolment() {
-    if (this.enrolmentList.size() == 0) {
+  public ArrayList<Enrollment> getEnrolment() {
+    if (this.enrollmentList.size() == 0) {
       try {
         throw new NullDataException("----------------- data is null... ------------------");
       } catch (NullDataException e) {
         throw new RuntimeException(e);
       }
     }
-    return this.enrolmentList;
+    return this.enrollmentList;
   }
 
   public boolean deleteEnrolment(String studentId) {
-    Optional<Enrolment> optionalEnrolment = enrolmentList.stream()
-        .filter(enrolment -> enrolment.match(studentId))
+    Optional<Enrollment> optionalEnrolment = enrollmentList.stream()
+        .filter(enrollment -> enrollment.match(studentId))
         .findFirst();
 
     if (optionalEnrolment.isPresent()) {
-      enrolmentList.remove(optionalEnrolment.get());
+      enrollmentList.remove(optionalEnrolment.get());
 
-      for (Enrolment enrolment : enrolmentList) {
+      for (Enrollment enrollment : enrollmentList) {
         try {
           bufferedWriter.newLine();
-          bufferedWriter.write(enrolment.toString());
+          bufferedWriter.write(enrollment.toString());
           bufferedWriter.newLine();
           bufferedWriter.flush();
         } catch (IOException e) {
