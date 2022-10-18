@@ -1,7 +1,7 @@
 package pRMI;
 
 import entity.Course;
-import entity.Enrolment;
+import entity.Enrollment;
 import entity.Student;
 import exception.NullDataException;
 import java.rmi.NotBoundException;
@@ -53,8 +53,8 @@ public class DataServer extends UnicastRemoteObject implements DataInterface {
   }
 
   @Override
-  public ArrayList<Enrolment> getAllEnrolmentData() throws RemoteException, NullDataException {
-    return data.getAllEnrolmentData();
+  public ArrayList<Enrollment> getAllEnrollmentData() throws RemoteException, NullDataException {
+    return data.getAllEnrollmentData();
   }
 
   @Override
@@ -68,18 +68,18 @@ public class DataServer extends UnicastRemoteObject implements DataInterface {
   }
 
   @Override
-  public void createStudentData(String studentInfo) throws RemoteException {
-    data.createStudentData(studentInfo);
+  public boolean createStudentData(String studentInfo) throws RemoteException {
+    return data.createStudentData(studentInfo);
   }
 
   @Override
-  public void createCourseData(String courseInfo) throws RemoteException {
-    data.createCourseData(courseInfo);
+  public boolean createCourseData(String courseInfo) throws RemoteException {
+    return data.createCourseData(courseInfo);
   }
 
   @Override
-  public void createEnrolment(String studentId) throws RemoteException {
-    data.createEnrolment(studentId);
+  public boolean createEnrollment(String studentId) throws RemoteException {
+    return data.createEnrollment(studentId);
   }
 
   @Override
@@ -93,8 +93,8 @@ public class DataServer extends UnicastRemoteObject implements DataInterface {
   }
 
   @Override
-  public boolean deleteEnrolment(String studentId) throws RemoteException {
-    return data.deleteEnrolment(studentId);
+  public boolean deleteEnrollment(String studentId) throws RemoteException {
+    return data.deleteEnrollment(studentId);
   }
 
 }

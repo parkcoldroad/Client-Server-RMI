@@ -13,12 +13,12 @@ import utils.Input;
 public class Client {
 
 	private static Client client;
-	private static ServerInterface stub;
+	private static ClientInterface stub;
 
 
 	private Client() throws RemoteException, NotBoundException {
 		Registry clientRegistry = LocateRegistry.getRegistry(14000);
-		stub = (ServerInterface) clientRegistry.lookup("Server");
+		stub = (ClientInterface) clientRegistry.lookup("Server");
 	}
 
 	public static Client getInstance() {
@@ -32,7 +32,7 @@ public class Client {
 		return client;
 	}
 
-	public static ServerInterface getStub() {
+	public static ClientInterface getStub() {
 		return stub;
 	}
 

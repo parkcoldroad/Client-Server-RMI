@@ -1,6 +1,7 @@
 package pRMI;
 
 import entity.Course;
+import entity.Enrollment;
 import entity.Student;
 import exception.NullDataException;
 import java.rmi.Remote;
@@ -9,19 +10,23 @@ import java.util.ArrayList;
 
 public interface DataInterface extends Remote {
 
-  public ArrayList<Student> getAllStudentData() throws RemoteException, NullDataException;
+   ArrayList<Student> getAllStudentData() throws RemoteException, NullDataException;
 
-  public ArrayList<Course> getAllCourseData() throws RemoteException, NullDataException;
+   ArrayList<Course> getAllCourseData() throws RemoteException, NullDataException;
 
-  public String searchStudentData(String studentId) throws RemoteException;
+   ArrayList<Enrollment> getAllEnrollmentData() throws RemoteException, NullDataException;
 
-  public String searchCourseData(String courseId) throws RemoteException;
+   String searchStudentData(String studentId) throws RemoteException;
 
-  public boolean createStudentData(String studentInfo) throws RemoteException;
+   String searchCourseData(String courseId) throws RemoteException;
 
-  public boolean createCourseData(String courseInfo) throws RemoteException;
+   boolean createStudentData(String studentInfo) throws RemoteException;
 
-  public boolean deleteStudentData(String studentId) throws RemoteException;
+   boolean createCourseData(String courseInfo) throws RemoteException;
+   boolean createEnrollment(String enrolmentInfo) throws RemoteException;
 
-  public boolean deleteCourseData(String courseId) throws RemoteException;
+   boolean deleteStudentData(String studentId) throws RemoteException;
+
+   boolean deleteCourseData(String courseId) throws RemoteException;
+   boolean deleteEnrollment(String studentId) throws RemoteException;
 }

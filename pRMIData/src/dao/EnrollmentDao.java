@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class EnrolmentDao {
+public class EnrollmentDao {
 
   private ArrayList<Enrollment> enrollmentList;
   private final BufferedWriter bufferedWriter;
 
-  public EnrolmentDao() throws IOException {
-    String EnrolmentFileName = "pRMIData/src/entity/Enrollment.txt";
+  public EnrollmentDao() throws IOException {
+    String EnrolmentFileName = "pRMIData/src/data/Enrollment.txt";
     BufferedReader objEnrolmentFile = new BufferedReader(new FileReader(EnrolmentFileName));
     this.enrollmentList = new ArrayList<Enrollment>();
     while (objEnrolmentFile.ready()) {
@@ -30,7 +30,7 @@ public class EnrolmentDao {
     objEnrolmentFile.close();
   }
 
-  public void createEnrolment(String enrolementInfo) {
+  public boolean createEnrolment(String enrolementInfo) {
     try {
       bufferedWriter.newLine();
       bufferedWriter.write(enrolementInfo);
@@ -40,9 +40,10 @@ public class EnrolmentDao {
       throw new RuntimeException(e);
     }
      this.enrollmentList.add(new Enrollment(enrolementInfo));
+    return true;
   }
 
-  public ArrayList<Enrollment> getEnrolment() {
+  public ArrayList<Enrollment> getAllEnrollmentData() {
     if (this.enrollmentList.size() == 0) {
       try {
         throw new NullDataException("----------------- data is null... ------------------");

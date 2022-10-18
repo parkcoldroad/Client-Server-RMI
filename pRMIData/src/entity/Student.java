@@ -16,7 +16,7 @@ public class Student extends Domain implements Serializable {
 		this.studentId = stringTokenizer.nextToken();
 		this.name = stringTokenizer.nextToken();
 		this.department = stringTokenizer.nextToken();
-		this.completedCoursesList = new ArrayList<String>();
+		this.completedCoursesList = new ArrayList<>();
 		while (stringTokenizer.hasMoreTokens()) {
 			this.completedCoursesList.add(stringTokenizer.nextToken());
 		}

@@ -1,8 +1,9 @@
 package pRMI;
 
 import dto.CourseDto;
-import dto.EnrolmentDto;
+import dto.EnrollmentDto;
 import dto.StudentDto;
+import entity.Course;
 import entity.Student;
 import exception.NullDataException;
 import java.rmi.AlreadyBoundException;
@@ -16,7 +17,7 @@ public class ClientServer extends UnicastRemoteObject implements ClientInterface
 
   private static ClientServer clientServer;
   private final Registry clientserverRegistry;
-  private DataServer dataServer = DataServer.getInstance();
+  private final DataServer dataServer = DataServer.getInstance();
 
   private ClientServer() throws RemoteException {
     clientserverRegistry = LocateRegistry.createRegistry(14000);
@@ -48,62 +49,79 @@ public class ClientServer extends UnicastRemoteObject implements ClientInterface
     ArrayList<Student> allStudentData = dataServer.getAllStudentData();
     ArrayList<StudentDto> studentDtos = new ArrayList<>();
 
-    for(int i=0;i< allStudentData.size();i++){
-      studentDtos.get(i).setStudentId(allStudentData.get(i).getId());
-      studentDtos.get(i).setName(allStudentData.get(i).getName());
-      studentDtos.get(i).setDepartment(allStudentData.get(i).getDepartment());
-      studentDtos.get(i).setCompletedCoursesList(allStudentData.get(i).getCompletedCourses());
+    for (Student student : allStudentData) {
+      StudentDto studentDto = new StudentDto();
+
+      studentDto.setStudentId(student.getId());
+      studentDto.setName(student.getName());
+      studentDto.setDepartment(student.getDepartment());
+      studentDto.setCompletedCoursesList(student.getCompletedCourses());
+
+      studentDtos.add(studentDto);
     }
-    return  studentDtos;
+    return studentDtos;
   }
 
   @Override
   public ArrayList<CourseDto> getAllCourseData() throws RemoteException, NullDataException {
-    return null;
+    ArrayList<Course> allCourseData = dataServer.getAllCourseData();
+    ArrayList<CourseDto> courseDtos = new ArrayList<>();
+
+    for (Course course : allCourseData) {
+      CourseDto courseDto = new CourseDto();
+
+      courseDto.setCourseId(course.getId());
+      courseDto.setpLName(course.getProfessorLastName());
+      courseDto.setCourseName(course.getName());
+      courseDto.setPreCourseIdList(course.getPreCoursesIdList());
+
+      courseDtos.add(courseDto);
+    }
+    return courseDtos;
   }
 
   @Override
-  public ArrayList<EnrolmentDto> getAllEnrolmentData() throws RemoteException, NullDataException {
+  public ArrayList<EnrollmentDto> getAllEnrollmentData() throws RemoteException, NullDataException {
     return null;
   }
 
   @Override
   public String searchStudentData(String studentId) throws RemoteException {
-    return null;
+    return dataServer.searchStudentData(studentId);
   }
 
   @Override
   public String searchCourseData(String courseId) throws RemoteException {
-    return null;
+    return dataServer.searchCourseData(courseId);
   }
 
   @Override
   public boolean createStudentData(String studentInfo) throws RemoteException {
-    return false;
+    return dataServer.createStudentData(studentInfo);
   }
 
   @Override
   public boolean createCourseData(String courseInfo) throws RemoteException {
-    return false;
+    return dataServer.createCourseData(courseInfo);
   }
 
   @Override
-  public boolean createEnrolment(String enrolmentInfo) throws RemoteException {
+  public boolean createEnrollment(String enrollmentInfo) throws RemoteException {
     return false;
   }
 
   @Override
   public boolean deleteStudentData(String studentId) throws RemoteException {
-    return false;
+    return dataServer.deleteStudentData(studentId);
   }
 
   @Override
   public boolean deleteCourseData(String courseId) throws RemoteException {
-    return false;
+    return dataServer.deleteCourseData(courseId);
   }
 
   @Override
-  public boolean deleteEnrolment(String studentId) throws RemoteException {
+  public boolean deleteEnrollment(String studentId) throws RemoteException {
     return false;
   }
 }

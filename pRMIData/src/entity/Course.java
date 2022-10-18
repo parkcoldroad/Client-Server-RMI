@@ -16,7 +16,7 @@ public class Course extends Domain implements Serializable {
 		this.courseId = stringTokenizer.nextToken();
 		this.pLName = stringTokenizer.nextToken();
 		this.courseName = stringTokenizer.nextToken();
-		preCourseIdList = new ArrayList<String>();
+		preCourseIdList = new ArrayList<>();
 		while (stringTokenizer.hasMoreTokens()) {
 			this.preCourseIdList.add(stringTokenizer.nextToken());
 		}

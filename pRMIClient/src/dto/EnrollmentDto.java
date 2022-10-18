@@ -1,6 +1,6 @@
 package dto;
 
-public class EnrolmentDto {
+public class EnrollmentDto {
   private String studentId;
   private String studentName;
   private String courseId;

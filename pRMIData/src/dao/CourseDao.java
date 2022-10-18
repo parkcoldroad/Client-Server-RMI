@@ -13,14 +13,16 @@ public class CourseDao {
   protected ArrayList<Course> courseList;
   private final String courseFileName = "pRMIData/src/data/Courses.txt";
 
-  public CourseDao() throws IOException {
-    refreshCourseInfo();
-  }
+  public CourseDao()  {refreshCourseInfo();}
 
 
-  public void createCourseRecords(String courseInfo) {
+  public boolean createCourseRecords(String courseInfo) {
     this.courseList.add(new Course(courseInfo));
-    writeCourseFile(courseInfo);
+
+    for (Course course : courseList) {
+      writeCourseFile(course.toString());
+    }
+    return true;
   }
 
 
@@ -57,7 +59,7 @@ public class CourseDao {
 
   private ArrayList<Course> refreshCourseInfo() {
     BufferedReader objCourseFile = DataImpl.getBufferedReader(courseFileName);
-    this.courseList = new ArrayList<Course>();
+    this.courseList = new ArrayList<>();
     try {
       while (objCourseFile.ready()) {
         String courseInfo = objCourseFile.readLine();
@@ -73,8 +75,8 @@ public class CourseDao {
   }
 
   private void writeCourseFile(String courseInfo) {
-    BufferedWriter bufferedWriter = DataImpl.getBufferedWriter(courseFileName);
     try {
+      BufferedWriter bufferedWriter = DataImpl.getBufferedWriter(courseFileName);
       bufferedWriter.newLine();
       bufferedWriter.write(courseInfo);
       bufferedWriter.newLine();

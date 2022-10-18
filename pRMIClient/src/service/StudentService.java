@@ -1,22 +1,21 @@
 package service;
 
-import entity.Student;
+import dto.StudentDto;
 import exception.NullDataException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import menu.StudentMenu;
 import pRMI.Client;
-import pRMI.ServerInterface;
+import pRMI.ClientInterface;
 import utils.Input;
 import utils.Message;
 
-public class StudentService implements Service{
+public class StudentService{
 
   private static StudentService studentService;
-  private final ServerInterface stub;
+  private final ClientInterface stub;
 
   public static StudentService getInstance(){
     if(studentService == null){
@@ -39,7 +38,6 @@ public class StudentService implements Service{
             () -> System.out.println("invalid enter"));
   }
 
-  @Override
   public void create() {
     try {
       boolean result = this.stub.createStudentData(getCreationStudentScannerResult());
@@ -47,22 +45,21 @@ public class StudentService implements Service{
     } catch (IOException e) {throw new RuntimeException(e);}
   }
 
-  @Override
   public void read() {
     try {
-      List<Student> studentList = this.stub.getAllStudentData();
-      Message.print(studentList);
+      ArrayList<StudentDto> studentList = this.stub.getAllStudentData();
+      for (StudentDto studentDto: studentList){
+        System.out.println(studentDto.toString());
+      }
     } catch (RemoteException | NullDataException e) {
       throw new RuntimeException(e);
     }
   }
 
-  @Override
   public void update() {
 
   }
 
-  @Override
   public void delete() {
     try {
       System.out.println("enter your studentId to delete");
@@ -73,7 +70,6 @@ public class StudentService implements Service{
     }
   }
 
-  @Override
   public void search() {
     try {
       System.out.println("enter your studentId to search");

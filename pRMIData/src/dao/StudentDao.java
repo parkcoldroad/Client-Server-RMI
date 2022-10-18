@@ -17,12 +17,13 @@ public class StudentDao {
     refreshStudentInfo();
   }
 
-  public void createStudentRecords(String studentInfo) {
+  public boolean createStudentRecords(String studentInfo) {
     this.studentList.add(new Student(studentInfo));
 
     for (Student student : studentList) {
       writeStudentFile(student.toString());
     }
+    return true;
   }
 
   public ArrayList<Student> getAllStudentRecords() {
@@ -57,7 +58,6 @@ public class StudentDao {
   private ArrayList<Student> refreshStudentInfo() {
     BufferedReader objStudentFile = DataImpl.getBufferedReader(studentFileName);
     this.studentList = new ArrayList<>();
-
     try {
       while (objStudentFile.ready()) {
         String stuInfo = objStudentFile.readLine();

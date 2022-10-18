@@ -6,52 +6,57 @@ import java.util.StringTokenizer;
 
 @SuppressWarnings("serial")
 public class Course extends Domain implements Serializable {
-	protected String courseId;
-	protected String pLName;
-	protected String courseName;
-	protected ArrayList<String> preCourseIdList;
 
-	public Course(String inputString) {
-		StringTokenizer stringTokenizer = new StringTokenizer(inputString);
-		this.courseId = stringTokenizer.nextToken();
-		this.pLName = stringTokenizer.nextToken();
-		this.courseName = stringTokenizer.nextToken();
-		preCourseIdList = new ArrayList<String>();
-		while (stringTokenizer.hasMoreTokens()) {
-			this.preCourseIdList.add(stringTokenizer.nextToken());
-		}
-	}
+  protected String courseId;
+  protected String pLName;
+  protected String courseName;
+  protected ArrayList<String> preCourseIdList;
 
-	public ArrayList<String> getPreCoursesId() {
-		return this.preCourseIdList;
-	}
+  public Course(String inputString) {
+    StringTokenizer stringTokenizer = new StringTokenizer(inputString);
+    this.courseId = stringTokenizer.nextToken();
+    this.pLName = stringTokenizer.nextToken();
+    this.courseName = stringTokenizer.nextToken();
+    this.preCourseIdList = new ArrayList<>();
+    while (stringTokenizer.hasMoreTokens()) {
+      this.preCourseIdList.add(stringTokenizer.nextToken());
+    }
+  }
 
-	@Override
-	public String toString() {
-		String stringReturn = this.courseId + " " + this.pLName + " " + this.courseName;
-		for (int i = 0; i < this.preCourseIdList.size(); i++) {
-			stringReturn = stringReturn + " " + this.preCourseIdList.get(i).toString();
-		}
-		return stringReturn;
-	}
+  @Override
+  public boolean match(String courseId) {
+    return this.courseId.equals(courseId);
+  }
 
-	@Override
-	public boolean match(String courseId) {
-		return this.courseId.equals(courseId);
-	}
+  public ArrayList<String> getPreCoursesIdList() {
+    return this.preCourseIdList;
+  }
 
-	@Override
-	public String getName() {
-		return this.courseName;
-	}
+  @Override
+  public String getName() {
+    return this.courseName;
+  }
 
-	@Override
-	public String getId() {
-		return this.courseId;
-	}
+  @Override
+  public String getId() {
+    return this.courseId;
+  }
 
-	@Override
-	public void showAttributes() {
-		System.out.println("°­ÁÂ¹øÈ£  ±³¼ö        °­ÁÂÀÌ¸§        	  ¼±ÀÌ¼ö°­ÁÂ¹øÈ£");
-	}
+  public String getProfessorLastName() {
+    return this.pLName;
+  }
+
+  @Override
+  public void showAttributes() {
+    System.out.println("ï¿½ï¿½ï¿½Â¹ï¿½È£  ï¿½ï¿½ï¿½ï¿½        ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½        	  ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½Â¹ï¿½È£");
+  }
+
+  @Override
+  public String toString() {
+    String stringReturn = this.courseId + " " + this.pLName + " " + this.courseName;
+    for (int i = 0; i < this.preCourseIdList.size(); i++) {
+      stringReturn = stringReturn + " " + this.preCourseIdList.get(i).toString();
+    }
+    return stringReturn;
+  }
 }

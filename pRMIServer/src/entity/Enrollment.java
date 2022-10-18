@@ -3,14 +3,14 @@ package entity;
 import java.io.Serializable;
 import java.util.StringTokenizer;
 
-public class Enrolment extends Domain implements Serializable {
+public class Enrollment extends Domain implements Serializable {
 
   private String studentId;
   private String studentName;
   private String courseId;
   private String courseName;
 
-  public Enrolment(String inputString) {
+  public Enrollment(String inputString) {
     StringTokenizer stringTokenizer = new StringTokenizer(inputString);
     this.studentId = stringTokenizer.nextToken();
     this.studentName = stringTokenizer.nextToken();

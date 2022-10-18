@@ -1,22 +1,21 @@
 package service;
 
-import entity.Course;
-import entity.Domain;
+import dto.CourseDto;
 import exception.NullDataException;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import menu.CourseMenu;
 import pRMI.Client;
-import pRMI.ServerInterface;
+import pRMI.ClientInterface;
 import utils.Input;
 import utils.Message;
 
-public class CourseService implements Service {
+public class CourseService {
 
   private static CourseService courseService;
-  private final ServerInterface stub;
+  private final ClientInterface stub;
 
   public static CourseService getInstance() {
     if (courseService == null) {
@@ -39,7 +38,6 @@ public class CourseService implements Service {
             () -> System.out.println("invalid enter"));
   }
 
-  @Override
   public void create() {
     try {
       boolean result = this.stub.createCourseData(getCreationCourseScannerResult());
@@ -49,22 +47,21 @@ public class CourseService implements Service {
     }
   }
 
-  @Override
   public void read() {
     try {
-      List<Course> courseList = this.stub.getAllCourseData();
-      Message.print(courseList);
+      ArrayList<CourseDto> courseList = this.stub.getAllCourseData();
+      for (CourseDto courseDto : courseList){
+        System.out.println(courseDto.toString());
+      }
     } catch (RemoteException | NullDataException e) {
       throw new RuntimeException(e);
     }
   }
 
-  @Override
   public void update() {
 
   }
 
-  @Override
   public void delete() {
     try {
       System.out.println("enter your courseId to delete");
@@ -75,7 +72,6 @@ public class CourseService implements Service {
     }
   }
 
-  @Override
   public void search() {
     try {
       System.out.println("enter your courseId to search");
