@@ -1,40 +1,32 @@
 package dao;
 
 import entity.Student;
-import exception.NullDataException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
+import pRMI.DataImpl;
 
 public class StudentDao {
 
   protected ArrayList<Student> studentList;
-  private final BufferedWriter bufferedWriter;
+  private final String studentFileName = "pRMIData/src/data/Students.txt";
 
-  public StudentDao(String sStudentFileName) throws IOException {
-    BufferedReader objStudentFile = new BufferedReader(new FileReader(sStudentFileName));
-    this.studentList = new ArrayList<Student>();
-    while (objStudentFile.ready()) {
-      String stuInfo = objStudentFile.readLine();
-      if (!stuInfo.equals("")) {
-        this.studentList.add(new Student(stuInfo));
-      }
-    }
-    FileWriter fw = new FileWriter(sStudentFileName, true);
-    bufferedWriter = new BufferedWriter(fw);
-    objStudentFile.close();
+  public StudentDao() {
+    refreshStudentInfo();
   }
 
-  public ArrayList<Student> getAllStudentRecords() throws NullDataException {
-    if (this.studentList.size() == 0) {
-      throw new NullDataException("----------------- data is null... ------------------");
+  public void createStudentRecords(String studentInfo) {
+    this.studentList.add(new Student(studentInfo));
+
+    for (Student student : studentList) {
+      writeStudentFile(student.toString());
     }
-    return this.studentList;
+  }
+
+  public ArrayList<Student> getAllStudentRecords() {
+    return this.studentList = refreshStudentInfo();
   }
 
   public String searchStudentRecords(String studentId) {
@@ -46,18 +38,6 @@ public class StudentDao {
     return "your studentId is not found";
   }
 
-  public boolean createStudentRecords(String studentInfo) {
-    try {
-      bufferedWriter.newLine();
-      bufferedWriter.write(studentInfo);
-      bufferedWriter.newLine();
-      bufferedWriter.flush();
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    return this.studentList.add(new Student(studentInfo));
-  }
-
   public boolean deleteStudentRecords(String studentId) {
     Optional<Student> optionalStudent = studentList.stream()
         .filter(student -> student.match(studentId))
@@ -65,19 +45,43 @@ public class StudentDao {
 
     if (optionalStudent.isPresent()) {
       studentList.remove(optionalStudent.get());
+
+      for (Student student : studentList) {
+        writeStudentFile(student.toString());
+      }
       return true;
     }
-    System.out.println("your studentId is not found");
     return false;
   }
 
-//  public boolean isRegisteredStudent (String sSID){
-//    for (Domain domain : this.studentList) {
-//      Student objStudent = (Student) domain;
-//      if (objStudent.match(sSID)) {
-//        return true;
-//      }
-//    }
-//    return false;
-//  }
+  private ArrayList<Student> refreshStudentInfo() {
+    BufferedReader objStudentFile = DataImpl.getBufferedReader(studentFileName);
+    this.studentList = new ArrayList<>();
+
+    try {
+      while (objStudentFile.ready()) {
+        String stuInfo = objStudentFile.readLine();
+        if (!stuInfo.equals("")) {
+          this.studentList.add(new Student(stuInfo));
+        }
+      }
+      objStudentFile.close();
+      return studentList;
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private void writeStudentFile(String studentInfo) {
+    try {
+      BufferedWriter bufferedWriter = DataImpl.getBufferedWriter(studentFileName);
+      bufferedWriter.newLine();
+      bufferedWriter.write(studentInfo);
+      bufferedWriter.newLine();
+      bufferedWriter.flush();
+      bufferedWriter.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }

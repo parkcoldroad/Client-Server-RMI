@@ -41,4 +41,13 @@ public class StudentDto implements Serializable {
 	public void setCompletedCoursesList(ArrayList<String> completedCoursesList) {
 		this.completedCoursesList = completedCoursesList;
 	}
+
+	@Override
+	public String toString() {
+		String stringReturn = this.studentId + " " + this.name + " " + this.department;
+		for (int i = 0; i < this.completedCoursesList.size(); i++) {
+			stringReturn = stringReturn + " " + this.completedCoursesList.get(i);
+		}
+		return stringReturn;
+	}
 }
