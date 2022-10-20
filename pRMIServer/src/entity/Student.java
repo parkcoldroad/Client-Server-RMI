@@ -4,58 +4,52 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class Student extends Domain implements Serializable {
+public class Student implements Serializable {
 	private static final long serialVersionUID = 1L;
-	protected String studentId;
-	protected String name;
-	protected String department;
-	protected ArrayList<String> completedCoursesList;
+	private String studentId;
+	private String studentName;
+	private String department;
+	private String password;
+	private String gender;
 
-	public Student(String inputString) {
-		StringTokenizer stringTokenizer = new StringTokenizer(inputString);
-		this.studentId = stringTokenizer.nextToken();
-		this.name = stringTokenizer.nextToken();
-		this.department = stringTokenizer.nextToken();
-		this.completedCoursesList = new ArrayList<String>();
-		while (stringTokenizer.hasMoreTokens()) {
-			this.completedCoursesList.add(stringTokenizer.nextToken());
-		}
+
+	public String getStudentId() {
+		return studentId;
 	}
 
-	public ArrayList<String> getCompletedCourses() {
-		return this.completedCoursesList;
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
 
-	@Override
-	public boolean match(String studentId) {
-		return this.studentId.equals(studentId);
+	public String getStudentName() {
+		return studentName;
 	}
 
-	@Override
-	public String getName() {
-		return this.name;
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
 
 	public String getDepartment() {
 		return department;
 	}
 
-	@Override
-	public String getId() {
-		return this.studentId;
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
-	@Override
-	public String toString() {
-		String stringReturn = this.studentId + " " + this.name + " " + this.department;
-		for (int i = 0; i < this.completedCoursesList.size(); i++) {
-			stringReturn = stringReturn + " " + this.completedCoursesList.get(i).toString();
-		}
-		return stringReturn;
+	public String getPassword() {
+		return password;
 	}
 
-	@Override
-	public void showAttributes() {
-		System.out.println("학번      이름           전공   수강과목");
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 }

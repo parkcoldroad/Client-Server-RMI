@@ -38,7 +38,7 @@ public class CourseService {
             () -> System.out.println("invalid enter"));
   }
 
-  public void create() {
+  public void createCourse() {
     try {
       boolean result = this.stub.createCourseData(getCreationCourseScannerResult());
       Message.print(result);
@@ -47,7 +47,7 @@ public class CourseService {
     }
   }
 
-  public void read() {
+  public void readCourses() {
     try {
       ArrayList<CourseDto> courseList = this.stub.getAllCourseData();
       for (CourseDto courseDto : courseList){
@@ -58,11 +58,16 @@ public class CourseService {
     }
   }
 
-  public void update() {
-
+  public void updateCourse() {
+    try {
+      boolean result = this.stub.updateCourseData(getCreationCourseScannerResult());
+      Message.print(result);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
-  public void delete() {
+  public void deleteCourse() {
     try {
       System.out.println("enter your courseId to delete");
       boolean result = this.stub.deleteCourseData(Input.readLine());
@@ -72,18 +77,20 @@ public class CourseService {
     }
   }
 
-  public void search() {
+  public void searchCourse() {
     try {
       System.out.println("enter your courseId to search");
       String courseId = Input.readLine();
+
       String seachedResult = this.stub.searchCourseData(courseId);
+
       System.out.println(seachedResult);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public String getCreationCourseScannerResult() throws IOException {
+  public ArrayList<CourseDto> getCreationCourseScannerResult() throws IOException {
     System.out.println("------------Course Information------------");
     System.out.println("Course Id : ");
     String courseId = Input.readLine();
@@ -91,8 +98,15 @@ public class CourseService {
     String professorLName = Input.readLine();
     System.out.println("Course Name : ");
     String courseName = Input.readLine();
-    System.out.println("preCoursedList : ");
-    String preCourseList = Input.readLine();
-    return courseId + " " + professorLName + " " + courseName + " " + preCourseList;
+
+
+    ArrayList<CourseDto> courseDtos = new ArrayList<>();
+    CourseDto courseDto = new CourseDto();
+    courseDto.setCourseId(courseId);
+    courseDto.setCourseName(courseName);
+    courseDto.setpLName(professorLName);
+
+    courseDtos.add(courseDto);
+    return courseDtos;
   }
 }

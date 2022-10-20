@@ -5,58 +5,33 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 @SuppressWarnings("serial")
-public class Course extends Domain implements Serializable {
+public class Course  implements Serializable {
 
-  protected String courseId;
-  protected String pLName;
-  protected String courseName;
-  protected ArrayList<String> preCourseIdList;
+  private String courseId;
+  private String pLName;
+  private String courseName;
 
-  public Course(String inputString) {
-    StringTokenizer stringTokenizer = new StringTokenizer(inputString);
-    this.courseId = stringTokenizer.nextToken();
-    this.pLName = stringTokenizer.nextToken();
-    this.courseName = stringTokenizer.nextToken();
-    this.preCourseIdList = new ArrayList<>();
-    while (stringTokenizer.hasMoreTokens()) {
-      this.preCourseIdList.add(stringTokenizer.nextToken());
-    }
+  public String getCourseId() {
+    return courseId;
   }
 
-  @Override
-  public boolean match(String courseId) {
-    return this.courseId.equals(courseId);
-  }
-
-  public ArrayList<String> getPreCoursesIdList() {
-    return this.preCourseIdList;
-  }
-
-  @Override
-  public String getName() {
-    return this.courseName;
-  }
-
-  @Override
-  public String getId() {
-    return this.courseId;
+  public void setCourseId(String courseId) {
+    this.courseId = courseId;
   }
 
   public String getProfessorLastName() {
-    return this.pLName;
+    return pLName;
   }
 
-  @Override
-  public void showAttributes() {
-    System.out.println("���¹�ȣ  ����        �����̸�        	  ���̼����¹�ȣ");
+  public void setProfessorLastName(String pLName) {
+    this.pLName = pLName;
   }
 
-  @Override
-  public String toString() {
-    String stringReturn = this.courseId + " " + this.pLName + " " + this.courseName;
-    for (int i = 0; i < this.preCourseIdList.size(); i++) {
-      stringReturn = stringReturn + " " + this.preCourseIdList.get(i).toString();
-    }
-    return stringReturn;
+  public String getCourseName() {
+    return courseName;
+  }
+
+  public void setCourseName(String courseName) {
+    this.courseName = courseName;
   }
 }

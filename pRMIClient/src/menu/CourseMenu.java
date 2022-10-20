@@ -3,11 +3,11 @@ package menu;
 import service.CourseService;
 
 public enum CourseMenu implements Menu {
-  CREATE(() -> CourseService.getInstance().create(),"1"),
-  READ(() -> CourseService.getInstance().read(),"2"),
-  UPDATE(() -> CourseService.getInstance().update(),"3"),
-  DELETE(() -> CourseService.getInstance().delete(),"4"),
-  SEARCH(() -> CourseService.getInstance().search(),"5");
+  CREATE(() -> CourseService.getInstance().createCourse(),"1"),
+  READ(() -> CourseService.getInstance().readCourses(),"2"),
+  UPDATE(() -> CourseService.getInstance().updateCourse(),"3"),
+  DELETE(() -> CourseService.getInstance().deleteCourse(),"4"),
+  SEARCH(() -> CourseService.getInstance().searchCourse(),"5");
 
 
   private final Runnable runnable;

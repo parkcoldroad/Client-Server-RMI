@@ -39,10 +39,10 @@ public class StudentService{
   }
 
   public void create() {
-    try {
-      boolean result = this.stub.createStudentData(getCreationStudentScannerResult());
-       Message.print(result);
-    } catch (IOException e) {throw new RuntimeException(e);}
+//    try {
+//      boolean result = this.stub.createStudentData(getCreationStudentScannerResult());
+//       Message.print(result);
+//    } catch (IOException e) {throw new RuntimeException(e);}
   }
 
   public void read() {

@@ -20,10 +20,13 @@ public interface ClientInterface extends Remote {
 
 	String searchCourseData(String courseId) throws RemoteException;
 
-	boolean createStudentData(String studentInfo) throws RemoteException;
+	boolean updateStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
+	boolean updateCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
 
-	boolean createCourseData(String courseInfo) throws RemoteException;
-	boolean createEnrollment(String enrolmentInfo) throws RemoteException;
+	boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
+
+	boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
+	boolean createEnrollment(ArrayList<EnrollmentDto> enrollmentDtos) throws RemoteException;
 
 	boolean deleteStudentData(String studentId) throws RemoteException;
 

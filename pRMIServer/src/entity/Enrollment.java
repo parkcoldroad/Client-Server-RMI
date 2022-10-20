@@ -3,42 +3,33 @@ package entity;
 import java.io.Serializable;
 import java.util.StringTokenizer;
 
-public class Enrollment extends Domain implements Serializable {
+public class Enrollment implements Serializable {
 
   private String studentId;
-  private String studentName;
   private String courseId;
-  private String courseName;
+  private boolean isCompleted;
 
-  public Enrollment(String inputString) {
-    StringTokenizer stringTokenizer = new StringTokenizer(inputString);
-    this.studentId = stringTokenizer.nextToken();
-    this.studentName = stringTokenizer.nextToken();
-    this.courseId = stringTokenizer.nextToken();
-    this.courseName = stringTokenizer.nextToken();
-    }
-  @Override
-  public boolean match(String domainId) {
-    return false;
+  public String getStudentId() {
+    return studentId;
   }
 
-  @Override
-  public String getName() {
-    return null;
+  public void setStudentId(String studentId) {
+    this.studentId = studentId;
   }
 
-  @Override
-  public String getId() {
-    return null;
+  public String getCourseId() {
+    return courseId;
   }
 
-  @Override
-  public String toString() {
-    return null;
+  public void setCourseId(String courseId) {
+    this.courseId = courseId;
   }
 
-  @Override
-  public void showAttributes() {
+  public boolean isCompleted() {
+    return isCompleted;
+  }
 
+  public void setCompleted(boolean completed) {
+    isCompleted = completed;
   }
 }
