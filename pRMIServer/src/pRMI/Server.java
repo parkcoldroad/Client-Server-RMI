@@ -64,8 +64,10 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   }
 
   @Override
-  public boolean createEnrollment(ArrayList<EnrollmentDto> enrollmentDtos) throws RemoteException {
-    return false;
+  public String createEnrollment(String studentId,String courseId) throws RemoteException {
+    //조건 , 성공
+    enrollmentDao.createEnrollment(studentId,courseId);
+    return "Enrollment is completed";
   }
 
 
@@ -81,7 +83,7 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
   @Override
   public ArrayList<EnrollmentDto> getAllEnrollmentData() throws RemoteException, NullDataException {
-    return null;
+    return enrollmentDao.getAllEnrollmentData();
   }
 
   @Override
@@ -117,7 +119,7 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
 
   @Override
-  public boolean deleteEnrollment(String studentId) throws RemoteException {
-    return false;
+  public boolean deleteEnrollment(String studentId,String courseId) throws RemoteException {
+   return enrollmentDao.deleteEnrollment(studentId,courseId);
   }
 }

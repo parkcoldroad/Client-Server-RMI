@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class StudentDao {
 
-  private Connection conn = null;
+  private Connection conn;
 
   private ResultSet rs = null;
   private String sql;
@@ -51,12 +51,10 @@ public class StudentDao {
         String studentId = rs.getString("studentId");
         String studentName = rs.getString("studentName");
         String department = rs.getString("department");
-        String password = rs.getString("password");
         String gender = rs.getString("gender");
         studentDto.setStudentId(studentId);
         studentDto.setName(studentName);
         studentDto.setDepartment(department);
-        studentDto.setPassword(password);
         studentDto.setGender(gender);
         studentDtos.add(studentDto);
       }
@@ -80,12 +78,11 @@ public class StudentDao {
       String studentid = rs.getString("studentId");
       String studentName = rs.getString("studentName");
       String department = rs.getString("department");
-      String password = rs.getString("password");
       String gender = rs.getString("gender");
 
       rs.close();
       pstmt.close();
-      return studentid + " " + studentName + " " + department + " " + password + " " + gender;
+      return studentid + " " + studentName + " " + department + " " + gender;
     } catch (SQLException e) {
       throw new RuntimeException();
     }

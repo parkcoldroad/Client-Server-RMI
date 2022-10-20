@@ -27,11 +27,11 @@ public enum StudentMenu implements Menu {
   }
 
   public static void printMenu(){
-    System.out.println("\n-----------------Student MENU--------------------");
-    System.out.println("1.Create");
-    System.out.println("2.Read");
-    System.out.println("3.Update");
-    System.out.println("4.Delete");
-    System.out.println("5.Search");
+    System.out.println("\n-----------------STUDENT MENU--------------------");
+    System.out.println("1.Create Student ");
+    System.out.println("2.Display Student ");
+    System.out.println("3.Update Student ");
+    System.out.println("4.Delete Student ");
+    System.out.println("5.Search Student ");
   }
 }

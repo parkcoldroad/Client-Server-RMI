@@ -7,7 +7,6 @@ import java.rmi.registry.Registry;
 import java.util.Arrays;
 import java.util.Optional;
 import menu.MainMenu;
-import menu.Menu;
 import utils.Input;
 
 public class Client {
@@ -50,7 +49,7 @@ public class Client {
 			optionalCRUD.ifPresentOrElse(MainMenu::execute,
 					() -> System.out.println("invalid enter"));
 
-			if (input.equals("3")) {
+			if (input.equals("4")) {
 				isStop = true;
 			}
 		}

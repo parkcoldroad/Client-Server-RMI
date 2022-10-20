@@ -40,7 +40,7 @@ public class CourseService {
 
   public void createCourse() {
     try {
-      boolean result = this.stub.createCourseData(getCreationCourseScannerResult());
+      boolean result = this.stub.createCourseData(getCourseScannerResult());
       Message.print(result);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -60,7 +60,7 @@ public class CourseService {
 
   public void updateCourse() {
     try {
-      boolean result = this.stub.updateCourseData(getCreationCourseScannerResult());
+      boolean result = this.stub.updateCourseData(getCourseScannerResult());
       Message.print(result);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -88,7 +88,7 @@ public class CourseService {
     }
   }
 
-  public ArrayList<CourseDto> getCreationCourseScannerResult() throws IOException {
+  public ArrayList<CourseDto> getCourseScannerResult() throws IOException {
     System.out.println("------------Course Information------------");
     System.out.println("Course Id : ");
     String courseId = Input.readLine();

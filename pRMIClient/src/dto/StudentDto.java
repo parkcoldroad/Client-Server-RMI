@@ -1,7 +1,6 @@
 package dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class StudentDto implements Serializable {
 
@@ -52,6 +51,7 @@ public class StudentDto implements Serializable {
     this.gender = gender;
   }
 
+  @Override
   public String toString() {
     return this.studentId + " " + this.name + " " + this.department + " " + this.gender;
   }

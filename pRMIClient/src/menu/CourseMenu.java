@@ -28,11 +28,11 @@ public enum CourseMenu implements Menu {
   }
 
   public static void printMenu(){
-    System.out.println("\n-----------------MENU--------------------");
-    System.out.println("1.Create");
-    System.out.println("2.Read");
-    System.out.println("3.Update");
-    System.out.println("4.Delete");
-    System.out.println("5.Search");
+    System.out.println("\n-----------------COURSE MENU--------------------");
+    System.out.println("1.Create Course");
+    System.out.println("2.Display Course ");
+    System.out.println("3.Update Course");
+    System.out.println("4.Delete Course");
+    System.out.println("5.Search Course");
   }
 }

@@ -26,10 +26,10 @@ public interface ClientInterface extends Remote {
 	boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
 
 	boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
-	boolean createEnrollment(ArrayList<EnrollmentDto> enrollmentDtos) throws RemoteException;
+	String createEnrollment(String studentId,String courseId) throws RemoteException;
 
 	boolean deleteStudentData(String studentId) throws RemoteException;
 
 	boolean deleteCourseData(String courseId) throws RemoteException;
-	boolean deleteEnrollment(String studentId) throws RemoteException;
+	boolean deleteEnrollment(String studentId, String courseId) throws RemoteException;
 }

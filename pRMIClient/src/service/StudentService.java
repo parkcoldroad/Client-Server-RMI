@@ -40,7 +40,7 @@ public class StudentService{
 
   public void createStudentInformation() {
     try {
-      boolean result = this.stub.createStudentData(getCreationStudentScannerResult());
+      boolean result = this.stub.createStudentData(getStudentScannerResult());
        Message.print(result);
     } catch (IOException e) {throw new RuntimeException(e);}
   }
@@ -56,9 +56,20 @@ public class StudentService{
     }
   }
 
+  public void searchStudentInformation() {
+    try {
+      System.out.println("enter your studentId to search");
+      String studentId = Input.readLine();
+      String seachedResult = this.stub.searchStudentData(studentId);
+      System.out.println(seachedResult);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public void updateStudentInformation() {
     try {
-      boolean result = this.stub.updateStudentData(getCreationStudentScannerResult());
+      boolean result = this.stub.updateStudentData(getStudentScannerResult());
       Message.print(result);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -75,18 +86,9 @@ public class StudentService{
     }
   }
 
-  public void searchStudentInformation() {
-    try {
-      System.out.println("enter your studentId to search");
-      String studentId = Input.readLine();
-      String seachedResult = this.stub.searchStudentData(studentId);
-      System.out.println(seachedResult);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
 
-  public  ArrayList<StudentDto> getCreationStudentScannerResult() throws IOException {
+
+  public  ArrayList<StudentDto> getStudentScannerResult() throws IOException {
     System.out.println("------------Student Information------------");
     System.out.println("Student Id : "); String studentId = Input.readLine();
     System.out.println("Student Password : "); String password =Input.readLine();
