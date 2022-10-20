@@ -24,10 +24,10 @@ public class CourseDao {
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
-      for (CourseDto course : courseList) {
-        pstmt.setString(1, course.getCourseId());
-        pstmt.setString(2, course.getpLName());
-        pstmt.setString(3, course.getCourseName());
+      for (CourseDto courseDto : courseList) {
+        pstmt.setString(1, courseDto.getCourseId());
+        pstmt.setString(2, courseDto.getpLName());
+        pstmt.setString(3, courseDto.getCourseName());
       }
 
       pstmt.executeUpdate();

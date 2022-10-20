@@ -4,7 +4,7 @@ import service.CourseService;
 
 public enum CourseMenu implements Menu {
   CREATE(() -> CourseService.getInstance().createCourse(),"1"),
-  READ(() -> CourseService.getInstance().readCourses(),"2"),
+  READ(() -> CourseService.getInstance().readCoursesInfo(),"2"),
   UPDATE(() -> CourseService.getInstance().updateCourse(),"3"),
   DELETE(() -> CourseService.getInstance().deleteCourse(),"4"),
   SEARCH(() -> CourseService.getInstance().searchCourse(),"5");

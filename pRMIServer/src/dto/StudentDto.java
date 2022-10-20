@@ -1,44 +1,57 @@
 package dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class StudentDto implements Serializable {
-	private static final long serialVersionUID = 1L;
-	protected String studentId;
-	protected String name;
-	protected String department;
-	protected ArrayList<String> completedCoursesList;
 
-	public String getStudentId() {
-		return studentId;
-	}
+  private static final long serialVersionUID = 1L;
+  private String studentId;
+  private String name;
+  private String department;
+  private String password;
+  private String gender;
 
-	public void setStudentId(String studentId) {
-		this.studentId = studentId;
-	}
+  public String getStudentId() {
+    return studentId;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public void setStudentId(String studentId) {
+    this.studentId = studentId;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public String getDepartment() {
-		return department;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public void setDepartment(String department) {
-		this.department = department;
-	}
+  public String getDepartment() {
+    return department;
+  }
 
-	public ArrayList<String> getCompletedCoursesList() {
-		return completedCoursesList;
-	}
+  public void setDepartment(String department) {
+    this.department = department;
+  }
 
-	public void setCompletedCoursesList(ArrayList<String> completedCoursesList) {
-		this.completedCoursesList = completedCoursesList;
-	}
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getGender() {
+    return gender;
+  }
+
+  public void setGender(String gender) {
+    this.gender = gender;
+  }
+
+  public String toString() {
+    return this.studentId + " " + this.name + " " + this.department + " " + this.gender;
+  }
 }

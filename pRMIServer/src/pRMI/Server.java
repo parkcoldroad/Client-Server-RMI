@@ -1,7 +1,6 @@
 package pRMI;
 
-import dao.CourseDao;
-import dao.EnrollmentDao;
+import dao.StudentDao;
 import dto.CourseDto;
 import dto.EnrollmentDto;
 import dto.StudentDto;
@@ -12,6 +11,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import dao.CourseDao;
+import dao.EnrollmentDao;
 
 public class Server extends UnicastRemoteObject implements ClientInterface {
 
@@ -19,7 +20,7 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   private final Registry clientserverRegistry;
 
   private CourseDao courseDao;
-//  private StudentDao studentDao;
+  private StudentDao studentDao;
   private EnrollmentDao enrollmentDao;
 
   private Server() throws RemoteException {
@@ -43,7 +44,7 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
       System.out.println("Server is ready");
 
       courseDao = new CourseDao();
-//      studentDao = new StudentDao();
+      studentDao = new StudentDao();
       enrollmentDao = new EnrollmentDao();
     } catch (RemoteException | AlreadyBoundException e) {
       e.printStackTrace();
@@ -54,7 +55,7 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
   @Override
   public boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
-    return false;
+    return studentDao.createStudentRecords(studentDtos);
   }
 
   @Override
@@ -66,29 +67,16 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   public boolean createEnrollment(ArrayList<EnrollmentDto> enrollmentDtos) throws RemoteException {
     return false;
   }
-  
+
 
   @Override
   public ArrayList<StudentDto> getAllStudentData() throws RemoteException, NullDataException {
-//    ArrayList<Student> allStudentData = dataServer.getAllStudentData();
-    ArrayList<StudentDto> studentDtos = new ArrayList<>();
-//
-//    for (Student student : allStudentData) {
-//      StudentDto studentDto = new StudentDto();
-//
-//      studentDto.setStudentId(student.getId());
-//      studentDto.setName(student.getName());
-//      studentDto.setDepartment(student.getDepartment());
-//      studentDto.setCompletedCoursesList(student.getCompletedCourses());
-//
-//      studentDtos.add(studentDto);
-//    }
-    return studentDtos;
+    return studentDao.readAllStudentRecords();
   }
 
   @Override
   public ArrayList<CourseDto> getAllCourseData() throws RemoteException, NullDataException {
-    return  courseDao.readAllCourseRecords();
+    return courseDao.readAllCourseRecords();
   }
 
   @Override
@@ -98,8 +86,7 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
   @Override
   public String searchStudentData(String studentId) throws RemoteException {
-//    return dataServer.searchStudentData(studentId);
-    return "";
+    return studentDao.searchStudentRecords(studentId);
   }
 
   @Override
@@ -109,7 +96,7 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
   @Override
   public boolean updateStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
-    return false;
+    return studentDao.updateStudentRecord(studentDtos);
   }
 
   @Override
@@ -119,8 +106,7 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
   @Override
   public boolean deleteStudentData(String studentId) throws RemoteException {
-//    return dataServer.deleteStudentData(studentId);
-    return  true;
+    return studentDao.deleteStudentRecords(studentId);
   }
 
 

@@ -38,14 +38,14 @@ public class StudentService{
             () -> System.out.println("invalid enter"));
   }
 
-  public void create() {
-//    try {
-//      boolean result = this.stub.createStudentData(getCreationStudentScannerResult());
-//       Message.print(result);
-//    } catch (IOException e) {throw new RuntimeException(e);}
+  public void createStudentInformation() {
+    try {
+      boolean result = this.stub.createStudentData(getCreationStudentScannerResult());
+       Message.print(result);
+    } catch (IOException e) {throw new RuntimeException(e);}
   }
 
-  public void read() {
+  public void readStudentInformation() {
     try {
       ArrayList<StudentDto> studentList = this.stub.getAllStudentData();
       for (StudentDto studentDto: studentList){
@@ -56,11 +56,16 @@ public class StudentService{
     }
   }
 
-  public void update() {
-
+  public void updateStudentInformation() {
+    try {
+      boolean result = this.stub.updateStudentData(getCreationStudentScannerResult());
+      Message.print(result);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
-  public void delete() {
+  public void deleteStudentInformation() {
     try {
       System.out.println("enter your studentId to delete");
       boolean result = this.stub.deleteStudentData(Input.readLine());
@@ -70,7 +75,7 @@ public class StudentService{
     }
   }
 
-  public void search() {
+  public void searchStudentInformation() {
     try {
       System.out.println("enter your studentId to search");
       String studentId = Input.readLine();
@@ -81,13 +86,24 @@ public class StudentService{
     }
   }
 
-  public static String getCreationStudentScannerResult() throws IOException {
+  public  ArrayList<StudentDto> getCreationStudentScannerResult() throws IOException {
     System.out.println("------------Student Information------------");
     System.out.println("Student Id : "); String studentId = Input.readLine();
+    System.out.println("Student Password : "); String password =Input.readLine();
     System.out.println("Student Name : "); String studentName = Input.readLine();
     System.out.println("Student Department : "); String department =Input.readLine();
-    System.out.println("Student Completed Course List : "); String completedCourses = Input.readLine();
-    return studentId + " " + studentName + " " + department + " " + completedCourses;
+    System.out.println("Student Gender : "); String gender =Input.readLine();
+
+    ArrayList<StudentDto> studentDtos = new ArrayList<>();
+    StudentDto studentDto = new StudentDto();
+    studentDto.setStudentId(studentId);
+    studentDto.setPassword(password);
+    studentDto.setName(studentName);
+    studentDto.setDepartment(department);
+    studentDto.setGender(gender);
+
+    studentDtos.add(studentDto);
+    return studentDtos;
   }
 
 }

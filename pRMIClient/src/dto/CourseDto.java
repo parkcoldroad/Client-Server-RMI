@@ -37,7 +37,6 @@ public class CourseDto implements Serializable {
 
 
   public String toString() {
-    String stringReturn = this.courseId + " " + this.pLName + " " + this.courseName;
-    return stringReturn;
+    return this.courseId + " " + this.pLName + " " + this.courseName;
   }
 }

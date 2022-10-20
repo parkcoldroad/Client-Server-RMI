@@ -47,7 +47,7 @@ public class CourseService {
     }
   }
 
-  public void readCourses() {
+  public void readCoursesInfo() {
     try {
       ArrayList<CourseDto> courseList = this.stub.getAllCourseData();
       for (CourseDto courseDto : courseList){
@@ -81,9 +81,7 @@ public class CourseService {
     try {
       System.out.println("enter your courseId to search");
       String courseId = Input.readLine();
-
       String seachedResult = this.stub.searchCourseData(courseId);
-
       System.out.println(seachedResult);
     } catch (IOException e) {
       throw new RuntimeException(e);
