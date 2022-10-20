@@ -1,13 +1,15 @@
 package menu;
 
 import service.CourseService;
+import service.PreCourseService;
 
 public enum CourseMenu implements Menu {
   CREATE(() -> CourseService.getInstance().createCourse(),"1"),
-  READ(() -> CourseService.getInstance().readCoursesInfo(),"2"),
+  READ(() -> CourseService.getInstance().printCoursesList(),"2"),
   UPDATE(() -> CourseService.getInstance().updateCourse(),"3"),
   DELETE(() -> CourseService.getInstance().deleteCourse(),"4"),
-  SEARCH(() -> CourseService.getInstance().searchCourse(),"5");
+  SEARCH(() -> CourseService.getInstance().searchCourse(),"5"),
+  REGISTER_PRECOURSE(() -> PreCourseService.getInstance().initialize(),"6");
 
 
   private final Runnable runnable;
@@ -34,5 +36,6 @@ public enum CourseMenu implements Menu {
     System.out.println("3.Update Course");
     System.out.println("4.Delete Course");
     System.out.println("5.Search Course");
+    System.out.println("6.Register PreCourse");
   }
 }

@@ -1,6 +1,8 @@
 package dto;
 
-public class PreCourseDto {
+import java.io.Serializable;
+
+public class PreCourseDto implements Serializable {
   private String courseId;
   private String preCourseId;
 
@@ -18,5 +20,10 @@ public class PreCourseDto {
 
   public void setPreCourseId(String preCourseId) {
     this.preCourseId = preCourseId;
+  }
+
+  @Override
+  public String toString(){
+    return courseId + " " + preCourseId;
   }
 }

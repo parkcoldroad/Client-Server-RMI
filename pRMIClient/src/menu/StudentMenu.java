@@ -3,11 +3,11 @@ package menu;
 import service.StudentService;
 
 public enum StudentMenu implements Menu {
-  CREATE(() -> StudentService.getInstance().createStudentInformation(),"1"),
-  READ(() -> StudentService.getInstance().readStudentInformation(),"2"),
-  UPDATE(() -> StudentService.getInstance().updateStudentInformation(),"3"),
-  DELETE(() -> StudentService.getInstance().deleteStudentInformation(),"4"),
-  SEARCH(() -> StudentService.getInstance().searchStudentInformation(),"5");
+  CREATE(() -> StudentService.getInstance().createStudent(),"1"),
+  READ(() -> StudentService.getInstance().printStudentsList(),"2"),
+  UPDATE(() -> StudentService.getInstance().updateStudent(),"3"),
+  DELETE(() -> StudentService.getInstance().deleteStudent(),"4"),
+  SEARCH(() -> StudentService.getInstance().searchStudent(),"5");
 
   private final Runnable runnable;
   private final String keyword;

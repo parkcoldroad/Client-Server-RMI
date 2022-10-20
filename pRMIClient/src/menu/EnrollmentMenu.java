@@ -4,8 +4,8 @@ import service.EnrollmentService;
 
 public enum EnrollmentMenu implements Menu {
   APPLY_COURSE(() -> EnrollmentService.getInstance().applyCourse(),"1"),
-  DISPLAY_APPLY_HISTORY(() -> EnrollmentService.getInstance().displayCourseHistory(),"2"),
-  REMOVE_APPLY_HISTORY(() -> EnrollmentService.getInstance().removeCourseHistory(),"3");
+  DISPLAY_APPLY_HISTORY(() -> EnrollmentService.getInstance().displayApplyHistory(),"2"),
+  REMOVE_APPLY_HISTORY(() -> EnrollmentService.getInstance().removeApplyHistory(),"3");
 
 
   private final Runnable runnable;

@@ -47,7 +47,7 @@ public class CourseService {
     }
   }
 
-  public void readCoursesInfo() {
+  public void printCoursesList() {
     try {
       ArrayList<CourseDto> courseList = this.stub.getAllCourseData();
       for (CourseDto courseDto : courseList){

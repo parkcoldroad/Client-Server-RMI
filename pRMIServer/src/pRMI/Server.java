@@ -1,8 +1,10 @@
 package pRMI;
 
+import dao.PreCourseDao;
 import dao.StudentDao;
 import dto.CourseDto;
 import dto.EnrollmentDto;
+import dto.PreCourseDto;
 import dto.StudentDto;
 import exception.NullDataException;
 import java.rmi.AlreadyBoundException;
@@ -22,6 +24,8 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   private CourseDao courseDao;
   private StudentDao studentDao;
   private EnrollmentDao enrollmentDao;
+
+  private PreCourseDao preCourseDao;
 
   private Server() throws RemoteException {
     clientserverRegistry = LocateRegistry.createRegistry(14000);
@@ -46,6 +50,7 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
       courseDao = new CourseDao();
       studentDao = new StudentDao();
       enrollmentDao = new EnrollmentDao();
+      preCourseDao = new PreCourseDao();
     } catch (RemoteException | AlreadyBoundException e) {
       e.printStackTrace();
     }
@@ -64,10 +69,15 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   }
 
   @Override
-  public String createEnrollment(String studentId,String courseId) throws RemoteException {
-    //조건 , 성공
-    enrollmentDao.createEnrollment(studentId,courseId);
+  public String createEnrollment(String studentId, String courseId) throws RemoteException {
+    //조건 , 성공 , 실패
+    enrollmentDao.createEnrollment(studentId, courseId);
     return "Enrollment is completed";
+  }
+
+  @Override
+  public String createPreCourseData(String courseId, String precourseId) throws RemoteException {
+     return preCourseDao.createPreCourseRecord(courseId,precourseId);
   }
 
 
@@ -84,6 +94,11 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   @Override
   public ArrayList<EnrollmentDto> getAllEnrollmentData() throws RemoteException, NullDataException {
     return enrollmentDao.getAllEnrollmentData();
+  }
+
+  @Override
+  public ArrayList<PreCourseDto> getAllPreCourseData() throws RemoteException, NullDataException {
+    return preCourseDao.readAllPreCourseRecords();
   }
 
   @Override
@@ -107,6 +122,11 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   }
 
   @Override
+  public boolean updatePreCourseData(String courseId, String preCourseId) throws RemoteException {
+    return preCourseDao.updatePreCourseRecord(courseId,preCourseId);
+  }
+
+  @Override
   public boolean deleteStudentData(String studentId) throws RemoteException {
     return studentDao.deleteStudentRecords(studentId);
   }
@@ -119,7 +139,12 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
 
   @Override
-  public boolean deleteEnrollment(String studentId,String courseId) throws RemoteException {
-   return enrollmentDao.deleteEnrollment(studentId,courseId);
+  public boolean deleteEnrollment(String studentId, String courseId) throws RemoteException {
+    return enrollmentDao.deleteEnrollment(studentId, courseId);
+  }
+
+  @Override
+  public boolean deletePreCourse(String courseId) throws RemoteException {
+    return preCourseDao.deleteCourseRecord(courseId);
   }
 }

@@ -38,14 +38,14 @@ public class StudentService{
             () -> System.out.println("invalid enter"));
   }
 
-  public void createStudentInformation() {
+  public void createStudent() {
     try {
       boolean result = this.stub.createStudentData(getStudentScannerResult());
        Message.print(result);
     } catch (IOException e) {throw new RuntimeException(e);}
   }
 
-  public void readStudentInformation() {
+  public void printStudentsList() {
     try {
       ArrayList<StudentDto> studentList = this.stub.getAllStudentData();
       for (StudentDto studentDto: studentList){
@@ -56,7 +56,7 @@ public class StudentService{
     }
   }
 
-  public void searchStudentInformation() {
+  public void searchStudent() {
     try {
       System.out.println("enter your studentId to search");
       String studentId = Input.readLine();
@@ -67,7 +67,7 @@ public class StudentService{
     }
   }
 
-  public void updateStudentInformation() {
+  public void updateStudent() {
     try {
       boolean result = this.stub.updateStudentData(getStudentScannerResult());
       Message.print(result);
@@ -76,7 +76,7 @@ public class StudentService{
     }
   }
 
-  public void deleteStudentInformation() {
+  public void deleteStudent() {
     try {
       System.out.println("enter your studentId to delete");
       boolean result = this.stub.deleteStudentData(Input.readLine());

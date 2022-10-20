@@ -58,7 +58,7 @@ public class EnrollmentService {
     }
   }
 
-  public void displayCourseHistory() {
+  public void displayApplyHistory() {
     try {
       ArrayList<EnrollmentDto> enrollmentDtos = this.stub.getAllEnrollmentData();
       for (EnrollmentDto enrollmentDto : enrollmentDtos){
@@ -70,7 +70,7 @@ public class EnrollmentService {
   }
 
 
-  public void removeCourseHistory() {
+  public void removeApplyHistory() {
     try {
       System.out.println("enter your studentId , courseId to delete");
       System.out.println("StudentId : ");  String studentId = Input.readLine();
