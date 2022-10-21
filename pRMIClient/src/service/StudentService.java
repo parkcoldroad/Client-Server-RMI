@@ -86,6 +86,17 @@ public class StudentService{
     }
   }
 
+  public void registerCompletedCourse() {
+    System.out.println("enter your studentId to register completed courses");  String studentId = Input.readLine();
+    System.out.println("enter courseId that you had completed");  String courseId = Input.readLine();
+    try {
+      String result = this.stub.registerCompletedCourse(studentId,courseId);
+      Message.print(result);
+    } catch (RemoteException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
 
 
   public  ArrayList<StudentDto> getStudentScannerResult() throws IOException {

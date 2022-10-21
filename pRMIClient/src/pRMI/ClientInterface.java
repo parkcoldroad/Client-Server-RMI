@@ -1,5 +1,6 @@
 package pRMI;
 
+import dto.CompletedCourseDto;
 import dto.CourseDto;
 import dto.EnrollmentDto;
 import dto.PreCourseDto;
@@ -31,6 +32,8 @@ public interface ClientInterface extends Remote {
 	boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
 	String createEnrollment(String studentId,String courseId) throws RemoteException;
 	String createPreCourseData(String courseId,String precourseId) throws RemoteException;
+	String registerCompletedCourse(String studentId,String courseId) throws RemoteException;
+	ArrayList<CompletedCourseDto> readCompletedCourse() throws RemoteException;
 
 	boolean deleteStudentData(String studentId) throws RemoteException;
 

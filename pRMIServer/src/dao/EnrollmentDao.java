@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class EnrollmentDao {
 
-  private Connection conn ;
+  private Connection conn;
 
   private ResultSet rs = null;
   private String sql;
@@ -60,6 +60,7 @@ public class EnrollmentDao {
     }
     return enrollmentDtos;
   }
+
 
   public boolean deleteEnrollment(String studentId, String courseId) {
     try {
