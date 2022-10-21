@@ -84,8 +84,21 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
   @Override
   public String createEnrollment(String studentId, String courseId) throws RemoteException {
-    enrollmentDao.createEnrollment(studentId, courseId);
-    return "Enrollment is completed";
+    boolean isReady = true;
+    ArrayList<String> completedCourseLists = completedCourseDao.searchCompletedCourse(studentId);
+    ArrayList<String> preCourseLists = preCourseDao.searchPreCourse(courseId);
+
+    System.out.println(completedCourseLists);
+    System.out.println(preCourseLists);
+    for (String precourse : preCourseLists) {
+      isReady = completedCourseLists.contains(precourse);
+    }
+
+    if (isReady) {
+      enrollmentDao.createEnrollment(studentId, courseId);
+      return "Enrollment is completed";
+    }
+    return "Enrollment is failed";
   }
 
   @Override
@@ -94,22 +107,22 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   }
 
   @Override
-  public ArrayList<StudentDto> getAllStudentData() throws RemoteException, NullDataException {
+  public ArrayList<StudentDto> getAllStudentData() throws RemoteException {
     return studentDao.readAllStudentRecords();
   }
 
   @Override
-  public ArrayList<CourseDto> getAllCourseData() throws RemoteException, NullDataException {
+  public ArrayList<CourseDto> getAllCourseData() throws RemoteException {
     return courseDao.readAllCourseRecords();
   }
 
   @Override
-  public ArrayList<EnrollmentDto> getAllEnrollmentData() throws RemoteException, NullDataException {
+  public ArrayList<EnrollmentDto> getAllEnrollmentData() throws RemoteException {
     return enrollmentDao.getAllEnrollmentData();
   }
 
   @Override
-  public ArrayList<PreCourseDto> getAllPreCourseData() throws RemoteException, NullDataException {
+  public ArrayList<PreCourseDto> getAllPreCourseData() throws RemoteException {
     return preCourseDao.readAllPreCourseRecords();
   }
 

@@ -1,6 +1,5 @@
 package dao;
 
-import dto.CourseDto;
 import dto.PreCourseDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 
 public class PreCourseDao {
 
-  private Connection conn = null;
+  private Connection conn ;
 
   private ResultSet rs = null;
   private String sql;
@@ -61,6 +60,26 @@ public class PreCourseDao {
     return preCourseDtos;
   }
 
+
+  public ArrayList<String> searchPreCourse(String courseId) {
+    ArrayList<String> preCourseList = new ArrayList<>();
+    sql = "SELECT * from PreCourse WHERE courseId = " + courseId;
+    try {
+      PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
+
+      rs = pstmt.executeQuery();
+      while (rs.next()) {
+        String precourseId = rs.getString("precourseId");
+        preCourseList.add(precourseId);
+      }
+
+      rs.close();
+      pstmt.close();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return preCourseList;
+  }
 
   public boolean updatePreCourseRecord(String courseId, String preCourseId) {
     try {

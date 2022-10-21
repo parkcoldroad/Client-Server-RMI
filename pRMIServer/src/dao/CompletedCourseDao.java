@@ -1,6 +1,7 @@
 package dao;
 
 import dto.CompletedCourseDto;
+import dto.CourseDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,6 +36,25 @@ public class CompletedCourseDao {
     }
   }
 
+  public ArrayList<String> searchCompletedCourse(String studnetId) {
+    ArrayList<String> completedCourseLists = new ArrayList<>();
+    sql = "SELECT * from CompletedCourse WHERE studentId = " + studnetId;
+    try {
+      PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
+
+      rs = pstmt.executeQuery();
+      while (rs.next()) {
+        String completedcourseId = rs.getString("completedcourseId");
+        completedCourseLists.add(completedcourseId);
+      }
+
+      rs.close();
+      pstmt.close();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return completedCourseLists;
+  }
 
   public ArrayList<CompletedCourseDto> readCompletedCourse() {
     ArrayList<CompletedCourseDto> completedCourseDtos = new ArrayList<>();
