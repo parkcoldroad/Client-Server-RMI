@@ -36,6 +36,6 @@ public enum CourseMenu implements Menu {
     System.out.println("3.Update Course");
     System.out.println("4.Delete Course");
     System.out.println("5.Search Course");
-    System.out.println("6.Register PreCourse");
+    System.out.println("6.Administrate PreCourse");
   }
 }

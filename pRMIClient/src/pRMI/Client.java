@@ -6,6 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Arrays;
 import java.util.Optional;
+import menu.LoginMenu;
 import menu.MainMenu;
 import utils.Input;
 
@@ -58,6 +59,18 @@ public class Client {
 	public void quit() {
 		Input.close();
 		System.out.println("system terminated..");
+	}
+
+	public void run() {
+		LoginMenu.printMenu();
+		String input = Input.readLine();
+
+		Optional<LoginMenu> optionalLogin = Arrays.stream(LoginMenu.values())
+				.filter(loginMenu -> loginMenu.getChoice().equals(input))
+				.findFirst();
+
+		optionalLogin.ifPresentOrElse(LoginMenu::execute,
+				() -> System.out.println("invalid enter"));
 	}
 }
 

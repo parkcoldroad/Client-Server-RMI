@@ -1,6 +1,5 @@
 package menu;
 
-import service.CompletedCourseService;
 import service.StudentService;
 
 public enum StudentMenu implements Menu {
@@ -8,8 +7,7 @@ public enum StudentMenu implements Menu {
   READ(() -> StudentService.getInstance().printStudentsList(),"2"),
   UPDATE(() -> StudentService.getInstance().updateStudent(),"3"),
   DELETE(() -> StudentService.getInstance().deleteStudent(),"4"),
-  SEARCH(() -> StudentService.getInstance().searchStudent(),"5"),
-  REGISTER_COMPLETED_COURSE(() -> CompletedCourseService.getInstance().initialize(),"6");
+  SEARCH(() -> StudentService.getInstance().searchStudent(),"5");
 
   private final Runnable runnable;
   private final String keyword;
@@ -35,6 +33,5 @@ public enum StudentMenu implements Menu {
     System.out.println("3.Update Student ");
     System.out.println("4.Delete Student ");
     System.out.println("5.Search Student ");
-    System.out.println("6.Register Completed Course");
   }
 }

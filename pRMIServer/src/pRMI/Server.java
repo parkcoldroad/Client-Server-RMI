@@ -1,14 +1,11 @@
 package pRMI;
 
-import dao.CompletedCourseDao;
 import dao.PreCourseDao;
 import dao.StudentDao;
-import dto.CompletedCourseDto;
 import dto.CourseDto;
-import dto.EnrollmentDto;
+import dto.StudentCourseDto;
 import dto.PreCourseDto;
 import dto.StudentDto;
-import exception.NullDataException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -16,7 +13,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import dao.CourseDao;
-import dao.EnrollmentDao;
+import dao.StudentCourseDao;
 
 public class Server extends UnicastRemoteObject implements ClientInterface {
 
@@ -25,10 +22,8 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
   private CourseDao courseDao;
   private StudentDao studentDao;
-  private EnrollmentDao enrollmentDao;
+  private StudentCourseDao studentCourseDao;
   private PreCourseDao preCourseDao;
-
-  private CompletedCourseDao completedCourseDao;
 
   private Server() throws RemoteException {
     clientserverRegistry = LocateRegistry.createRegistry(14000);
@@ -52,25 +47,14 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
       courseDao = new CourseDao();
       studentDao = new StudentDao();
-      enrollmentDao = new EnrollmentDao();
+      studentCourseDao = new StudentCourseDao();
       preCourseDao = new PreCourseDao();
-      completedCourseDao = new CompletedCourseDao();
     } catch (RemoteException | AlreadyBoundException e) {
       e.printStackTrace();
     }
 
   }
 
-  @Override
-  public String registerCompletedCourse(String studentId, String courseId) throws RemoteException {
-    completedCourseDao.createCompletedCourse(studentId, courseId);
-    return "Completed course Registration is completed";
-  }
-
-  @Override
-  public ArrayList<CompletedCourseDto> readCompletedCourse() throws RemoteException {
-    return completedCourseDao.readCompletedCourse();
-  }
 
   @Override
   public boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
@@ -83,19 +67,16 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   }
 
   @Override
-  public String createEnrollment(String studentId, String courseId) throws RemoteException {
+  public String createStudentCourse(String studentId, String courseId) throws RemoteException {
     boolean isReady = true;
-    ArrayList<String> completedCourseLists = completedCourseDao.searchCompletedCourse(studentId);
     ArrayList<String> preCourseLists = preCourseDao.searchPreCourse(courseId);
+    ArrayList<String> completedCourseList = studentCourseDao.getCompletedCourseList(studentId);
 
-    System.out.println(completedCourseLists);
-    System.out.println(preCourseLists);
     for (String precourse : preCourseLists) {
-      isReady = completedCourseLists.contains(precourse);
+      isReady = completedCourseList.contains(precourse);
     }
-
     if (isReady) {
-      enrollmentDao.createEnrollment(studentId, courseId);
+      studentCourseDao.createStudentCourse(studentId, courseId);
       return "Enrollment is completed";
     }
     return "Enrollment is failed";
@@ -117,8 +98,8 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   }
 
   @Override
-  public ArrayList<EnrollmentDto> getAllEnrollmentData() throws RemoteException {
-    return enrollmentDao.getAllEnrollmentData();
+  public ArrayList<StudentCourseDto> getStudentCourseData() throws RemoteException {
+    return studentCourseDao.getStudentCourseData();
   }
 
   @Override
@@ -164,8 +145,8 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
 
   @Override
-  public boolean deleteEnrollment(String studentId, String courseId) throws RemoteException {
-    return enrollmentDao.deleteEnrollment(studentId, courseId);
+  public boolean deleteStudentCourse(String studentId, String courseId) throws RemoteException {
+    return studentCourseDao.deleteStudentCourse(studentId, courseId);
   }
 
   @Override

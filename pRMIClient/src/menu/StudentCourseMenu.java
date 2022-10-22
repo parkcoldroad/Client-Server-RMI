@@ -1,18 +1,18 @@
 package menu;
 
-import service.EnrollmentService;
+import service.StudentCourseService;
 
-public enum EnrollmentMenu implements Menu {
-  APPLY_COURSE(() -> EnrollmentService.getInstance().applyCourse(),"1"),
-  DISPLAY_APPLY_HISTORY(() -> EnrollmentService.getInstance().displayApplyHistory(),"2"),
-  REMOVE_APPLY_HISTORY(() -> EnrollmentService.getInstance().removeApplyHistory(),"3");
+public enum StudentCourseMenu implements Menu {
+  APPLY_COURSE(() -> StudentCourseService.getInstance().applyCourse(),"1"),
+  DISPLAY_APPLY_HISTORY(() -> StudentCourseService.getInstance().displayApplyHistory(),"2"),
+  REMOVE_APPLY_HISTORY(() -> StudentCourseService.getInstance().removeApplyHistory(),"3");
 
 
   private final Runnable runnable;
   private final String keyword;
 
 
-  EnrollmentMenu(Runnable runnable,String keyword) {
+  StudentCourseMenu(Runnable runnable,String keyword) {
     this.runnable = runnable;
     this.keyword = keyword;
   }

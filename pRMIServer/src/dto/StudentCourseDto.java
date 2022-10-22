@@ -2,7 +2,7 @@ package dto;
 
 import java.io.Serializable;
 
-public class EnrollmentDto implements Serializable {
+public class StudentCourseDto implements Serializable {
   private String studentId;
   private String courseId;
   private String courseName;

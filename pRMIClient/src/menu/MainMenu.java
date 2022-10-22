@@ -3,13 +3,13 @@ package menu;
 
 import pRMI.Client;
 import service.CourseService;
-import service.EnrollmentService;
+import service.StudentCourseService;
 import service.StudentService;
 
 public enum MainMenu implements Menu {//인터페이스 상속 후, 모든 메뉴 다 enum으로 처리
 	STUDENT(() -> StudentService.getInstance().initialize(),"1"),
 	COURSE(() -> CourseService.getInstance().initialize(),"2"),
-	ENROLLMENT(() -> EnrollmentService.getInstance().initialize(),"3"),
+	ENROLLMENT(() -> StudentCourseService.getInstance().initialize(),"3"),
 	QUIT(() -> Client.getInstance().quit(),"4");
 	
 	private final Runnable runnable;
