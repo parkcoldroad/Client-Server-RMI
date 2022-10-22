@@ -1,32 +1,34 @@
-package menu;
+package command.menu;
 
-import service.StudentService;
+import command.StudentCmd;
 
 public enum StudentMenu implements Menu {
-  CREATE(() -> StudentService.getInstance().createStudent(),"1"),
-  READ(() -> StudentService.getInstance().printStudentsList(),"2"),
-  UPDATE(() -> StudentService.getInstance().updateStudent(),"3"),
-  DELETE(() -> StudentService.getInstance().deleteStudent(),"4"),
-  SEARCH(() -> StudentService.getInstance().searchStudent(),"5");
+  CREATE(StudentCmd::createStudent, "1"),
+  READ(StudentCmd::printStudentsList, "2"),
+  UPDATE(StudentCmd::updateStudent, "3"),
+  DELETE(StudentCmd::deleteStudent, "4"),
+  SEARCH(StudentCmd::searchStudent, "5");
 
   private final Runnable runnable;
   private final String keyword;
 
 
-  StudentMenu(Runnable runnable,String keyword) {
+  StudentMenu(Runnable runnable, String keyword) {
     this.runnable = runnable;
     this.keyword = keyword;
   }
+
   @Override
   public void execute() {
     this.runnable.run();
   }
+
   @Override
   public String getChoice() {
     return this.keyword;
   }
 
-  public static void printMenu(){
+  public static void printMenu() {
     System.out.println("\n-----------------STUDENT MENU--------------------");
     System.out.println("1.Create Student ");
     System.out.println("2.Display Student ");

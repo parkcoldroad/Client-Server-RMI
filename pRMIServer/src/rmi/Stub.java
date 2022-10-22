@@ -1,7 +1,7 @@
-package pRMI;
+package rmi;
 
 import dto.CourseDto;
-import dto.StudentCourseDto;
+import dto.EnrollmentDto;
 import dto.PreCourseDto;
 import dto.StudentDto;
 import exception.NullDataException;
@@ -9,13 +9,13 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface ClientInterface extends Remote {
+public interface Stub extends Remote {
 
   ArrayList<StudentDto> getAllStudentData() throws RemoteException, NullDataException;
 
   ArrayList<CourseDto> getAllCourseData() throws RemoteException, NullDataException;
 
-  ArrayList<StudentCourseDto> getStudentCourseData() throws RemoteException, NullDataException;
+  ArrayList<EnrollmentDto> getEnrollmentData(String studentId) throws RemoteException, NullDataException;
 
   ArrayList<PreCourseDto> getAllPreCourseData() throws RemoteException, NullDataException;
 
@@ -33,7 +33,7 @@ public interface ClientInterface extends Remote {
 
   boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
 
-  String createStudentCourse(String studentId, String courseId) throws RemoteException;
+  String createEnrollment(String studentId, String courseId) throws RemoteException;
 
   String createPreCourseData(String courseId, String precourseId) throws RemoteException;
 
@@ -41,7 +41,7 @@ public interface ClientInterface extends Remote {
 
   boolean deleteCourseData(String courseId) throws RemoteException;
 
-  boolean deleteStudentCourse(String studentId, String courseId) throws RemoteException;
+  boolean deleteEnrollment(String studentId, String courseId) throws RemoteException;
 
   boolean deletePreCourse(String courseId) throws RemoteException;
 }

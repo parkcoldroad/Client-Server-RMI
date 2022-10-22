@@ -1,25 +1,25 @@
 package dao;
 
-import dto.StudentCourseDto;
+import dto.EnrollmentDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class StudentCourseDao {
+public class EnrollmentDao {
 
   private Connection conn;
 
   private ResultSet rs = null;
   private String sql;
 
-  public StudentCourseDao() {
+  public EnrollmentDao() {
     conn = DBConfig.getConnection();
   }
 
-  public void createStudentCourse(String studentId, String courseId) {
-    sql = "INSERT INTO StudentCourse(studentId,courseId) VALUES (?,?)";
+  public void createEnrollment(String studentId, String courseId) {
+    sql = "INSERT INTO Enrollment(studentId,courseId) VALUES (?,?)";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
@@ -35,7 +35,7 @@ public class StudentCourseDao {
 
   public ArrayList<String> getCompletedCourseList(String studentId) {
     ArrayList<String> completedCourseList = new ArrayList<>();
-    sql = "SELECT * from StudentCourse WHERE isCompleted = 1 AND studentId = " + studentId;
+    sql = "SELECT * from Enrollment WHERE isCompleted = 1 AND studentId = " + studentId;
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
@@ -52,24 +52,24 @@ public class StudentCourseDao {
     return completedCourseList;
   }
 
-  public ArrayList<StudentCourseDto> getStudentCourseData() {
-    ArrayList<StudentCourseDto> studentCourseDtos = new ArrayList<>();
-    sql = "SELECT * from StudentCourse INNER JOIN Course ON StudentCourse.courseId  = Course.courseId";
+  public ArrayList<EnrollmentDto> getEnrollmentData(String studentId) {
+    ArrayList<EnrollmentDto> enrollmentDtos = new ArrayList<>();
+    sql = "SELECT * from Enrollment INNER JOIN Course ON Enrollment.courseId  = Course.courseId AND studentId =" + studentId;
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       rs = pstmt.executeQuery();
       while (rs.next()) {
-        StudentCourseDto studentCourseDto = new StudentCourseDto();
-        String studentId = rs.getString("studentId");
+        EnrollmentDto enrollmentDto = new EnrollmentDto();
+        String studentid = rs.getString("studentId");
         String courseId = rs.getString("courseId");
         String professorName = rs.getString("professorName");
         String courseName = rs.getString("courseName");
-        studentCourseDto.setStudentId(studentId);
-        studentCourseDto.setCourseId(courseId);
-        studentCourseDto.setProfessorName(professorName);
-        studentCourseDto.setCourseName(courseName);
-        studentCourseDtos.add(studentCourseDto);
+        enrollmentDto.setStudentId(studentid);
+        enrollmentDto.setCourseId(courseId);
+        enrollmentDto.setProfessorName(professorName);
+        enrollmentDto.setCourseName(courseName);
+        enrollmentDtos.add(enrollmentDto);
       }
 
       rs.close();
@@ -77,13 +77,13 @@ public class StudentCourseDao {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
-    return studentCourseDtos;
+    return enrollmentDtos;
   }
 
 
-  public boolean deleteStudentCourse(String studentId, String courseId) {
+  public boolean deleteEnrollment(String studentId, String courseId) {
     try {
-      sql = "DELETE FROM StudentCourse " + " WHERE studentId = ? AND courseId = ? ";
+      sql = "DELETE FROM Enrollment " + " WHERE studentId = ? AND courseId = ? ";
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       pstmt.setString(1, studentId);

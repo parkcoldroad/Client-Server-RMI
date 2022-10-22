@@ -1,15 +1,15 @@
-package menu;
+package command.menu;
 
-import service.CourseService;
-import service.PreCourseService;
+import command.CourseCmd;
+import command.PreCourseCmd;
 
 public enum CourseMenu implements Menu {
-  CREATE(() -> CourseService.getInstance().createCourse(),"1"),
-  READ(() -> CourseService.getInstance().printCoursesList(),"2"),
-  UPDATE(() -> CourseService.getInstance().updateCourse(),"3"),
-  DELETE(() -> CourseService.getInstance().deleteCourse(),"4"),
-  SEARCH(() -> CourseService.getInstance().searchCourse(),"5"),
-  REGISTER_PRECOURSE(() -> PreCourseService.getInstance().initialize(),"6");
+  CREATE(CourseCmd::createCourse,"1"),
+  READ(CourseCmd::printCoursesList,"2"),
+  UPDATE(CourseCmd::updateCourse,"3"),
+  DELETE(CourseCmd::deleteCourse,"4"),
+  SEARCH(CourseCmd::searchCourse,"5"),
+  ADMINISTRATE_PRECOURSE(PreCourseCmd::initialize,"6");
 
 
   private final Runnable runnable;

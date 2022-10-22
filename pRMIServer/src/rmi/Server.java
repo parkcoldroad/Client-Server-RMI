@@ -1,9 +1,9 @@
-package pRMI;
+package rmi;
 
 import dao.PreCourseDao;
 import dao.StudentDao;
 import dto.CourseDto;
-import dto.StudentCourseDto;
+import dto.EnrollmentDto;
 import dto.PreCourseDto;
 import dto.StudentDto;
 import java.rmi.AlreadyBoundException;
@@ -13,16 +13,16 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import dao.CourseDao;
-import dao.StudentCourseDao;
+import dao.EnrollmentDao;
 
-public class Server extends UnicastRemoteObject implements ClientInterface {
+public class Server extends UnicastRemoteObject implements Stub {
 
   private static Server clientServer;
   private final Registry clientserverRegistry;
 
   private CourseDao courseDao;
   private StudentDao studentDao;
-  private StudentCourseDao studentCourseDao;
+  private EnrollmentDao enrollmentDao;
   private PreCourseDao preCourseDao;
 
   private Server() throws RemoteException {
@@ -47,7 +47,7 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
 
       courseDao = new CourseDao();
       studentDao = new StudentDao();
-      studentCourseDao = new StudentCourseDao();
+      enrollmentDao = new EnrollmentDao();
       preCourseDao = new PreCourseDao();
     } catch (RemoteException | AlreadyBoundException e) {
       e.printStackTrace();
@@ -66,20 +66,19 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
     return courseDao.createCourseRecord(courseData);
   }
 
-  @Override
-  public String createStudentCourse(String studentId, String courseId) throws RemoteException {
+  public String createEnrollment(String studentId, String courseId) throws RemoteException {
     boolean isReady = true;
     ArrayList<String> preCourseLists = preCourseDao.searchPreCourse(courseId);
-    ArrayList<String> completedCourseList = studentCourseDao.getCompletedCourseList(studentId);
+    ArrayList<String> completedCourseList = enrollmentDao.getCompletedCourseList(studentId);
 
     for (String precourse : preCourseLists) {
       isReady = completedCourseList.contains(precourse);
     }
     if (isReady) {
-      studentCourseDao.createStudentCourse(studentId, courseId);
+      enrollmentDao.createEnrollment(studentId, courseId);
       return "Enrollment is completed";
     }
-    return "Enrollment is failed";
+    return "Enrollment is failed.. you didn't take preCourses";
   }
 
   @Override
@@ -98,8 +97,8 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   }
 
   @Override
-  public ArrayList<StudentCourseDto> getStudentCourseData() throws RemoteException {
-    return studentCourseDao.getStudentCourseData();
+  public ArrayList<EnrollmentDto> getEnrollmentData(String studentId) throws RemoteException {
+    return enrollmentDao.getEnrollmentData(studentId);
   }
 
   @Override
@@ -144,9 +143,8 @@ public class Server extends UnicastRemoteObject implements ClientInterface {
   }
 
 
-  @Override
-  public boolean deleteStudentCourse(String studentId, String courseId) throws RemoteException {
-    return studentCourseDao.deleteStudentCourse(studentId, courseId);
+  public boolean deleteEnrollment(String studentId, String courseId) throws RemoteException {
+    return enrollmentDao.deleteEnrollment(studentId, courseId);
   }
 
   @Override

@@ -1,1 +1,1 @@
-# Client-Server-pRMI
+# Client-Server-rmi

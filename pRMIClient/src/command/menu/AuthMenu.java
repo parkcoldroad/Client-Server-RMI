@@ -1,17 +1,17 @@
-package menu;
+package command.menu;
 
 
-import service.LoginService;
+import service.AuthService;
 
-public enum LoginMenu implements Menu {//인터페이스 상속 후, 모든 메뉴 다 enum으로 처리
-	LOGIN(() -> LoginService.getInstance().initialize(),"1"),
-	REGISTER(() -> LoginService.getInstance().initialize(),"2");
+public enum AuthMenu implements Menu {//인터페이스 상속 후, 모든 메뉴 다 enum으로 처리
+	LOGIN(() -> AuthService.getInstance().initialize(),"1"),
+	REGISTER(() -> AuthService.getInstance().initialize(),"2");
 
 	private final Runnable runnable;
 	private final String keyword;
 
 
-	LoginMenu(Runnable runnable,String keyword) {
+	AuthMenu(Runnable runnable,String keyword) {
 		this.runnable = runnable;
 		this.keyword = keyword;
 	}

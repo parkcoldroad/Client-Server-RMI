@@ -1,15 +1,15 @@
-package menu;
+package command.menu;
 
 
-import pRMI.Client;
-import service.CourseService;
-import service.StudentCourseService;
-import service.StudentService;
+import command.CourseCmd;
+import command.EnrollmentCmd;
+import command.StudentCmd;
+import rmi.Client;
 
 public enum MainMenu implements Menu {//인터페이스 상속 후, 모든 메뉴 다 enum으로 처리
-	STUDENT(() -> StudentService.getInstance().initialize(),"1"),
-	COURSE(() -> CourseService.getInstance().initialize(),"2"),
-	ENROLLMENT(() -> StudentCourseService.getInstance().initialize(),"3"),
+	STUDENT(StudentCmd::initialize,"1"),
+	COURSE(CourseCmd::initialize,"2"),
+	ENROLLMENT(EnrollmentCmd::initialize,"3"),
 	QUIT(() -> Client.getInstance().quit(),"4");
 	
 	private final Runnable runnable;

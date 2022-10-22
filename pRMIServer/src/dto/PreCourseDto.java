@@ -2,7 +2,7 @@ package dto;
 
 import java.io.Serializable;
 
-public class PreCourseDto implements Serializable {
+public class PreCourseDto extends Dto implements Serializable {
   private String courseId;
   private String preCourseId;
 
@@ -25,5 +25,10 @@ public class PreCourseDto implements Serializable {
   @Override
   public String toString(){
     return courseId + " " + preCourseId;
+  }
+
+  @Override
+  public void print() {
+    System.out.println(courseId + " " + preCourseId);
   }
 }

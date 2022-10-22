@@ -1,4 +1,4 @@
-package pRMI;
+import rmi.Server;
 
 public class ServerMain {
 

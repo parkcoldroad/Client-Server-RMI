@@ -2,7 +2,7 @@ package dto;
 
 import java.io.Serializable;
 
-public class StudentDto implements Serializable {
+public class StudentDto extends Dto implements Serializable {
 
   private static final long serialVersionUID = 1L;
   private String studentId;
@@ -51,7 +51,13 @@ public class StudentDto implements Serializable {
     this.gender = gender;
   }
 
+  @Override
   public String toString() {
     return this.studentId + " " + this.name + " " + this.department + " " + this.gender;
+  }
+
+  @Override
+  public void print() {
+    System.out.println(this.studentId + " " + this.name + " " + this.department + " " + this.gender);
   }
 }

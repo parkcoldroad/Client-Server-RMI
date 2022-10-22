@@ -1,22 +1,19 @@
 package service;
 
-import dto.CourseDto;
+import command.menu.PreCourseMenu;
 import dto.PreCourseDto;
 import exception.NullDataException;
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import menu.PreCourseMenu;
-import pRMI.Client;
-import pRMI.ClientInterface;
+import rmi.Client;
+import rmi.Stub;
 import utils.Input;
-import utils.Message;
 
 public class PreCourseService {
 
   private static PreCourseService preCourseService;
-  private final ClientInterface stub;
+  private final Stub stub;
 
   public static PreCourseService getInstance() {
     if (preCourseService == null) {
@@ -40,50 +37,33 @@ public class PreCourseService {
   }
 
 
-  public void registerPreCourse() {
+  public String registerPreCourse(String courseId, String preCourseId) {
     try {
-      System.out.println("enter your courseId to register preCourse");
-      String courseId = Input.readLine();
-      System.out.println("enter your precourseId");
-      String precourseId = Input.readLine();
-      String createdResult = this.stub.createPreCourseData(courseId, precourseId);
-      System.out.println(createdResult);
-    } catch (IOException e) {
+      return this.stub.createPreCourseData(courseId, preCourseId);
+    } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public void readPreCoursesList() {
+  public ArrayList<PreCourseDto> readPreCoursesList() {
     try {
-      ArrayList<PreCourseDto> preCourseList = this.stub.getAllPreCourseData();
-      for (PreCourseDto preCourseDto : preCourseList) {
-        System.out.println(preCourseDto);
-      }
+      return this.stub.getAllPreCourseData();
     } catch (RemoteException | NullDataException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public void updatePreCourse() {
+  public boolean updatePreCourse(String courseId, String preCourseId) {
     try {
-      System.out.println("enter your courseId to update preCourse");
-      String courseId = Input.readLine();
-      String precourseId = Input.readLine();
-
-      boolean result = this.stub.updatePreCourseData(courseId, precourseId);
-      Message.print(result);
-    } catch (IOException e) {
+      return this.stub.updatePreCourseData(courseId, preCourseId);
+    } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public void deletePreCourse() {
+  public boolean deletePreCourse(String courseId) {
     try {
-      System.out.println("enter your precourseId to delete");
-      String courseId = Input.readLine();
-
-      boolean result = this.stub.deletePreCourse(courseId);
-      Message.print(result);
+     return this.stub.deletePreCourse(courseId);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }

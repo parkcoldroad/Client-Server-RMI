@@ -1,24 +1,23 @@
 package service;
 
+import command.menu.StudentMenu;
 import dto.StudentDto;
 import exception.NullDataException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import menu.StudentMenu;
-import pRMI.Client;
-import pRMI.ClientInterface;
+import rmi.Client;
+import rmi.Stub;
 import utils.Input;
-import utils.Message;
 
-public class StudentService{
+public class StudentService {
 
   private static StudentService studentService;
-  private final ClientInterface stub;
+  private final Stub stub;
 
-  public static StudentService getInstance(){
-    if(studentService == null){
+  public static StudentService getInstance() {
+    if (studentService == null) {
       studentService = new StudentService();
     }
     return studentService;
@@ -28,9 +27,9 @@ public class StudentService{
     this.stub = Client.getStub();
   }
 
-  public void initialize(){
+  public void initialize() {
     StudentMenu.printMenu();
-    String choice =Input.readLine();
+    String choice = Input.readLine();
     Arrays.stream(StudentMenu.values())
         .filter(studentMenu -> studentMenu.getChoice().equals(choice))
         .findFirst()
@@ -38,74 +37,45 @@ public class StudentService{
             () -> System.out.println("invalid enter"));
   }
 
-  public void createStudent() {
+  public boolean createStudent(ArrayList<StudentDto> studentScannerResult) {
     try {
-      boolean result = this.stub.createStudentData(getStudentScannerResult());
-       Message.print(result);
-    } catch (IOException e) {throw new RuntimeException(e);}
+      return this.stub.createStudentData(studentScannerResult);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
-  public void printStudentsList() {
+  public ArrayList<StudentDto> printStudentsList() {
     try {
-      ArrayList<StudentDto> studentList = this.stub.getAllStudentData();
-      for (StudentDto studentDto: studentList){
-        System.out.println(studentDto.toString());
-      }
+      return this.stub.getAllStudentData();
     } catch (RemoteException | NullDataException e) {
       throw new RuntimeException(e);
     }
   }
 
 
-  public void searchStudent() {
+  public String searchStudent(String studentId) {
     try {
-      System.out.println("enter your studentId to search");
-      String studentId = Input.readLine();
-      String seachedResult = this.stub.searchStudentData(studentId);
-      System.out.println(seachedResult);
+      return this.stub.searchStudentData(studentId);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public void updateStudent() {
+  public boolean updateStudent(ArrayList<StudentDto> studentScannerResult) {
     try {
-      boolean result = this.stub.updateStudentData(getStudentScannerResult());
-      Message.print(result);
+      return this.stub.updateStudentData(studentScannerResult);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public void deleteStudent() {
+  public boolean deleteStudent() {
     try {
-      System.out.println("enter your studentId to delete");
-      boolean result = this.stub.deleteStudentData(Input.readLine());
-      Message.print(result);
+      return this.stub.deleteStudentData(Input.readLine());
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
-  }
-
-
-  public  ArrayList<StudentDto> getStudentScannerResult() throws IOException {
-    System.out.println("------------Student Information------------");
-    System.out.println("Student Id : "); String studentId = Input.readLine();
-    System.out.println("Student Password : "); String password =Input.readLine();
-    System.out.println("Student Name : "); String studentName = Input.readLine();
-    System.out.println("Student Department : "); String department =Input.readLine();
-    System.out.println("Student Gender : "); String gender =Input.readLine();
-
-    ArrayList<StudentDto> studentDtos = new ArrayList<>();
-    StudentDto studentDto = new StudentDto();
-    studentDto.setStudentId(studentId);
-    studentDto.setPassword(password);
-    studentDto.setName(studentName);
-    studentDto.setDepartment(department);
-    studentDto.setGender(gender);
-
-    studentDtos.add(studentDto);
-    return studentDtos;
   }
 
 }
