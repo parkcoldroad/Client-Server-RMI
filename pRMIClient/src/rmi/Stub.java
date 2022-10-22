@@ -11,11 +11,22 @@ import java.util.ArrayList;
 
 public interface Stub extends Remote {
 
+  boolean signIn(String studentId, String password) throws RemoteException;
+
+  boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
+
+  boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
+
+  String createEnrollment(String studentId, String courseId) throws RemoteException;
+
+  String createPreCourseData(String courseId, String precourseId) throws RemoteException;
+
   ArrayList<StudentDto> getAllStudentData() throws RemoteException, NullDataException;
 
   ArrayList<CourseDto> getAllCourseData() throws RemoteException, NullDataException;
 
-  ArrayList<EnrollmentDto> getEnrollmentData(String studentId) throws RemoteException, NullDataException;
+  ArrayList<EnrollmentDto> getEnrollmentData(String studentId)
+      throws RemoteException, NullDataException;
 
   ArrayList<PreCourseDto> getAllPreCourseData() throws RemoteException, NullDataException;
 
@@ -28,14 +39,6 @@ public interface Stub extends Remote {
   boolean updateCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
 
   boolean updatePreCourseData(String courseId, String preCourseId) throws RemoteException;
-
-  boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
-
-  boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
-
-  String createEnrollment(String studentId, String courseId) throws RemoteException;
-
-  String createPreCourseData(String courseId, String precourseId) throws RemoteException;
 
   boolean deleteStudentData(String studentId) throws RemoteException;
 

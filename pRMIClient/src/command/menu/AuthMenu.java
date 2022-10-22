@@ -1,11 +1,13 @@
 package command.menu;
 
 
-import service.AuthService;
+import command.AuthCmd;
+import rmi.Client;
 
 public enum AuthMenu implements Menu {//인터페이스 상속 후, 모든 메뉴 다 enum으로 처리
-	LOGIN(() -> AuthService.getInstance().initialize(),"1"),
-	REGISTER(() -> AuthService.getInstance().initialize(),"2");
+	SignIn(AuthCmd::signIn,"1"),
+	SignUp(AuthCmd::signUp,"2"),
+	Quit(Client::quit,"3");
 
 	private final Runnable runnable;
 	private final String keyword;
@@ -25,8 +27,9 @@ public enum AuthMenu implements Menu {//인터페이스 상속 후, 모든 메�
 	}
 
 	public static void printMenu(){
-			System.out.println("\n-----------------Login Menu--------------------");
-			System.out.println("1.Login");
-			System.out.println("2.Register");
+			System.out.println("\n-----------------Sign In Menu--------------------");
+			System.out.println("1.Sign In");
+			System.out.println("2.Sign Up");
+			System.out.println("3.Quit");
 	}
 }

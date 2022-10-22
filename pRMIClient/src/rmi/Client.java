@@ -1,13 +1,12 @@
 package rmi;
 
+import command.menu.MainMenu;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Arrays;
 import java.util.Optional;
-import command.menu.AuthMenu;
-import command.menu.MainMenu;
 import utils.Input;
 
 public class Client {
@@ -37,7 +36,7 @@ public class Client {
   }
 
 
-  public void start() {
+  public static void start() {
     boolean isStop = false;
     while (!isStop) {
       MainMenu.printMenu();
@@ -50,29 +49,19 @@ public class Client {
       optionalCRUD.ifPresentOrElse(MainMenu::execute,
           () -> System.out.println("invalid enter"));
 
-      if (input.equals("4")) {
+      if (input.equals("5")) {
         isStop = true;
       }
     }
   }
 
-  public void quit() {
+  public static void quit() {
     Input.close();
     System.out.println("system terminated..");
     System.exit(0);
   }
 
-  public void run() {
-    AuthMenu.printMenu();
-    String input = Input.readLine();
 
-    Optional<AuthMenu> optionalLogin = Arrays.stream(AuthMenu.values())
-        .filter(authMenu -> authMenu.getChoice().equals(input))
-        .findFirst();
-
-    optionalLogin.ifPresentOrElse(AuthMenu::execute,
-        () -> System.out.println("invalid enter"));
-  }
 }
 
 

@@ -1,6 +1,7 @@
 package command.menu;
 
 
+import command.AuthCmd;
 import command.CourseCmd;
 import command.EnrollmentCmd;
 import command.StudentCmd;
@@ -10,7 +11,8 @@ public enum MainMenu implements Menu {//인터페이스 상속 후, 모든 메�
 	STUDENT(StudentCmd::initialize,"1"),
 	COURSE(CourseCmd::initialize,"2"),
 	ENROLLMENT(EnrollmentCmd::initialize,"3"),
-	QUIT(() -> Client.getInstance().quit(),"4");
+	LOGOUT(AuthCmd::initialize,"4"),
+	QUIT(Client::quit,"5");
 	
 	private final Runnable runnable;
 	private final String keyword;
@@ -34,6 +36,7 @@ public enum MainMenu implements Menu {//인터페이스 상속 후, 모든 메�
 			System.out.println("1.Student");
 			System.out.println("2.Course");
 			System.out.println("3.Enrollment");
-			System.out.println("4.Quit");
+			System.out.println("4.Logout");
+			System.out.println("5.Quit");
 	}
 }

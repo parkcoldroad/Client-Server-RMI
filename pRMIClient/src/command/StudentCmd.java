@@ -20,11 +20,6 @@ public class StudentCmd {
             () -> System.out.println("invalid enter"));
   }
 
-  public static void createStudent() {
-    boolean result = StudentService.getInstance().createStudent(getStudentScannerResult());
-    Message.print(result);
-  }
-
   public static void printStudentsList() {
     ArrayList<StudentDto> studentList = StudentService.getInstance().printStudentsList();
     Message.print(studentList);

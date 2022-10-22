@@ -26,16 +26,6 @@ public class PreCourseService {
     this.stub = Client.getStub();
   }
 
-  public void initialize() {
-    PreCourseMenu.printMenu();
-    String choice = Input.readLine();
-    Arrays.stream(PreCourseMenu.values())
-        .filter(preCourseMenu -> preCourseMenu.getChoice().equals(choice))
-        .findFirst()
-        .ifPresentOrElse(PreCourseMenu::execute,
-            () -> System.out.println("invalid enter"));
-  }
-
 
   public String registerPreCourse(String courseId, String preCourseId) {
     try {

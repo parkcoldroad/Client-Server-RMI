@@ -14,6 +14,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import dao.CourseDao;
 import dao.EnrollmentDao;
+import java.util.Optional;
 
 public class Server extends UnicastRemoteObject implements Stub {
 
@@ -59,6 +60,18 @@ public class Server extends UnicastRemoteObject implements Stub {
   @Override
   public boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
     return studentDao.createStudentRecords(studentDtos);
+  }
+
+
+  @Override
+  public boolean signIn(String studentId, String password) throws RemoteException {
+    ArrayList<StudentDto> studentList = studentDao.signIn(studentId);
+
+    Optional<StudentDto> OptionalStudent = studentList.stream()
+        .filter(student -> student.getStudentId().equals(studentId) && student.getPassword().equals(password))
+        .findFirst();
+
+    return OptionalStudent.isPresent();
   }
 
   @Override

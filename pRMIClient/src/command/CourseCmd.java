@@ -10,8 +10,6 @@ import utils.Message;
 
 public class CourseCmd {
 
-  private CourseService courseService;
-
   public static void initialize() {
     CourseMenu.printMenu();
     String choice = Input.readLine();

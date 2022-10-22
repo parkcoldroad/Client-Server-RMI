@@ -18,6 +18,33 @@ public class StudentDao {
     conn = DBConfig.getConnection();
   }
 
+
+  public ArrayList<StudentDto> signIn(String studentId){
+    ArrayList<StudentDto> studentDtos = new ArrayList<>();
+    sql = "SELECT * from Student WHERE StudentId = " + studentId;
+
+    try {
+      PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
+      StudentDto studentDto = new StudentDto();
+
+      rs = pstmt.executeQuery();
+      rs.next();
+      String studentid = rs.getString("studentId");
+      String password = rs.getString("password");
+
+      studentDto.setStudentId(studentid);
+      studentDto.setPassword(password);
+      studentDtos.add(studentDto);
+
+      rs.close();
+      pstmt.close();
+      return studentDtos;
+    } catch (SQLException e) {
+      throw new RuntimeException();
+    }
+  }
+
+
   public boolean createStudentRecords(ArrayList<StudentDto> studentList) {
     sql = "INSERT INTO Student(studentId,studentName,department,password,gender) VALUES (?,?,?,?,?)";
     try {

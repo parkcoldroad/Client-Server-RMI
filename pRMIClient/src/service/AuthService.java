@@ -1,10 +1,11 @@
 package service;
 
-import java.util.Arrays;
-import command.menu.PreCourseMenu;
+import dto.StudentDto;
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import rmi.Client;
 import rmi.Stub;
-import utils.Input;
 
 public class AuthService {
 
@@ -22,14 +23,20 @@ public class AuthService {
     this.stub = Client.getStub();
   }
 
-  public void initialize() {
-    PreCourseMenu.printMenu();
-    String choice = Input.readLine();
-    Arrays.stream(PreCourseMenu.values())
-        .filter(preCourseMenu -> preCourseMenu.getChoice().equals(choice))
-        .findFirst()
-        .ifPresentOrElse(PreCourseMenu::execute,
-            () -> System.out.println("invalid enter"));
+  public boolean signIn(String studentId, String password){
+    try {
+      return this.stub.signIn(studentId,password);
+    } catch (RemoteException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public boolean signUp(ArrayList<StudentDto> studentScannerResult) {
+    try {
+      return this.stub.createStudentData(studentScannerResult);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
 }

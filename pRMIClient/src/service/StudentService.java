@@ -27,23 +27,6 @@ public class StudentService {
     this.stub = Client.getStub();
   }
 
-  public void initialize() {
-    StudentMenu.printMenu();
-    String choice = Input.readLine();
-    Arrays.stream(StudentMenu.values())
-        .filter(studentMenu -> studentMenu.getChoice().equals(choice))
-        .findFirst()
-        .ifPresentOrElse(StudentMenu::execute,
-            () -> System.out.println("invalid enter"));
-  }
-
-  public boolean createStudent(ArrayList<StudentDto> studentScannerResult) {
-    try {
-      return this.stub.createStudentData(studentScannerResult);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
 
   public ArrayList<StudentDto> printStudentsList() {
     try {

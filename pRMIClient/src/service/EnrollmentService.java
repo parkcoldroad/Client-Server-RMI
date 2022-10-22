@@ -26,15 +26,6 @@ public class EnrollmentService {
     this.stub = Client.getStub();
   }
 
-  public void initialize() {
-    EnrollmentMenu.printMenu();
-    String choice = Input.readLine();
-    Arrays.stream(EnrollmentMenu.values())
-        .filter(enrollmentMenu -> enrollmentMenu.getChoice().equals(choice))
-        .findFirst()
-        .ifPresentOrElse(EnrollmentMenu::execute,
-            () -> System.out.println("invalid enter"));
-  }
 
   public String applyCourse(String studentId, String courseId) {
     try {
