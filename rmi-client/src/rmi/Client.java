@@ -20,7 +20,7 @@ public class Client {
     stub = (Stub) clientRegistry.lookup("Server");
   }
 
-  public static Client getInstance() {
+  public static void initialize() {
     if (client == null) {
       try {
         client = new Client();
@@ -28,7 +28,6 @@ public class Client {
         e.printStackTrace();
       }
     }
-    return client;
   }
 
   public static Stub getStub() {

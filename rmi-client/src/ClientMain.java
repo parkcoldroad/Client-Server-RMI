@@ -4,7 +4,7 @@ import rmi.Client;
 public class ClientMain {
 
   public static void main(String[] args) {
-    Client.getInstance();
+    Client.initialize();
     AuthCmd.initialize();
   }
 
