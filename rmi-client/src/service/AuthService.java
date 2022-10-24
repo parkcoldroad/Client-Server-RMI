@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import rmi.Client;
-import rmi.Stub;
+import rmi.ClientStub;
 
 public class AuthService {
 
   private static AuthService authService;
-  private final Stub stub;
+  private final ClientStub clientStub;
 
   public static AuthService getInstance() {
     if (authService == null) {
@@ -20,12 +20,12 @@ public class AuthService {
   }
 
   private AuthService() {
-    this.stub = Client.getStub();
+    this.clientStub = Client.getStub();
   }
 
   public boolean signIn(String studentId, String password){
     try {
-      return this.stub.signIn(studentId,password);
+      return this.clientStub.signIn(studentId,password);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
@@ -33,7 +33,7 @@ public class AuthService {
 
   public boolean signUp(ArrayList<StudentDto> studentScannerResult) {
     try {
-      return this.stub.createStudentData(studentScannerResult);
+      return this.clientStub.createStudentData(studentScannerResult);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

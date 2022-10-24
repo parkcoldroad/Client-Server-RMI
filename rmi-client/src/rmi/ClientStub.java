@@ -1,15 +1,15 @@
 package rmi;
 
 import dto.CourseDto;
-import dto.EnrollmentDto;
 import dto.PreCourseDto;
+import dto.EnrollmentDto;
 import dto.StudentDto;
 import exception.NullDataException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface Stub extends Remote {
+public interface ClientStub extends Remote {
 
   boolean signIn(String studentId, String password) throws RemoteException;
 

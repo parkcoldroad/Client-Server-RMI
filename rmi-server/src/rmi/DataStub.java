@@ -1,17 +1,17 @@
 package rmi;
 
 import dto.CourseDto;
-import dto.PreCourseDto;
 import dto.EnrollmentDto;
+import dto.PreCourseDto;
 import dto.StudentDto;
 import exception.NullDataException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface Stub extends Remote {
+public interface DataStub extends Remote {
 
-  boolean signIn(String studentId, String password) throws RemoteException;
+  ArrayList<StudentDto> signIn(String studentId, String password) throws RemoteException;
 
   boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
 
@@ -25,14 +25,17 @@ public interface Stub extends Remote {
 
   ArrayList<CourseDto> getAllCourseData() throws RemoteException, NullDataException;
 
-  ArrayList<EnrollmentDto> getEnrollmentData(String studentId)
-      throws RemoteException, NullDataException;
+   ArrayList<String> getCompletedCourseList(String studentId) throws RemoteException;
+
+  ArrayList<EnrollmentDto> getEnrollmentData(String studentId) throws RemoteException, NullDataException;
 
   ArrayList<PreCourseDto> getAllPreCourseData() throws RemoteException, NullDataException;
 
   String searchStudentData(String studentId) throws RemoteException;
 
   String searchCourseData(String courseId) throws RemoteException;
+
+   ArrayList<String> searchPreCourse(String courseId)throws RemoteException;
 
   boolean updateStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
 

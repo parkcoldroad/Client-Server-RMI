@@ -1,19 +1,16 @@
 package service;
 
-import command.menu.EnrollmentMenu;
 import dto.EnrollmentDto;
 import exception.NullDataException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import rmi.Client;
-import rmi.Stub;
-import utils.Input;
+import rmi.ClientStub;
 
 public class EnrollmentService {
 
   private static EnrollmentService enrollmentService;
-  private final Stub stub;
+  private final ClientStub clientStub;
 
   public static EnrollmentService getInstance() {
     if (enrollmentService == null) {
@@ -23,13 +20,13 @@ public class EnrollmentService {
   }
 
   private EnrollmentService() {
-    this.stub = Client.getStub();
+    this.clientStub = Client.getStub();
   }
 
 
   public String applyCourse(String studentId, String courseId) {
     try {
-      return this.stub.createEnrollment(studentId, courseId);
+      return this.clientStub.createEnrollment(studentId, courseId);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
@@ -37,7 +34,7 @@ public class EnrollmentService {
 
   public ArrayList<EnrollmentDto> displayApplyHistory(String studentId) {
     try {
-      return this.stub.getEnrollmentData(studentId);
+      return this.clientStub.getEnrollmentData(studentId);
     } catch (RemoteException | NullDataException e) {
       throw new RuntimeException(e);
     }
@@ -46,7 +43,7 @@ public class EnrollmentService {
 
   public boolean removeApplyHistory(String studentId,String courseId) {
     try {
-      return this.stub.deleteEnrollment(studentId, courseId);
+      return this.clientStub.deleteEnrollment(studentId, courseId);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }

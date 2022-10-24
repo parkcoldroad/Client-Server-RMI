@@ -1,20 +1,18 @@
 package service;
 
-import command.menu.StudentMenu;
 import dto.StudentDto;
 import exception.NullDataException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import rmi.Client;
-import rmi.Stub;
+import rmi.ClientStub;
 import utils.Input;
 
 public class StudentService {
 
   private static StudentService studentService;
-  private final Stub stub;
+  private final ClientStub clientStub;
 
   public static StudentService getInstance() {
     if (studentService == null) {
@@ -24,13 +22,13 @@ public class StudentService {
   }
 
   private StudentService() {
-    this.stub = Client.getStub();
+    this.clientStub = Client.getStub();
   }
 
 
   public ArrayList<StudentDto> printStudentsList() {
     try {
-      return this.stub.getAllStudentData();
+      return this.clientStub.getAllStudentData();
     } catch (RemoteException | NullDataException e) {
       throw new RuntimeException(e);
     }
@@ -39,7 +37,7 @@ public class StudentService {
 
   public String searchStudent(String studentId) {
     try {
-      return this.stub.searchStudentData(studentId);
+      return this.clientStub.searchStudentData(studentId);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -47,7 +45,7 @@ public class StudentService {
 
   public boolean updateStudent(ArrayList<StudentDto> studentScannerResult) {
     try {
-      return this.stub.updateStudentData(studentScannerResult);
+      return this.clientStub.updateStudentData(studentScannerResult);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -55,7 +53,7 @@ public class StudentService {
 
   public boolean deleteStudent() {
     try {
-      return this.stub.deleteStudentData(Input.readLine());
+      return this.clientStub.deleteStudentData(Input.readLine());
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }

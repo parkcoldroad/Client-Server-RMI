@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import rmi.Client;
-import rmi.Stub;
+import rmi.ClientStub;
 
 public class CourseService {
 
   private static CourseService courseService;
-  private final Stub stub;
+  private final ClientStub clientStub;
 
   public static CourseService getInstance() {
     if (courseService == null) {
@@ -21,13 +21,13 @@ public class CourseService {
   }
 
   private CourseService() {
-    this.stub = Client.getStub();
+    this.clientStub = Client.getStub();
   }
 
 
   public boolean createCourse(ArrayList<CourseDto> courseScannerResult) {
     try {
-      return this.stub.createCourseData(courseScannerResult);
+      return this.clientStub.createCourseData(courseScannerResult);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -35,7 +35,7 @@ public class CourseService {
 
   public ArrayList<CourseDto> printCoursesList() {
     try {
-      return this.stub.getAllCourseData();
+      return this.clientStub.getAllCourseData();
     } catch (RemoteException | NullDataException e) {
       throw new RuntimeException(e);
     }
@@ -43,7 +43,7 @@ public class CourseService {
 
   public boolean updateCourse(ArrayList<CourseDto> courseScannerResult) {
     try {
-      return this.stub.updateCourseData(courseScannerResult);
+      return this.clientStub.updateCourseData(courseScannerResult);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -51,7 +51,7 @@ public class CourseService {
 
   public boolean deleteCourse(String courseId) {
     try {
-      return this.stub.deleteCourseData(courseId);
+      return this.clientStub.deleteCourseData(courseId);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
@@ -59,7 +59,7 @@ public class CourseService {
 
   public String searchCourse(String courseId) {
     try {
-      return this.stub.searchCourseData(courseId);
+      return this.clientStub.searchCourseData(courseId);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
