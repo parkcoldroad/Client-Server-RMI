@@ -7,6 +7,7 @@ import java.util.Arrays;
 import service.StudentService;
 import utils.Input;
 import utils.Message;
+import utils.Log;
 
 public class StudentCmd {
 
@@ -23,6 +24,7 @@ public class StudentCmd {
   public static void printStudentsList() {
     ArrayList<StudentDto> studentList = StudentService.getInstance().printStudentsList();
     Message.print(studentList);
+    Log.getLogger().fine("printprint");
   }
 
 
