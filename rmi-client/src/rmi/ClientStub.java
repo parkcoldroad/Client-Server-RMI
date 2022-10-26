@@ -1,8 +1,9 @@
 package rmi;
 
 import dto.CourseDto;
-import dto.PreCourseDto;
 import dto.EnrollmentDto;
+import dto.LogDto;
+import dto.PreCourseDto;
 import dto.StudentDto;
 import exception.NullDataException;
 import java.rmi.Remote;
@@ -10,6 +11,10 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface ClientStub extends Remote {
+
+  void createLog(ArrayList<LogDto> logDto) throws RemoteException;
+
+  ArrayList<LogDto> readLog() throws RemoteException;
 
   boolean signIn(String studentId, String password) throws RemoteException;
 

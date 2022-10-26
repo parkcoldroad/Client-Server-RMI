@@ -48,7 +48,7 @@ public class Client {
       optionalCRUD.ifPresentOrElse(MainMenu::execute,
           () -> System.out.println("invalid enter"));
 
-      if (input.equals("5")) {
+      if (input.equals("6")) {
         isStop = true;
       }
     }

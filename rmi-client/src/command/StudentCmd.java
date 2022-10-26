@@ -24,7 +24,7 @@ public class StudentCmd {
   public static void printStudentsList() {
     ArrayList<StudentDto> studentList = StudentService.getInstance().printStudentsList();
     Message.print(studentList);
-    Log.getLogger().fine("printprint");
+    Log.createLog("printList");
   }
 
 
@@ -33,17 +33,20 @@ public class StudentCmd {
     String studentId = Input.readLine();
     String seachedResult = StudentService.getInstance().searchStudent(studentId);
     Message.print(seachedResult);
+    Log.createLog("searchStudent");
   }
 
   public static void updateStudent() {
     boolean result = StudentService.getInstance().updateStudent(getStudentScannerResult());
     Message.print(result);
+    Log.createLog("updateStudent");
   }
 
   public static void deleteStudent() {
     System.out.println("enter your studentId to delete");
     boolean result = StudentService.getInstance().deleteStudent();
     Message.print(result);
+    Log.createLog("deleteStudent");
   }
 
 

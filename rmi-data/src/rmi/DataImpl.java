@@ -6,8 +6,10 @@ import dao.PreCourseDao;
 import dao.StudentDao;
 import dto.CourseDto;
 import dto.EnrollmentDto;
+import dto.LogDto;
 import dto.PreCourseDto;
 import dto.StudentDto;
+import exception.DuplicateUserIdException;
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -15,6 +17,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import log.LogDao;
 
 @SuppressWarnings("serial")
 public class DataImpl extends UnicastRemoteObject implements DataStub {
@@ -24,6 +27,8 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   private CourseDao courseDao;
   private EnrollmentDao enrollmentDao;
   private PreCourseDao preCourseDao;
+
+  private LogDao logDao;
   private Registry registry;
 
   public static DataImpl getInstance() {
@@ -54,6 +59,7 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
       studentDao = new StudentDao();
       enrollmentDao = new EnrollmentDao();
       preCourseDao = new PreCourseDao();
+      logDao = new LogDao();
       System.out.println("data Server is ready");
     } catch (RemoteException | AlreadyBoundException e) {
       e.printStackTrace();
@@ -62,13 +68,30 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
 
   @Override
   public boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
-    return studentDao.createStudentRecords(studentDtos);
+    try {
+      return studentDao.createStudentRecords(studentDtos);
+    } catch (DuplicateUserIdException e) {
+      throw new RuntimeException(e);
+    }
   }
 
 
   @Override
+  public void createLog(ArrayList<LogDto> logList) {
+    logDao.createLog(logList);
+  }
+
+  @Override
+  public ArrayList<LogDto> readLog() {return logDao.readLog();
+  }
+
+  @Override
   public ArrayList<StudentDto> signIn(String studentId, String password) throws RemoteException {
-    return studentDao.signIn(studentId);
+    try {
+      return studentDao.signIn(studentId);
+    } catch (DuplicateUserIdException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override

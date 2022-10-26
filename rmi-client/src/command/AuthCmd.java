@@ -7,8 +7,8 @@ import java.util.Arrays;
 import rmi.Client;
 import service.AuthService;
 import utils.Input;
-import utils.Message;
 import utils.Log;
+import utils.Message;
 
 public class AuthCmd {
 
@@ -31,10 +31,8 @@ public class AuthCmd {
 
     boolean signInResult = AuthService.getInstance().signIn(studentId, password);
     if (signInResult) {
-      Log.getLogger().fine("sign in succeed");
       Client.start();
     } else {
-      Log.getLogger().fine("sign in failed");
       System.out.println("SignIn failed");
       initialize();
     }
@@ -45,7 +43,6 @@ public class AuthCmd {
   public static void signUp() {
     boolean signUpResult = AuthService.getInstance().signUp(getStudentScannerResult());
     Message.print(signUpResult);
-    Log.getLogger().fine("sign up succeed");
     initialize();
   }
 }

@@ -1,40 +1,49 @@
 package utils;
 
-import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.SimpleFormatter;
+import dto.LogDto;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import rmi.Client;
 
 public class Log {
 
-  java.util.logging.Logger logger = java.util.logging.Logger.getLogger("DataLog");
-  private static Log log;
+  public static void createLog(String message) {
+    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+    StackTraceElement[] ste = new Throwable().getStackTrace();
+    List<StackTraceElement> stackTraceElements = Arrays.asList(ste);
+    String methodName = stackTraceElements.get(1).getMethodName();
 
-  public static final String infoLog = "D:/java/Java-RMI/rmi-data/src/log/DataLog%g.log";
+    ArrayList<LogDto> logInfo = new ArrayList<>();
+    LogDto logDto = new LogDto();
+    logDto.setMethodName(methodName);
+    logDto.setTimestamp(timestamp.toString());
+    logDto.setMessage(message);
+    logInfo.add(logDto);
 
-  private FileHandler infoFileHandler = null;
-
-  private Log() {
     try {
-      // path, append 방식으로 생성
-      infoFileHandler = new FileHandler(infoLog, 200, 1000, true);
-    } catch (SecurityException | IOException e) {
-      e.printStackTrace();
+      Client.getStub().createLog(logInfo);
+    } catch (
+        RemoteException e) {
+      throw new RuntimeException(e);
     }
 
-    infoFileHandler.setFormatter(new SimpleFormatter());
-    infoFileHandler.setLevel(Level.INFO);
-    logger.addHandler(infoFileHandler);
   }
 
-  public static Log getLogger() {
-    if (log == null) {
-      log = new Log();
+
+  public static void readLog() {
+    try {
+      ArrayList<LogDto> logResults = Client.getStub().readLog();
+
+      for (LogDto logDto : logResults) {
+        System.out.println(logDto);
+      }
+
+    } catch (RemoteException e) {
+      throw new RuntimeException(e);
     }
-    return log;
   }
 
-  public void fine(String msg) {
-    logger.info(msg);
-  }
 }

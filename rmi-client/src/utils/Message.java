@@ -1,8 +1,6 @@
 package utils;
 
-import dto.CourseDto;
 import dto.Dto;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Message {

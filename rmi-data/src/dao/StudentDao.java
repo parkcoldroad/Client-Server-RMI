@@ -1,6 +1,8 @@
 package dao;
 
+import com.mysql.jdbc.MysqlErrorNumbers;
 import dto.StudentDto;
+import exception.DuplicateUserIdException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +21,7 @@ public class StudentDao {
   }
 
 
-  public ArrayList<StudentDto> signIn(String studentId){
+  public ArrayList<StudentDto> signIn(String studentId) throws DuplicateUserIdException {
     ArrayList<StudentDto> studentDtos = new ArrayList<>();
     sql = "SELECT * from Student WHERE StudentId = " + studentId;
 
@@ -40,12 +42,15 @@ public class StudentDao {
       pstmt.close();
       return studentDtos;
     } catch (SQLException e) {
-      throw new RuntimeException();
+      if(e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY)
+        throw new DuplicateUserIdException("your id is duplicated");
+      else throw new RuntimeException();
     }
   }
 
 
-  public boolean createStudentRecords(ArrayList<StudentDto> studentList) {
+  public boolean createStudentRecords(ArrayList<StudentDto> studentList)
+      throws DuplicateUserIdException {
     sql = "INSERT INTO Student(studentId,studentName,department,password,gender) VALUES (?,?,?,?,?)";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
@@ -62,7 +67,9 @@ public class StudentDao {
       pstmt.close();
       return true;
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      if(e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY)
+        throw new DuplicateUserIdException("duplicate id");
+      else throw new RuntimeException(e);
     }
   }
 

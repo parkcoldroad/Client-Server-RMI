@@ -2,6 +2,7 @@ package rmi;
 
 import dto.CourseDto;
 import dto.EnrollmentDto;
+import dto.LogDto;
 import dto.PreCourseDto;
 import dto.StudentDto;
 import exception.NullDataException;
@@ -41,6 +42,16 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
       e.printStackTrace();
     }
 
+  }
+
+  @Override
+  public void createLog(ArrayList<LogDto> logDto) throws RemoteException {
+    data.createLog(logDto);
+  }
+
+  @Override
+  public ArrayList<LogDto> readLog() throws RemoteException {
+    return data.readLog();
   }
 
   @Override

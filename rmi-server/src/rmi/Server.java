@@ -2,6 +2,7 @@ package rmi;
 
 import dto.CourseDto;
 import dto.EnrollmentDto;
+import dto.LogDto;
 import dto.PreCourseDto;
 import dto.StudentDto;
 import exception.NullDataException;
@@ -47,10 +48,14 @@ public class Server extends UnicastRemoteObject implements ClientStub {
 
   }
 
+  @Override
+  public ArrayList<LogDto> readLog() throws RemoteException {
+    return dataServer.readLog();
+  }
 
   @Override
-  public boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
-    return dataServer.createStudentData(studentDtos);
+  public void createLog(ArrayList<LogDto> logDto) throws RemoteException {
+    dataServer.createLog(logDto);
   }
 
 
@@ -65,6 +70,10 @@ public class Server extends UnicastRemoteObject implements ClientStub {
     return OptionalStudent.isPresent();
   }
 
+  @Override
+  public boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
+    return dataServer.createStudentData(studentDtos);
+  }
   @Override
   public boolean createCourseData(ArrayList<CourseDto> courseData) throws RemoteException {
     return dataServer.createCourseData(courseData);
