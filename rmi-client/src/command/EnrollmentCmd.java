@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import service.EnrollmentService;
 import utils.Input;
+import utils.Log;
 import utils.Message;
 
 public class EnrollmentCmd {
@@ -28,12 +29,13 @@ public class EnrollmentCmd {
     System.out.println("CourseId : "); String courseId = Input.readLine();
     String result = EnrollmentService.getInstance().applyCourse(courseId);
     Message.print(result);
+    Log.createLog("Enrollmentiscompleted");
   }
 
   public static void displayApplyHistory() {
-    System.out.println("enter studentId to display applying List");
     ArrayList<EnrollmentDto> enrollmentList = EnrollmentService.getInstance().displayApplyHistory();
     Message.print(enrollmentList);
+    Log.createLog("displayEnrollmentHistory");
   }
 
 
@@ -42,5 +44,6 @@ public class EnrollmentCmd {
     System.out.println("CourseId : "); String courseId = Input.readLine();
     boolean result = EnrollmentService.getInstance().removeApplyHistory(courseId);
     Message.print(result);
+    Log.createLog("removeEnrollmentHistory");
   }
 }

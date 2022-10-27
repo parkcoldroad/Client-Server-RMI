@@ -1,2 +1,4 @@
-60181894 printList printStudentsList 2022.10.27.16:07:42
-60181895 printList printStudentsList 2022.10.27.16:08:43
+60181894 printList printStudentsList 2022.10.27.16:35:46
+60181894 printCourseList printCoursesList 2022.10.27.16:35:49
+60181894 Enrollmentiscompleted applyCourse 2022.10.27.16:35:57
+60181894 printCourseList printCoursesList 2022.10.27.16:36:06

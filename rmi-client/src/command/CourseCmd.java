@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import service.CourseService;
 import utils.Input;
+import utils.Log;
 import utils.Message;
 
 public class CourseCmd {
@@ -23,16 +24,19 @@ public class CourseCmd {
   public static void createCourse() {
     boolean result = CourseService.getInstance().createCourse(getCourseScannerResult());
     Message.print(result);
+    Log.createLog("createCourse");
   }
 
   public static void printCoursesList() {
     ArrayList<CourseDto> courseList = CourseService.getInstance().printCoursesList();
     Message.print(courseList);
+    Log.createLog("printCourseList");
   }
 
   public static void updateCourse() {
     boolean result =  CourseService.getInstance().updateCourse(getCourseScannerResult());
     Message.print(result);
+    Log.createLog("updateCourse");
   }
 
   public static void deleteCourse() {
@@ -40,6 +44,7 @@ public class CourseCmd {
     String courseId = Input.readLine();
     boolean result = CourseService.getInstance().deleteCourse(courseId);
     Message.print(result);
+    Log.createLog("deleteCourse");
   }
 
   public static void searchCourse() {
@@ -47,6 +52,7 @@ public class CourseCmd {
     String courseId = Input.readLine();
     String seachedResult = CourseService.getInstance().searchCourse(courseId);
     Message.print(seachedResult);
+    Log.createLog("searchCourse");
   }
 
   public static ArrayList<CourseDto> getCourseScannerResult() {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import service.PreCourseService;
 import utils.Input;
+import utils.Log;
 import utils.Message;
 
 public class PreCourseCmd {
@@ -26,11 +27,13 @@ public class PreCourseCmd {
     System.out.println("enter your preCourseId"); String preCourseId = Input.readLine();
     String createdResult = PreCourseService.getInstance().registerPreCourse(courseId,preCourseId);
     Message.print(createdResult);
+    Log.createLog("preCourseRegistrationiscompleted");
   }
 
   public static void readPreCoursesList() {
     ArrayList<PreCourseDto> preCourseList = PreCourseService.getInstance().readPreCoursesList();
     Message.print(preCourseList);
+    Log.createLog("readpreCourse");
   }
 
   public static void updatePreCourse() {
@@ -39,6 +42,7 @@ public class PreCourseCmd {
     String precourseId = Input.readLine();
     boolean result = PreCourseService.getInstance().updatePreCourse(courseId,precourseId);
     Message.print(result);
+    Log.createLog("updatePrecourse");
   }
 
   public static void deletePreCourse() {
@@ -46,5 +50,6 @@ public class PreCourseCmd {
     String courseId = Input.readLine();
     boolean result = PreCourseService.getInstance().deletePreCourse(courseId);
     Message.print(result);
+    Log.createLog("deletePreCourse");
   }
 }

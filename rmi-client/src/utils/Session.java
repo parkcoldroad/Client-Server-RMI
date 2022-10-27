@@ -34,6 +34,7 @@ public class Session {
   public void exit() {
     this.studentDto = null;
     System.out.println("log out completed..");
+    Log.createLog("log out completed..");
     AuthCmd.initialize();
   }
 }

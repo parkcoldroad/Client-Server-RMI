@@ -43,7 +43,7 @@ public class StudentCmd {
   }
 
   public static void deleteStudent() {
-    System.out.println("enter your studentId to delete");
+    System.out.println("enter studentId to delete");
     boolean result = StudentService.getInstance().deleteStudent();
     Message.print(result);
     Log.createLog("deleteStudent");
