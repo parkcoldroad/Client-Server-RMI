@@ -7,12 +7,13 @@ import command.EnrollmentCmd;
 import command.StudentCmd;
 import rmi.Client;
 import utils.Log;
+import utils.Session;
 
 public enum MainMenu implements Menu {//인터페이스 상속 후, 모든 메뉴 다 enum으로 처리
 	STUDENT(StudentCmd::initialize,"1"),
 	COURSE(CourseCmd::initialize,"2"),
 	ENROLLMENT(EnrollmentCmd::initialize,"3"),
-	LOGOUT(AuthCmd::initialize,"4"),
+	LOGOUT(()->Session.getSession().exit(),"4"),
 	LOG(Log::readLog,"5"),
 	QUIT(Client::quit,"6");
 	

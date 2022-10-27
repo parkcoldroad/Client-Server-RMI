@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import rmi.Client;
 import rmi.ClientStub;
+import utils.Session;
 
 public class EnrollmentService {
 
@@ -24,26 +25,26 @@ public class EnrollmentService {
   }
 
 
-  public String applyCourse(String studentId, String courseId) {
+  public String applyCourse(String courseId) {
     try {
-      return this.clientStub.createEnrollment(studentId, courseId);
+      return this.clientStub.createEnrollment( Session.getSession().getStudentId(), courseId);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public ArrayList<EnrollmentDto> displayApplyHistory(String studentId) {
+  public ArrayList<EnrollmentDto> displayApplyHistory() {
     try {
-      return this.clientStub.getEnrollmentData(studentId);
+      return this.clientStub.getEnrollmentData(Session.getSession().getStudentId());
     } catch (RemoteException | NullDataException e) {
       throw new RuntimeException(e);
     }
   }
 
 
-  public boolean removeApplyHistory(String studentId,String courseId) {
+  public boolean removeApplyHistory(String courseId) {
     try {
-      return this.clientStub.deleteEnrollment(studentId, courseId);
+      return this.clientStub.deleteEnrollment(Session.getSession().getStudentId(), courseId);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }

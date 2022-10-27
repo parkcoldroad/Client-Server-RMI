@@ -4,11 +4,10 @@ import static command.StudentCmd.getStudentScannerResult;
 
 import command.menu.AuthMenu;
 import java.util.Arrays;
-import rmi.Client;
 import service.AuthService;
 import utils.Input;
-import utils.Log;
 import utils.Message;
+import utils.Session;
 
 public class AuthCmd {
 
@@ -28,15 +27,7 @@ public class AuthCmd {
     String studentId = Input.readLine();
     System.out.println("enter your password");
     String password = Input.readLine();
-
-    boolean signInResult = AuthService.getInstance().signIn(studentId, password);
-    if (signInResult) {
-      Client.start();
-    } else {
-      System.out.println("SignIn failed");
-      initialize();
-    }
-
+    Session.getSession().register(AuthService.getInstance().signIn(studentId, password));
   }
 
 

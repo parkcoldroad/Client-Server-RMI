@@ -24,27 +24,23 @@ public class EnrollmentCmd {
     System.out.println("------------Courses List------------");
     CourseCmd.printCoursesList();
 
-    System.out.println("\n enter studentId, courseId to apply");
-    System.out.println("StudentId : "); String studentId = Input.readLine();
+    System.out.println("\n enter courseId to apply");
     System.out.println("CourseId : "); String courseId = Input.readLine();
-
-    String result = EnrollmentService.getInstance().applyCourse(studentId, courseId);
+    String result = EnrollmentService.getInstance().applyCourse(courseId);
     Message.print(result);
   }
 
   public static void displayApplyHistory() {
     System.out.println("enter studentId to display applying List");
-    String studentId = Input.readLine();
-    ArrayList<EnrollmentDto> enrollmentList = EnrollmentService.getInstance().displayApplyHistory(studentId);
+    ArrayList<EnrollmentDto> enrollmentList = EnrollmentService.getInstance().displayApplyHistory();
     Message.print(enrollmentList);
   }
 
 
   public static void removeApplyHistory() {
-    System.out.println("enter your studentId , courseId to delete");
-    System.out.println("StudentId : "); String studentId = Input.readLine();
+    System.out.println("enter your courseId to delete");
     System.out.println("CourseId : "); String courseId = Input.readLine();
-    boolean result = EnrollmentService.getInstance().removeApplyHistory(studentId, courseId);
+    boolean result = EnrollmentService.getInstance().removeApplyHistory(courseId);
     Message.print(result);
   }
 }

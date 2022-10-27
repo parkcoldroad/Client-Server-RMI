@@ -12,6 +12,8 @@ import rmi.Client;
 public class Log {
 
   public static void createLog(String message) {
+
+    String studentId = Session.getSession().getStudentId();
     SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd.HH:mm:ss");
     String timeStamp = date.format(new Date());
 
@@ -21,6 +23,7 @@ public class Log {
 
     ArrayList<LogDto> logInfo = new ArrayList<>();
     LogDto logDto = new LogDto();
+    logDto.setStudentId(studentId);
     logDto.setMethodName(methodName);
     logDto.setTimestamp(timeStamp);
     logDto.setMessage(message);

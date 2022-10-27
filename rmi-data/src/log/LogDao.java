@@ -16,6 +16,8 @@ public class LogDao {
   private String methodName;
   private String timestamp;
 
+  private String studentId;
+
   private String logInfo;
 
   private ArrayList<LogDto> logList;
@@ -30,13 +32,14 @@ public class LogDao {
 
   public void createLog(ArrayList<LogDto> logList) {
     for (LogDto logDto : logList) {
+      studentId = logDto.getStudentId();
       message = logDto.getMessage();
       methodName = logDto.getMethodName();
       timestamp = logDto.getTimestamp();
     }
     try {
       BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true));
-      fw.write(message + " " + methodName + " " + timestamp);
+      fw.write(studentId + " " + message + " " + methodName + " " + timestamp);
       fw.newLine();
       fw.close();
 
@@ -56,10 +59,12 @@ public class LogDao {
         logInfo = bufferedReader.readLine();
 
         StringTokenizer stringTokenizer = new StringTokenizer(logInfo);
+        this.studentId = stringTokenizer.nextToken();
         this.message = stringTokenizer.nextToken();
         this.methodName = stringTokenizer.nextToken();
         this.timestamp = stringTokenizer.nextToken();
 
+        logDto.setStudentId(studentId);
         logDto.setMessage(message);
         logDto.setMethodName(methodName);
         logDto.setTimestamp(timestamp);

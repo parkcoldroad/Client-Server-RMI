@@ -60,14 +60,17 @@ public class Server extends UnicastRemoteObject implements ClientStub {
 
 
   @Override
-  public boolean signIn(String studentId, String password) throws RemoteException {
+  public StudentDto signIn(String studentId, String password) throws RemoteException {
     ArrayList<StudentDto> studentList = dataServer.signIn(studentId,password);
 
     Optional<StudentDto> OptionalStudent = studentList.stream()
         .filter(student -> student.getStudentId().equals(studentId) && student.getPassword().equals(password))
         .findFirst();
 
-    return OptionalStudent.isPresent();
+    if(OptionalStudent.isPresent()){
+      return OptionalStudent.get();
+    }
+  return  null;
   }
 
   @Override

@@ -16,7 +16,7 @@ public interface ClientStub extends Remote {
 
   ArrayList<LogDto> readLog() throws RemoteException;
 
-  boolean signIn(String studentId, String password) throws RemoteException;
+  StudentDto signIn(String studentId, String password) throws RemoteException;
 
   boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
 

@@ -33,9 +33,11 @@ public class StudentDao {
       rs.next();
       String studentid = rs.getString("studentId");
       String password = rs.getString("password");
+      String studentName = rs.getString("studentName");
 
       studentDto.setStudentId(studentid);
       studentDto.setPassword(password);
+      studentDto.setName(studentName);
       studentDtos.add(studentDto);
 
       rs.close();

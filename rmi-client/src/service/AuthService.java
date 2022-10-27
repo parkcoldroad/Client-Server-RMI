@@ -23,7 +23,7 @@ public class AuthService {
     this.clientStub = Client.getStub();
   }
 
-  public boolean signIn(String studentId, String password){
+  public StudentDto signIn(String studentId, String password){
     try {
       return this.clientStub.signIn(studentId,password);
     } catch (RemoteException e) {
