@@ -18,18 +18,13 @@ public class LogDao {
 
   private String logInfo;
 
-  private final String fileName = "rmi-data/src/log/logs.txt";
-  private final BufferedWriter fw;
+  private ArrayList<LogDto> logList;
+  private LogDto logDto;
 
-  private final BufferedReader bufferedReader;
+  String fileName = "rmi-data/src/log/logs.txt";
 
   public LogDao() {
-    try {
-      fw = new BufferedWriter(new FileWriter(fileName, true));
-      bufferedReader = new BufferedReader(new FileReader(fileName));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    logList = new ArrayList<>();
   }
 
 
@@ -40,7 +35,11 @@ public class LogDao {
       timestamp = logDto.getTimestamp();
     }
     try {
+      BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true));
       fw.write(message + " " + methodName + " " + timestamp);
+      fw.newLine();
+      fw.close();
+
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -48,27 +47,33 @@ public class LogDao {
   }
 
   public ArrayList<LogDto> readLog() {
-    ArrayList<LogDto> logList = new ArrayList<>();
-    LogDto logDto = new LogDto();
-
+    logList.clear();
     try {
+      BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+
       while (bufferedReader.ready()) {
+        logDto = new LogDto();
         logInfo = bufferedReader.readLine();
+
+        StringTokenizer stringTokenizer = new StringTokenizer(logInfo);
+        this.message = stringTokenizer.nextToken();
+        this.methodName = stringTokenizer.nextToken();
+        this.timestamp = stringTokenizer.nextToken();
+
+        logDto.setMessage(message);
+        logDto.setMethodName(methodName);
+        logDto.setTimestamp(timestamp);
+
+        if (!logInfo.equals("")) {
+            logList.add(logDto);
+        }
       }
+
+      bufferedReader.close();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    StringTokenizer stringTokenizer = new StringTokenizer(logInfo);
-    this.message = stringTokenizer.nextToken();
-    this.methodName = stringTokenizer.nextToken();
-    this.timestamp = stringTokenizer.nextToken();
-
-    logDto.setMessage(message);
-    logDto.setMethodName(methodName);
-    logDto.setTimestamp(timestamp);
-    logList.add(logDto);
 
     return logList;
   }
-
 }

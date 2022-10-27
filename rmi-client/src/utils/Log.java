@@ -2,16 +2,19 @@ package utils;
 
 import dto.LogDto;
 import java.rmi.RemoteException;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import rmi.Client;
 
 public class Log {
 
   public static void createLog(String message) {
-    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+    SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd.HH:mm:ss");
+    String timeStamp = date.format(new Date());
+
     StackTraceElement[] ste = new Throwable().getStackTrace();
     List<StackTraceElement> stackTraceElements = Arrays.asList(ste);
     String methodName = stackTraceElements.get(1).getMethodName();
@@ -19,7 +22,7 @@ public class Log {
     ArrayList<LogDto> logInfo = new ArrayList<>();
     LogDto logDto = new LogDto();
     logDto.setMethodName(methodName);
-    logDto.setTimestamp(timestamp.toString());
+    logDto.setTimestamp(timeStamp);
     logDto.setMessage(message);
     logInfo.add(logDto);
 
@@ -38,7 +41,7 @@ public class Log {
       ArrayList<LogDto> logResults = Client.getStub().readLog();
 
       for (LogDto logDto : logResults) {
-        System.out.println(logDto);
+        logDto.print();
       }
 
     } catch (RemoteException e) {

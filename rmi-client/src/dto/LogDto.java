@@ -42,6 +42,6 @@ public class LogDto extends Dto implements Serializable {
   }
 
   public void print() {
-    System.out.println("Command: " +  methodName + " " + "TimeStamp" + timestamp+ " " + "message" + message) ;
+    System.out.println("Command: " +  methodName + " " + "TimeStamp: " + timestamp+ " " + "Message: " + message) ;
   }
 }
