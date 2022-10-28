@@ -23,7 +23,7 @@ public class StudentDao {
 
   public ArrayList<StudentDto> signIn(String studentId) throws DuplicateUserIdException {
     ArrayList<StudentDto> studentDtos = new ArrayList<>();
-    sql = "SELECT * from Student WHERE StudentId = " + studentId;
+    sql = "SELECT * from Student WHERE studentId ='" + studentId + "' ";
 
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
@@ -32,26 +32,29 @@ public class StudentDao {
       rs = pstmt.executeQuery();
       rs.next();
       String studentid = rs.getString("studentId");
-      String password = rs.getString("password");
       String studentName = rs.getString("studentName");
+      String department = rs.getString("department");
+      String password = rs.getString("password");
+      String gender = rs.getString("gender");
 
       studentDto.setStudentId(studentid);
-      studentDto.setPassword(password);
       studentDto.setName(studentName);
+      studentDto.setDepartment(department);
+      studentDto.setPassword(password);
+      studentDto.setGender(gender);
+
       studentDtos.add(studentDto);
 
       rs.close();
       pstmt.close();
       return studentDtos;
     } catch (SQLException e) {
-      if(e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY)
-        throw new DuplicateUserIdException("your id is duplicated");
-      else throw new RuntimeException();
+      throw new RuntimeException();
     }
   }
 
 
-  public boolean createStudentRecords(ArrayList<StudentDto> studentList)
+  public StudentDto createStudentRecords(ArrayList<StudentDto> studentList)
       throws DuplicateUserIdException {
     sql = "INSERT INTO Student(studentId,studentName,department,password,gender) VALUES (?,?,?,?,?)";
     try {
@@ -67,11 +70,13 @@ public class StudentDao {
 
       pstmt.executeUpdate();
       pstmt.close();
-      return true;
+      return studentList.stream().findFirst().get();
     } catch (SQLException e) {
-      if(e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY)
+      if (e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY) {
         throw new DuplicateUserIdException("duplicate id");
-      else throw new RuntimeException(e);
+      } else {
+        throw new RuntimeException(e);
+      }
     }
   }
 

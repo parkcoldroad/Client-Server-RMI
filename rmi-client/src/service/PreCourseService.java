@@ -48,9 +48,9 @@ public class PreCourseService {
     }
   }
 
-  public boolean deletePreCourse(String courseId) {
+  public boolean deletePreCourse(String courseId,String preCourseId) {
     try {
-     return this.clientStub.deletePreCourse(courseId);
+     return this.clientStub.deletePreCourse(courseId,preCourseId);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }

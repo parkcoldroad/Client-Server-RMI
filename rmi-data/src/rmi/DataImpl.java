@@ -66,15 +66,6 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
     }
   }
 
-  @Override
-  public boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
-    try {
-      return studentDao.createStudentRecords(studentDtos);
-    } catch (DuplicateUserIdException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
 
   @Override
   public void createLog(ArrayList<LogDto> logList) {
@@ -86,9 +77,19 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<StudentDto> signIn(String studentId, String password) throws RemoteException {
+  public ArrayList<StudentDto> signIn(String studentId) throws RemoteException {
     try {
       return studentDao.signIn(studentId);
+    } catch (DuplicateUserIdException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+
+  @Override
+  public StudentDto createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
+    try {
+      return studentDao.createStudentRecords(studentDtos);
     } catch (DuplicateUserIdException e) {
       throw new RuntimeException(e);
     }
@@ -105,8 +106,8 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public String createPreCourseData(String courseId, String precourseId) throws RemoteException {
-    return preCourseDao.createPreCourseRecord(courseId, precourseId);
+  public String createPreCourseData(String courseId, String preCourseId) throws RemoteException {
+    return preCourseDao.createPreCourseRecord(courseId, preCourseId);
   }
 
   @Override
@@ -181,8 +182,8 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public boolean deletePreCourse(String courseId) throws RemoteException {
-    return preCourseDao.deleteCourseRecord(courseId);
+  public boolean deletePreCourse(String courseId,String preCourseId) throws RemoteException {
+    return preCourseDao.deletepreCourseRecord(courseId,preCourseId);
   }
 
 }

@@ -26,15 +26,14 @@ public class Session {
       AuthCmd.initialize();
     }
     this.studentDto = studentDto;
-    System.out.println("sign in succeed!");
     System.out.printf("\n%s님 환영합니다!%n", this.studentDto.getName());
     Client.start();
   }
 
   public void exit() {
+    Log.createLog("logOutCompleted..");
     this.studentDto = null;
     System.out.println("log out completed..");
-    Log.createLog("log out completed..");
     AuthCmd.initialize();
   }
 }

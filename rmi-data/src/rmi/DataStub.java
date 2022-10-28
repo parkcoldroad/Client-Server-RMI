@@ -16,9 +16,9 @@ public interface DataStub extends Remote {
 
   ArrayList<LogDto> readLog() throws RemoteException;
 
-  ArrayList<StudentDto> signIn(String studentId, String password) throws RemoteException;
+  ArrayList<StudentDto> signIn(String studentId) throws RemoteException;
 
-  boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
+  StudentDto createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
 
   boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
 
@@ -55,5 +55,5 @@ public interface DataStub extends Remote {
 
   boolean deleteEnrollment(String studentId, String courseId) throws RemoteException;
 
-  boolean deletePreCourse(String courseId) throws RemoteException;
+  boolean deletePreCourse(String courseId,String preCourseID) throws RemoteException;
 }

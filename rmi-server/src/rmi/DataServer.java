@@ -55,12 +55,12 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<StudentDto> signIn(String studentId, String password) throws RemoteException {
-    return data.signIn(studentId,password);
+  public ArrayList<StudentDto> signIn(String studentId) throws RemoteException {
+    return data.signIn(studentId);
   }
 
   @Override
-  public boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
+  public StudentDto createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
     return data.createStudentData(studentDtos);
   }
 
@@ -75,8 +75,8 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public String createPreCourseData(String courseId, String precourseId) throws RemoteException {
-    return data.createPreCourseData(courseId,precourseId);
+  public String createPreCourseData(String courseId, String preCourseId) throws RemoteException {
+    return data.createPreCourseData(courseId,preCourseId);
   }
 
   @Override
@@ -150,7 +150,7 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public boolean deletePreCourse(String courseId) throws RemoteException {
-    return data.deletePreCourse(courseId);
+  public boolean deletePreCourse(String courseId,String preCourseId) throws RemoteException {
+    return data.deletePreCourse(courseId,preCourseId);
   }
 }

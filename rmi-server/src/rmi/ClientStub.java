@@ -18,7 +18,7 @@ public interface ClientStub extends Remote {
 
   StudentDto signIn(String studentId, String password) throws RemoteException;
 
-  boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
+  StudentDto createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException;
 
   boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
 
@@ -51,5 +51,5 @@ public interface ClientStub extends Remote {
 
   boolean deleteEnrollment(String studentId, String courseId) throws RemoteException;
 
-  boolean deletePreCourse(String courseId) throws RemoteException;
+  boolean deletePreCourse(String courseId,String preCourseId) throws RemoteException;
 }

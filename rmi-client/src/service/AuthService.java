@@ -31,7 +31,7 @@ public class AuthService {
     }
   }
 
-  public boolean signUp(ArrayList<StudentDto> studentScannerResult) {
+  public StudentDto signUp(ArrayList<StudentDto> studentScannerResult) {
     try {
       return this.clientStub.createStudentData(studentScannerResult);
     } catch (IOException e) {

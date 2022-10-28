@@ -95,12 +95,13 @@ public class PreCourseDao {
 
   }
 
-  public boolean deleteCourseRecord(String courseId) {
+  public boolean deletepreCourseRecord(String courseId,String preCourseId) {
     try {
-      sql = "DELETE FROM PreCourse " + " WHERE courseId = ? ";
+      sql = "DELETE FROM PreCourse " + " WHERE courseId = ? AND precourseId = ?";
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       pstmt.setString(1, courseId);
+      pstmt.setString(2, preCourseId);
       pstmt.executeUpdate();
 
       pstmt.close();

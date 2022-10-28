@@ -46,9 +46,11 @@ public class PreCourseCmd {
   }
 
   public static void deletePreCourse() {
-    System.out.println("enter your precourseId to delete");
+    System.out.println("enter your courseId to delete");
     String courseId = Input.readLine();
-    boolean result = PreCourseService.getInstance().deletePreCourse(courseId);
+    System.out.println("enter your preCourseId to delete");
+    String preCourseId = Input.readLine();
+    boolean result = PreCourseService.getInstance().deletePreCourse(courseId,preCourseId);
     Message.print(result);
     Log.createLog("deletePreCourse");
   }

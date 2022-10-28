@@ -61,20 +61,17 @@ public class Server extends UnicastRemoteObject implements ClientStub {
 
   @Override
   public StudentDto signIn(String studentId, String password) throws RemoteException {
-    ArrayList<StudentDto> studentList = dataServer.signIn(studentId,password);
+    ArrayList<StudentDto> studentList = dataServer.signIn(studentId);
 
     Optional<StudentDto> OptionalStudent = studentList.stream()
         .filter(student -> student.getStudentId().equals(studentId) && student.getPassword().equals(password))
         .findFirst();
 
-    if(OptionalStudent.isPresent()){
-      return OptionalStudent.get();
-    }
-  return  null;
+    return OptionalStudent.orElse(null);
   }
 
   @Override
-  public boolean createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
+  public StudentDto createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
     return dataServer.createStudentData(studentDtos);
   }
   @Override
@@ -163,7 +160,7 @@ public class Server extends UnicastRemoteObject implements ClientStub {
   }
 
   @Override
-  public boolean deletePreCourse(String courseId) throws RemoteException {
-    return dataServer.deletePreCourse(courseId);
+  public boolean deletePreCourse(String courseId,String preCourseId) throws RemoteException {
+    return dataServer.deletePreCourse(courseId,preCourseId);
   }
 }

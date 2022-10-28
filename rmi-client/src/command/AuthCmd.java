@@ -7,7 +7,6 @@ import java.util.Arrays;
 import service.AuthService;
 import utils.Input;
 import utils.Log;
-import utils.Message;
 import utils.Session;
 
 public class AuthCmd {
@@ -34,9 +33,7 @@ public class AuthCmd {
 
 
   public static void signUp() {
-    boolean signUpResult = AuthService.getInstance().signUp(getStudentScannerResult());
-    Log.createLog("signUpCompleted!");
-    Message.print(signUpResult);
-    initialize();
+    Session.getSession().register(AuthService.getInstance().signUp(getStudentScannerResult()));
+    Log.createLog("signUpCompleted");
   }
 }
