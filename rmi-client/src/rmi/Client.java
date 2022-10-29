@@ -21,13 +21,11 @@ public class Client {
   }
 
   public static void initialize() {
-    if (client == null) {
       try {
         client = new Client();
       } catch (RemoteException | NotBoundException e) {
         e.printStackTrace();
       }
-    }
   }
 
   public static ClientStub getStub() {

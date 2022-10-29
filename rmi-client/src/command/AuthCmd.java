@@ -19,7 +19,7 @@ public class AuthCmd {
         .filter(authMenu -> authMenu.getChoice().equals(choice))
         .findFirst()
         .ifPresentOrElse(AuthMenu::execute,
-            () -> System.out.println("invalid enter"));
+            () -> {System.out.println("invalid enter"); initialize();});
   }
 
   public static void signIn() {

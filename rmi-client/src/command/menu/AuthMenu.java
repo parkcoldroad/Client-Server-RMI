@@ -27,7 +27,7 @@ public enum AuthMenu implements Menu {//인터페이스 상속 후, 모든 메�
 	}
 
 	public static void printMenu(){
-			System.out.println("\n-----------------Sign In Menu--------------------");
+			System.out.println("\n-----------------Auth Menu--------------------");
 			System.out.println("1.Sign In");
 			System.out.println("2.Sign Up");
 			System.out.println("3.Quit");
