@@ -3,12 +3,12 @@ package rmi;
 import dao.CourseDao;
 import dao.EnrollmentDao;
 import dao.PreCourseDao;
-import dao.StudentDao;
+import dao.UserDao;
 import dto.CourseDto;
 import dto.EnrollmentDto;
 import dto.LogDto;
 import dto.PreCourseDto;
-import dto.StudentDto;
+import dto.UserDto;
 import exception.DuplicateUserIdException;
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
@@ -23,7 +23,7 @@ import log.LogDao;
 public class DataImpl extends UnicastRemoteObject implements DataStub {
 
   private static DataImpl dataImpl;
-  private StudentDao studentDao;
+  private UserDao userDao;
   private CourseDao courseDao;
   private EnrollmentDao enrollmentDao;
   private PreCourseDao preCourseDao;
@@ -56,7 +56,7 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
       registry.bind("dataServer", dataImpl);
 
       courseDao = new CourseDao();
-      studentDao = new StudentDao();
+      userDao = new UserDao();
       enrollmentDao = new EnrollmentDao();
       preCourseDao = new PreCourseDao();
       logDao = new LogDao();
@@ -77,9 +77,9 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<StudentDto> signIn(String studentId) throws RemoteException {
+  public ArrayList<UserDto> signIn(String userId) throws RemoteException {
     try {
-      return studentDao.signIn(studentId);
+      return userDao.signIn(userId);
     } catch (DuplicateUserIdException e) {
       throw new RuntimeException(e);
     }
@@ -87,9 +87,9 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
 
 
   @Override
-  public StudentDto createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
+  public UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException {
     try {
-      return studentDao.createStudentRecords(studentDtos);
+      return userDao.createUserRecords(userDtos);
     } catch (DuplicateUserIdException e) {
       throw new RuntimeException(e);
     }
@@ -100,8 +100,8 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
     return courseDao.createCourseRecord(courseData);
   }
 
-  public String createEnrollment(String studentId, String courseId) throws RemoteException {
-    enrollmentDao.createEnrollment(studentId, courseId);
+  public String createEnrollment(String userId, String courseId) throws RemoteException {
+    enrollmentDao.createEnrollment(userId, courseId);
     return "Enrollment is completed";
   }
 
@@ -111,8 +111,8 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<StudentDto> getAllStudentData() throws RemoteException {
-    return studentDao.readAllStudentRecords();
+  public ArrayList<UserDto> getAllUserData() throws RemoteException {
+    return userDao.readAllUserRecords();
   }
 
   @Override
@@ -121,13 +121,13 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<String> getCompletedCourseList(String studentId) throws RemoteException {
-    return enrollmentDao.getCompletedCourseList(studentId);
+  public ArrayList<String> getCompletedCourseList(String userId) throws RemoteException {
+    return enrollmentDao.getCompletedCourseList(userId);
   }
 
   @Override
-  public ArrayList<EnrollmentDto> getEnrollmentData(String studentId) throws RemoteException {
-    return enrollmentDao.getEnrollmentData(studentId);
+  public ArrayList<EnrollmentDto> getEnrollmentData(String userId) throws RemoteException {
+    return enrollmentDao.getEnrollmentData(userId);
   }
 
   @Override
@@ -136,13 +136,13 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public String searchStudentData(String studentId) throws RemoteException {
-    return studentDao.searchStudentRecords(studentId);
+  public String searchUserData(String userId) throws RemoteException {
+    return userDao.searchUserRecords(userId);
   }
 
   @Override
-  public String searchCourseData(String courseId) throws RemoteException {
-    return courseDao.searchCourseRecord(courseId);
+  public String searchCourseData(String userId) throws RemoteException {
+    return courseDao.searchCourseRecord(userId);
   }
 
   @Override
@@ -151,8 +151,8 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public boolean updateStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
-    return studentDao.updateStudentRecord(studentDtos);
+  public boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+    return userDao.updateUserRecord(userDtos);
   }
 
   @Override
@@ -166,8 +166,8 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public boolean deleteStudentData(String studentId) throws RemoteException {
-    return studentDao.deleteStudentRecords(studentId);
+  public boolean deleteUserData(String userId) throws RemoteException {
+    return userDao.deleteUserRecords(userId);
   }
 
 
@@ -177,8 +177,8 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
 
-  public boolean deleteEnrollment(String studentId, String courseId) throws RemoteException {
-    return enrollmentDao.deleteEnrollment(studentId, courseId);
+  public boolean deleteEnrollment(String userId, String courseId) throws RemoteException {
+    return enrollmentDao.deleteEnrollment(userId, courseId);
   }
 
   @Override

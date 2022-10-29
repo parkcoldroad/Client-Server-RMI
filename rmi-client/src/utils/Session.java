@@ -1,13 +1,13 @@
 package utils;
 
 import command.AuthCmd;
-import dto.StudentDto;
+import dto.UserDto;
 import rmi.Client;
 
 public class Session {
 
   public static Session session;
-  private StudentDto studentDto;
+  private UserDto userDto;
 
   public static Session getSession() {
     if (session == null) {
@@ -16,23 +16,23 @@ public class Session {
     return session;
   }
 
-  public String getStudentId() {
-    return this.studentDto.getStudentId();
+  public String getUserId() {
+    return this.userDto.getUserId();
   }
 
-  public void register(StudentDto studentDto) {
-    if (studentDto == null) {
+  public void register(UserDto userDto) {
+    if (userDto == null) {
       System.out.println("sign in failed..");
       AuthCmd.initialize();
     }
-    this.studentDto = studentDto;
-    System.out.printf("\n%s님 환영합니다!%n", this.studentDto.getName());
+    this.userDto = userDto;
+    System.out.printf("\n%s님 환영합니다!%n", this.userDto.getName());
     Client.start();
   }
 
   public void exit() {
     Log.createLog("logOutCompleted..");
-    this.studentDto = null;
+    this.userDto = null;
     System.out.println("log out completed..");
     AuthCmd.initialize();
   }

@@ -4,7 +4,7 @@ import dto.CourseDto;
 import dto.EnrollmentDto;
 import dto.LogDto;
 import dto.PreCourseDto;
-import dto.StudentDto;
+import dto.UserDto;
 import exception.NullDataException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -60,35 +60,34 @@ public class Server extends UnicastRemoteObject implements ClientStub {
 
 
   @Override
-  public StudentDto signIn(String studentId, String password) throws RemoteException {
-    ArrayList<StudentDto> studentList = dataServer.signIn(studentId);
+  public UserDto signIn(String userId, String password) throws RemoteException {
+    ArrayList<UserDto> userList = dataServer.signIn(userId);
 
-    Optional<StudentDto> OptionalStudent = studentList.stream()
-        .filter(student -> student.getStudentId().equals(studentId) && student.getPassword().equals(password))
+    Optional<UserDto> OptionalUser = userList.stream()
+        .filter(user -> user.getUserId().equals(userId) && user.getPassword().equals(password))
         .findFirst();
 
-    return OptionalStudent.orElse(null);
+    return OptionalUser.orElse(null);
   }
 
-  @Override
-  public StudentDto createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
-    return dataServer.createStudentData(studentDtos);
+  public UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+    return dataServer.createUserData(userDtos);
   }
   @Override
   public boolean createCourseData(ArrayList<CourseDto> courseData) throws RemoteException {
     return dataServer.createCourseData(courseData);
   }
 
-  public String createEnrollment(String studentId, String courseId) throws RemoteException {
+  public String createEnrollment(String userId, String courseId) throws RemoteException {
     boolean isReady = true;
     ArrayList<String> preCourseLists = dataServer.searchPreCourse(courseId);
-    ArrayList<String> completedCourseList = dataServer.getCompletedCourseList(studentId);
+    ArrayList<String> completedCourseList = dataServer.getCompletedCourseList(userId);
 
     for (String precourse : preCourseLists) {
       isReady = completedCourseList.contains(precourse);
     }
     if (isReady) {
-      return  dataServer.createEnrollment(studentId, courseId);
+      return  dataServer.createEnrollment(userId, courseId);
     }
     return "Enrollment is failed.. you didn't take preCourses";
   }
@@ -98,9 +97,8 @@ public class Server extends UnicastRemoteObject implements ClientStub {
     return dataServer.createPreCourseData(courseId, precourseId);
   }
 
-  @Override
-  public ArrayList<StudentDto> getAllStudentData() throws RemoteException, NullDataException {
-    return dataServer.getAllStudentData();
+  public ArrayList<UserDto> getAllUserData() throws RemoteException, NullDataException {
+    return dataServer.getAllUserData();
   }
 
   @Override
@@ -109,8 +107,8 @@ public class Server extends UnicastRemoteObject implements ClientStub {
   }
 
   @Override
-  public ArrayList<EnrollmentDto> getEnrollmentData(String studentId) throws RemoteException, NullDataException {
-    return dataServer.getEnrollmentData(studentId);
+  public ArrayList<EnrollmentDto> getEnrollmentData(String userId) throws RemoteException, NullDataException {
+    return dataServer.getEnrollmentData(userId);
   }
 
   @Override
@@ -118,9 +116,8 @@ public class Server extends UnicastRemoteObject implements ClientStub {
     return dataServer.getAllPreCourseData();
   }
 
-  @Override
-  public String searchStudentData(String studentId) throws RemoteException {
-    return dataServer.searchStudentData(studentId);
+  public String searchUserData(String userId) throws RemoteException {
+    return dataServer.searchUserData(userId);
   }
 
   @Override
@@ -128,9 +125,8 @@ public class Server extends UnicastRemoteObject implements ClientStub {
     return dataServer.searchCourseData(courseId);
   }
 
-  @Override
-  public boolean updateStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
-    return dataServer.updateStudentData(studentDtos);
+  public boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+    return dataServer.updateUserData(userDtos);
   }
 
   @Override
@@ -143,9 +139,8 @@ public class Server extends UnicastRemoteObject implements ClientStub {
     return dataServer.updatePreCourseData(courseId, preCourseId);
   }
 
-  @Override
-  public boolean deleteStudentData(String studentId) throws RemoteException {
-    return dataServer.deleteStudentData(studentId);
+  public boolean deleteUserData(String userId) throws RemoteException {
+    return dataServer.deleteUserData(userId);
   }
 
 
@@ -155,8 +150,8 @@ public class Server extends UnicastRemoteObject implements ClientStub {
   }
 
 
-  public boolean deleteEnrollment(String studentId, String courseId) throws RemoteException {
-    return dataServer.deleteEnrollment(studentId, courseId);
+  public boolean deleteEnrollment(String userId, String courseId) throws RemoteException {
+    return dataServer.deleteEnrollment(userId, courseId);
   }
 
   @Override

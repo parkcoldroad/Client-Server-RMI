@@ -27,7 +27,7 @@ public class EnrollmentService {
 
   public String applyCourse(String courseId) {
     try {
-      return this.clientStub.createEnrollment( Session.getSession().getStudentId(), courseId);
+      return this.clientStub.createEnrollment(Session.getSession().getUserId(), courseId);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
@@ -35,7 +35,7 @@ public class EnrollmentService {
 
   public ArrayList<EnrollmentDto> displayApplyHistory() {
     try {
-      return this.clientStub.getEnrollmentData(Session.getSession().getStudentId());
+      return this.clientStub.getEnrollmentData(Session.getSession().getUserId());
     } catch (RemoteException | NullDataException e) {
       throw new RuntimeException(e);
     }
@@ -44,7 +44,7 @@ public class EnrollmentService {
 
   public boolean removeApplyHistory(String courseId) {
     try {
-      return this.clientStub.deleteEnrollment(Session.getSession().getStudentId(), courseId);
+      return this.clientStub.deleteEnrollment(Session.getSession().getUserId(), courseId);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }

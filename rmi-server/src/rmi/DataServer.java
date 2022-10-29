@@ -4,7 +4,7 @@ import dto.CourseDto;
 import dto.EnrollmentDto;
 import dto.LogDto;
 import dto.PreCourseDto;
-import dto.StudentDto;
+import dto.UserDto;
 import exception.NullDataException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -55,13 +55,13 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<StudentDto> signIn(String studentId) throws RemoteException {
-    return data.signIn(studentId);
+  public ArrayList<UserDto> signIn(String userId) throws RemoteException {
+    return data.signIn(userId);
   }
 
   @Override
-  public StudentDto createStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
-    return data.createStudentData(studentDtos);
+  public UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+    return data.createUserData(userDtos);
   }
 
   @Override
@@ -70,8 +70,8 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public String createEnrollment(String studentId, String courseId) throws RemoteException {
-    return data.createEnrollment(studentId,courseId);
+  public String createEnrollment(String userId, String courseId) throws RemoteException {
+    return data.createEnrollment(userId,courseId);
   }
 
   @Override
@@ -80,8 +80,8 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<StudentDto> getAllStudentData() throws RemoteException, NullDataException {
-    return data.getAllStudentData();
+  public ArrayList<UserDto> getAllUserData() throws RemoteException, NullDataException {
+    return data.getAllUserData();
   }
 
   @Override
@@ -90,13 +90,13 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<String> getCompletedCourseList(String studentId) throws RemoteException {
-    return data.getCompletedCourseList(studentId);
+  public ArrayList<String> getCompletedCourseList(String userId) throws RemoteException {
+    return data.getCompletedCourseList(userId);
   }
 
   @Override
-  public ArrayList<EnrollmentDto> getEnrollmentData(String studentId) throws RemoteException, NullDataException {
-    return data.getEnrollmentData(studentId);
+  public ArrayList<EnrollmentDto> getEnrollmentData(String userId) throws RemoteException, NullDataException {
+    return data.getEnrollmentData(userId);
   }
 
   @Override
@@ -105,8 +105,8 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public String searchStudentData(String studentId) throws RemoteException {
-    return data.searchStudentData(studentId);
+  public String searchUserData(String userId) throws RemoteException {
+    return data.searchUserData(userId);
   }
 
   @Override
@@ -120,8 +120,8 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public boolean updateStudentData(ArrayList<StudentDto> studentDtos) throws RemoteException {
-    return data.updateStudentData(studentDtos);
+  public boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+    return data.updateUserData(userDtos);
   }
 
   @Override
@@ -135,8 +135,8 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public boolean deleteStudentData(String studentId) throws RemoteException {
-    return data.deleteStudentData(studentId);
+  public boolean deleteUserData(String userId) throws RemoteException {
+    return data.deleteUserData(userId);
   }
 
   @Override
@@ -145,8 +145,8 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public boolean deleteEnrollment(String studentId, String courseId) throws RemoteException {
-    return data.deleteEnrollment(studentId,courseId);
+  public boolean deleteEnrollment(String userId, String courseId) throws RemoteException {
+    return data.deleteEnrollment(userId,courseId);
   }
 
   @Override

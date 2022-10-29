@@ -18,12 +18,12 @@ public class EnrollmentDao {
     conn = DBConfig.getConnection();
   }
 
-  public void createEnrollment(String studentId, String courseId) {
-    sql = "INSERT INTO Enrollment(studentId,courseId) VALUES (?,?)";
+  public void createEnrollment(String userId, String courseId) {
+    sql = "INSERT INTO Enrollment(userId,courseId) VALUES (?,?)";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
-      pstmt.setString(1, studentId);
+      pstmt.setString(1, userId);
       pstmt.setString(2, courseId);
 
       pstmt.executeUpdate();
@@ -33,9 +33,9 @@ public class EnrollmentDao {
     }
   }
 
-  public ArrayList<String> getCompletedCourseList(String studentId) {
+  public ArrayList<String> getCompletedCourseList(String userId) {
     ArrayList<String> completedCourseList = new ArrayList<>();
-    sql = "SELECT * from Enrollment WHERE isCompleted = 1 AND studentId = " + studentId;
+    sql = "SELECT * from Enrollment WHERE isCompleted = 1 AND userId ='" + userId + "' ";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
@@ -52,20 +52,20 @@ public class EnrollmentDao {
     return completedCourseList;
   }
 
-  public ArrayList<EnrollmentDto> getEnrollmentData(String studentId) {
+  public ArrayList<EnrollmentDto> getEnrollmentData(String userId) {
     ArrayList<EnrollmentDto> enrollmentDtos = new ArrayList<>();
-    sql = "SELECT * from Enrollment INNER JOIN Course ON Enrollment.courseId  = Course.courseId AND studentId =" + studentId;
+    sql = "SELECT * from Enrollment INNER JOIN Course ON Enrollment.courseId  = Course.courseId AND userId ='" + userId + "' ";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       rs = pstmt.executeQuery();
       while (rs.next()) {
         EnrollmentDto enrollmentDto = new EnrollmentDto();
-        String studentid = rs.getString("studentId");
+        String userid = rs.getString("userId");
         String courseId = rs.getString("courseId");
         String professorName = rs.getString("professorName");
         String courseName = rs.getString("courseName");
-        enrollmentDto.setStudentId(studentid);
+        enrollmentDto.setUserId(userid);
         enrollmentDto.setCourseId(courseId);
         enrollmentDto.setProfessorName(professorName);
         enrollmentDto.setCourseName(courseName);
@@ -81,12 +81,12 @@ public class EnrollmentDao {
   }
 
 
-  public boolean deleteEnrollment(String studentId, String courseId) {
+  public boolean deleteEnrollment(String userId, String courseId) {
     try {
-      sql = "DELETE FROM Enrollment " + " WHERE studentId = ? AND courseId = ? ";
+      sql = "DELETE FROM Enrollment " + " WHERE userId = ? AND courseId = ? ";
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
-      pstmt.setString(1, studentId);
+      pstmt.setString(1, userId);
       pstmt.setString(2, courseId);
       pstmt.executeUpdate();
 

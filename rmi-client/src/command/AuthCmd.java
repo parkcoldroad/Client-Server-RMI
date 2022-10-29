@@ -1,6 +1,6 @@
 package command;
 
-import static command.StudentCmd.getStudentScannerResult;
+import static command.UserCmd.getUserScannerResult;
 
 import command.menu.AuthMenu;
 import java.util.Arrays;
@@ -23,17 +23,17 @@ public class AuthCmd {
   }
 
   public static void signIn() {
-    System.out.println("enter your studentId to sign in");
-    String studentId = Input.readLine();
+    System.out.println("enter your userId to sign in");
+    String userId = Input.readLine();
     System.out.println("enter your password");
     String password = Input.readLine();
-    Session.getSession().register(AuthService.getInstance().signIn(studentId, password));
+    Session.getSession().register(AuthService.getInstance().signIn(userId, password));
     Log.createLog("signInCompleted");
   }
 
 
   public static void signUp() {
-    Session.getSession().register(AuthService.getInstance().signUp(getStudentScannerResult()));
+    Session.getSession().register(AuthService.getInstance().signUp(getUserScannerResult()));
     Log.createLog("signUpCompleted");
   }
 }

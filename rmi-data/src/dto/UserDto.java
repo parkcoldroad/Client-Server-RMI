@@ -2,21 +2,21 @@ package dto;
 
 import java.io.Serializable;
 
-public class StudentDto extends Dto implements Serializable {
+public class UserDto extends Dto implements Serializable {
 
   private static final long serialVersionUID = 1L;
-  private String studentId;
+  private String userId;
   private String name;
   private String department;
   private String password;
   private String gender;
 
-  public String getStudentId() {
-    return studentId;
+  public String getUserId() {
+    return userId;
   }
 
-  public void setStudentId(String studentId) {
-    this.studentId = studentId;
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   public String getName() {
@@ -53,11 +53,11 @@ public class StudentDto extends Dto implements Serializable {
 
   @Override
   public String toString() {
-    return this.studentId + " " + this.name + " " + this.department + " " + this.gender;
+    return this.userId + " " + this.name + " " + this.department + " " + this.gender;
   }
 
   @Override
   public void print() {
-    System.out.println(this.studentId + " " + this.name + " " + this.department + " " + this.gender);
+    System.out.println(this.userId + " " + this.name + " " + this.department + " " + this.gender);
   }
 }

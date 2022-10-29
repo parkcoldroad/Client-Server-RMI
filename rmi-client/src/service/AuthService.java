@@ -1,6 +1,6 @@
 package service;
 
-import dto.StudentDto;
+import dto.UserDto;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -23,17 +23,17 @@ public class AuthService {
     this.clientStub = Client.getStub();
   }
 
-  public StudentDto signIn(String studentId, String password){
+  public UserDto signIn(String userId, String password){
     try {
-      return this.clientStub.signIn(studentId,password);
+      return this.clientStub.signIn(userId,password);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public StudentDto signUp(ArrayList<StudentDto> studentScannerResult) {
+  public UserDto signUp(ArrayList<UserDto> userScannerResult) {
     try {
-      return this.clientStub.createStudentData(studentScannerResult);
+      return this.clientStub.createUserData(userScannerResult);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

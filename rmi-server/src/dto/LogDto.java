@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class LogDto extends Dto implements Serializable {
 
-  private String studentId;
+  private String userId;
   private String methodName;
   private String timestamp;
   private String message;
 
-  public String getStudentId() {
-    return studentId;
+  public String getUserId() {
+    return userId;
   }
 
-  public void setStudentId(String studentId) {
-    this.studentId = studentId;
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   public String getMethodName() {
@@ -43,7 +43,7 @@ public class LogDto extends Dto implements Serializable {
 
   public void print() {
     System.out.println(
-        "StudentId : " + studentId + " " + "Command: " + methodName + " " + "TimeStamp: "
+        "userId : " + userId + " " + "Command: " + methodName + " " + "TimeStamp: "
             + timestamp + " " + "Message: " + message);
   }
 }

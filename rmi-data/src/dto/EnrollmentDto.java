@@ -3,17 +3,17 @@ package dto;
 import java.io.Serializable;
 
 public class EnrollmentDto extends Dto implements Serializable {
-  private String studentId;
+  private String userId;
   private String courseId;
   private String courseName;
   private String professorName;
 
-  public String getStudentId() {
-    return studentId;
+  public String getUserId() {
+    return userId;
   }
 
-  public void setStudentId(String studentId) {
-    this.studentId = studentId;
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   public String getCourseId() {
@@ -41,11 +41,11 @@ public class EnrollmentDto extends Dto implements Serializable {
   }
   @Override
   public String toString(){
-    return studentId + " " + courseId + " " + courseName + " " + professorName ;
+    return userId + " " + courseId + " " + courseName + " " + professorName ;
   }
 
   @Override
   public void print() {
-    System.out.println(studentId + " " + courseId + " " + courseName + " " + professorName);
+    System.out.println(userId + " " + courseId + " " + courseName + " " + professorName);
   }
 }
