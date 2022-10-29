@@ -17,7 +17,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import log.LogDao;
+import log.LogWriter;
 
 @SuppressWarnings("serial")
 public class DataImpl extends UnicastRemoteObject implements DataStub {
@@ -28,7 +28,7 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   private EnrollmentDao enrollmentDao;
   private PreCourseDao preCourseDao;
 
-  private LogDao logDao;
+  private LogWriter logWriter;
   private Registry registry;
 
   public static DataImpl getInstance() {
@@ -59,7 +59,7 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
       userDao = new UserDao();
       enrollmentDao = new EnrollmentDao();
       preCourseDao = new PreCourseDao();
-      logDao = new LogDao();
+      logWriter = new LogWriter();
       System.out.println("data Server is ready");
     } catch (RemoteException | AlreadyBoundException e) {
       e.printStackTrace();
@@ -69,11 +69,11 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
 
   @Override
   public void createLog(ArrayList<LogDto> logList) {
-    logDao.createLog(logList);
+    logWriter.createLog(logList);
   }
 
   @Override
-  public ArrayList<LogDto> readLog() {return logDao.readLog();
+  public ArrayList<LogDto> readLog() {return logWriter.readLog();
   }
 
   @Override

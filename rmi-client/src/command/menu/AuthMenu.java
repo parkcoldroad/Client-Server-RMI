@@ -4,7 +4,7 @@ package command.menu;
 import command.AuthCmd;
 import rmi.Client;
 
-public enum AuthMenu implements Menu {//인터페이스 상속 후, 모든 메뉴 다 enum으로 처리
+public enum AuthMenu implements Menu {
 	SignIn(AuthCmd::signIn,"1"),
 	SignUp(AuthCmd::signUp,"2"),
 	Quit(Client::quit,"3");

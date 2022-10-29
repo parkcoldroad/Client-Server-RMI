@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 
-public class LogDao {
+public class LogWriter {
 
   private String message;
   private String methodName;
@@ -25,7 +25,7 @@ public class LogDao {
 
   String fileName = "rmi-data/src/log/logs.txt";
 
-  public LogDao() {
+  public LogWriter() {
     logList = new ArrayList<>();
   }
 
