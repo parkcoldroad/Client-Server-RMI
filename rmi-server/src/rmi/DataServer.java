@@ -41,7 +41,6 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
     } catch (RemoteException | NotBoundException e) {
       e.printStackTrace();
     }
-
   }
 
   @Override

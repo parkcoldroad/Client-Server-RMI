@@ -39,11 +39,11 @@ public class Client {
       MainMenu.printMenu();
       String input = Input.readLine();
 
-      Optional<MainMenu> optionalCRUD = Arrays.stream(MainMenu.values())
+      Optional<MainMenu> optionalMainMenu = Arrays.stream(MainMenu.values())
           .filter(mainMenu -> mainMenu.getChoice().equals(input))
           .findFirst();
 
-      optionalCRUD.ifPresentOrElse(MainMenu::execute,
+      optionalMainMenu.ifPresentOrElse(MainMenu::execute,
           () -> System.out.println("invalid enter"));
 
       if (input.equals("6")) {

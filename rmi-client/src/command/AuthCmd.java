@@ -23,10 +23,8 @@ public class AuthCmd {
   }
 
   public static void signIn() {
-    System.out.println("enter your userId to sign in");
-    String userId = Input.readLine();
-    System.out.println("enter your password");
-    String password = Input.readLine();
+    System.out.println("enter your userId to sign in"); String userId = Input.readLine();
+    System.out.println("enter your password"); String password = Input.readLine();
     Session.getSession().register(AuthService.getInstance().signIn(userId, password));
     Log.createLog("signInCompleted");
   }

@@ -44,7 +44,8 @@ public class UserCmd {
 
   public static void deleteUser() {
     System.out.println("enter userId to delete");
-    boolean result = UserService.getInstance().deleteUser();
+    String userId = Input.readLine();
+    boolean result = UserService.getInstance().deleteUser(userId);
     Message.print(result);
     Log.createLog("deleteuser");
   }

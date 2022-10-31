@@ -51,9 +51,9 @@ public class UserService {
     }
   }
 
-  public boolean deleteUser() {
+  public boolean deleteUser(String userId) {
     try {
-      return this.clientStub.deleteUserData(Input.readLine());
+      return this.clientStub.deleteUserData(userId);
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
