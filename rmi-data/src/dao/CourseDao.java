@@ -99,7 +99,7 @@ public class CourseDao {
 
     try {
       sql = "UPDATE Course SET courseName= '" + courseName + "'," + "professorName = '" + professorName
-          + "' WHERE courseId = " + courseId;
+          + "' WHERE courseId ='" + courseId + "' ";
       PreparedStatement pstmt = null;
       pstmt = (PreparedStatement) conn.prepareStatement(sql);
       pstmt.executeUpdate();

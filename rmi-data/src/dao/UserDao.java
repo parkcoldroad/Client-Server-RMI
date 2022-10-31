@@ -146,12 +146,9 @@ public class UserDao {
     }
 
     try {
-      sql = "UPDATE user SET "
-          + "userName= '" + userName
-          + "'," + "department = '" + department
-          + "'," + "password = '" + password
-          + "'," + "gender = '" + gender
-          + "' WHERE userId = " + userid;
+      sql = "UPDATE User SET userName = '" + userName + "'," + "department = '" + department
+          + "'," + "password = '" + password + "'," + "gender = '" + gender
+          + "' WHERE userId ='" + userid + "' ";
       PreparedStatement pstmt = null;
       pstmt = (PreparedStatement) conn.prepareStatement(sql);
       pstmt.executeUpdate();
