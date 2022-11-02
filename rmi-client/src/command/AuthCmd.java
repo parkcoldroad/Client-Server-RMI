@@ -3,6 +3,7 @@ package command;
 import static command.UserCmd.getUserScannerResult;
 
 import command.menu.AuthMenu;
+import dto.UserDto;
 import java.util.Arrays;
 import service.AuthService;
 import utils.Input;
@@ -31,7 +32,13 @@ public class AuthCmd {
 
 
   public static void signUp() {
-    Session.getSession().register(AuthService.getInstance().signUp(getUserScannerResult()));
+    UserDto userDto = AuthService.getInstance().signUp(getUserScannerResult());
+    if(userDto==null){
+      System.out.println("duplicate Id, please enter another id");
+      initialize();
+    }
+
+    Session.getSession().register(userDto);
     Log.createLog("signUpCompleted");
   }
 }

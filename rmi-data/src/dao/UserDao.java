@@ -21,7 +21,7 @@ public class UserDao {
   }
 
 
-  public ArrayList<UserDto> signIn(String userId) throws DuplicateUserIdException {
+  public ArrayList<UserDto> signIn(String userId) {
     ArrayList<UserDto> userDtos = new ArrayList<>();
     sql = "SELECT * from User WHERE userId ='" + userId + "' ";
 
@@ -49,13 +49,12 @@ public class UserDao {
       pstmt.close();
       return userDtos;
     } catch (SQLException e) {
-      throw new RuntimeException();
+        throw new RuntimeException();
+      }
     }
-  }
 
 
-  public UserDto createUserRecords(ArrayList<UserDto> userList)
-      throws DuplicateUserIdException {
+  public UserDto createUserRecords(ArrayList<UserDto> userList) throws DuplicateUserIdException {
     sql = "INSERT INTO user(userId,userName,department,password,gender) VALUES (?,?,?,?,?)";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
@@ -79,6 +78,7 @@ public class UserDao {
       }
     }
   }
+
 
   public ArrayList<UserDto> readAllUserRecords() {
     ArrayList<UserDto> userDtos = new ArrayList<>();

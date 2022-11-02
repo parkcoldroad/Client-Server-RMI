@@ -78,11 +78,7 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
 
   @Override
   public ArrayList<UserDto> signIn(String userId) throws RemoteException {
-    try {
       return userDao.signIn(userId);
-    } catch (DuplicateUserIdException e) {
-      throw new RuntimeException(e);
-    }
   }
 
 
@@ -91,8 +87,9 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
     try {
       return userDao.createUserRecords(userDtos);
     } catch (DuplicateUserIdException e) {
-      throw new RuntimeException(e);
+      e.printStackTrace();
     }
+    return null;
   }
 
   @Override
