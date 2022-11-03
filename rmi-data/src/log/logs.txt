@@ -40,3 +40,4 @@ aswi35 logOutCompleted.. exit 2022.10.29.21:27:17
 60181894 printCourseList printCoursesList 2022.11.01.00:06:57
 60181894 updateCourse updateCourse 2022.11.01.00:07:04
 60181894 printCourseList printCoursesList 2022.11.01.00:07:07
+60181894 logOutCompleted.. exit 2022.11.03.14:23:25

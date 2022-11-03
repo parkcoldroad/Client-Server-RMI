@@ -10,6 +10,7 @@ import dto.LogDto;
 import dto.PreCourseDto;
 import dto.UserDto;
 import exception.DuplicateUserIdException;
+import exception.IllegalValueIdException;
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -78,7 +79,12 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
 
   @Override
   public ArrayList<UserDto> signIn(String userId) throws RemoteException {
+    try {
       return userDao.signIn(userId);
+    } catch (IllegalValueIdException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
 

@@ -26,7 +26,12 @@ public class AuthCmd {
   public static void signIn() {
     System.out.println("enter your userId to sign in"); String userId = Input.readLine();
     System.out.println("enter your password"); String password = Input.readLine();
-    Session.getSession().register(AuthService.getInstance().signIn(userId, password));
+    UserDto userDto = AuthService.getInstance().signIn(userId, password);
+    if(userDto==null){
+      System.out.println("Invalid id or pw , Please re-enter.");
+      initialize();
+    }
+    Session.getSession().register(userDto);
     Log.createLog("signInCompleted");
   }
 
@@ -37,7 +42,6 @@ public class AuthCmd {
       System.out.println("duplicate Id, please enter another id");
       initialize();
     }
-
     Session.getSession().register(userDto);
     Log.createLog("signUpCompleted");
   }

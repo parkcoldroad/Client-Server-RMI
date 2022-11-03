@@ -3,6 +3,7 @@ package dao;
 import com.mysql.jdbc.MysqlErrorNumbers;
 import dto.UserDto;
 import exception.DuplicateUserIdException;
+import exception.IllegalValueIdException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class UserDao {
   }
 
 
-  public ArrayList<UserDto> signIn(String userId) {
+  public ArrayList<UserDto> signIn(String userId) throws IllegalValueIdException {
     ArrayList<UserDto> userDtos = new ArrayList<>();
     sql = "SELECT * from User WHERE userId ='" + userId + "' ";
 
@@ -30,7 +31,11 @@ public class UserDao {
       UserDto userDto = new UserDto();
 
       rs = pstmt.executeQuery();
-      rs.next();
+      if(!rs.next()) {
+        throw new IllegalValueIdException("invalid id is entered");
+      }
+
+
       String userid = rs.getString("userId");
       String userName = rs.getString("userName");
       String department = rs.getString("department");
@@ -49,7 +54,7 @@ public class UserDao {
       pstmt.close();
       return userDtos;
     } catch (SQLException e) {
-        throw new RuntimeException();
+        throw new RuntimeException(e);
       }
     }
 
@@ -72,7 +77,7 @@ public class UserDao {
       return userList.stream().findFirst().get();
     } catch (SQLException e) {
       if (e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY) {
-        throw new DuplicateUserIdException("duplicate id");
+        throw new DuplicateUserIdException("duplicate id, please enter another Id");
       } else {
         throw new RuntimeException(e);
       }

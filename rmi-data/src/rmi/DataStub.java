@@ -5,6 +5,8 @@ import dto.EnrollmentDto;
 import dto.LogDto;
 import dto.PreCourseDto;
 import dto.UserDto;
+import exception.DuplicateUserIdException;
+import exception.IllegalValueIdException;
 import exception.NullDataException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
