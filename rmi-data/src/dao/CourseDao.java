@@ -66,7 +66,7 @@ public class CourseDao {
   }
 
   public String searchCourseRecord(String courseId) {
-    sql = "SELECT * from Course WHERE CourseId = " + courseId;
+    sql = "SELECT * from Course WHERE courseId = '" + courseId + "' ";
     String result;
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);

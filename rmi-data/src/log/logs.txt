@@ -41,3 +41,13 @@ aswi35 logOutCompleted.. exit 2022.10.29.21:27:17
 60181894 updateCourse updateCourse 2022.11.01.00:07:04
 60181894 printCourseList printCoursesList 2022.11.01.00:07:07
 60181894 logOutCompleted.. exit 2022.11.03.14:23:25
+60181894 printCourseList printCoursesList 2022.11.04.17:01:15
+60181894 createCourse createCourse 2022.11.04.17:02:45
+60181894 printCourseList printCoursesList 2022.11.04.17:03:15
+60181894 updateCourse updateCourse 2022.11.04.17:04:13
+60181894 deleteCourse deleteCourse 2022.11.04.17:04:57
+60181894 searchCourse searchCourse 2022.11.04.17:11:48
+60181894 printCourseList printCoursesList 2022.11.04.17:12:38
+60181894 printCourseList printCoursesList 2022.11.04.17:13:02
+60181894 printCourseList printCoursesList 2022.11.04.17:18:32
+60181894 searchCourse searchCourse 2022.11.04.17:22:15

@@ -22,7 +22,7 @@ public class Session {
 
   public void register(UserDto userDto) {
     if (userDto == null) {
-      System.out.println("sign in failed..");
+      System.out.println("Invalid id or pw , Please re-enter.");
       AuthCmd.initialize();
     }
     this.userDto = userDto;
