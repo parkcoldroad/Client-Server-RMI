@@ -186,7 +186,7 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
 
   @Override
   public boolean deletePreCourse(String courseId,String preCourseId) throws RemoteException {
-    return preCourseDao.deletepreCourseRecord(courseId,preCourseId);
+    return preCourseDao.deletePreCourseRecord(courseId,preCourseId);
   }
 
 }

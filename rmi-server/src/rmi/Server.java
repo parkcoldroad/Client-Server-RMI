@@ -130,6 +130,11 @@ public class Server extends UnicastRemoteObject implements ClientStub {
     return dataServer.searchCourseData(courseId);
   }
 
+  @Override
+  public ArrayList<String> searchPreCourseData(String courseId) throws RemoteException {
+    return dataServer.searchPreCourse(courseId);
+  }
+
   public boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException {
     return dataServer.updateUserData(userDtos);
   }

@@ -33,7 +33,14 @@ public class PreCourseCmd {
   public static void readPreCoursesList() {
     ArrayList<PreCourseDto> preCourseList = PreCourseService.getInstance().readPreCoursesList();
     Message.print(preCourseList);
-    Log.createLog("readpreCourse");
+    Log.createLog("readPreCourse");
+  }
+
+  public static void searchPreCourse() {
+    System.out.println("enter your courseId to search preCourse"); String courseId = Input.readLine();
+    ArrayList<String> searchedResult = PreCourseService.getInstance().searchPreCourse(courseId);
+    Message.print(searchedResult.toString());
+    Log.createLog("searchPreCourse");
   }
 
   public static void updatePreCourse() {
@@ -42,7 +49,7 @@ public class PreCourseCmd {
     String precourseId = Input.readLine();
     boolean result = PreCourseService.getInstance().updatePreCourse(courseId,precourseId);
     Message.print(result);
-    Log.createLog("updatePrecourse");
+    Log.createLog("updatePreCourse");
   }
 
   public static void deletePreCourse() {

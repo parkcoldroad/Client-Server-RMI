@@ -39,6 +39,8 @@ public interface ClientStub extends Remote {
 
   String searchCourseData(String courseId) throws RemoteException;
 
+  ArrayList<String>  searchPreCourseData(String courseId) throws RemoteException;
+
   boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException;
 
   boolean updateCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;

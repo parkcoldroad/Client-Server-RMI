@@ -29,7 +29,7 @@ public class PreCourseDao {
 
       pstmt.executeUpdate();
       pstmt.close();
-      return "Precourse registration is completed";
+      return "PreCourse registration is completed";
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
@@ -60,10 +60,9 @@ public class PreCourseDao {
     return preCourseDtos;
   }
 
-
   public ArrayList<String> searchPreCourse(String courseId) {
     ArrayList<String> preCourseList = new ArrayList<>();
-    sql = "SELECT * from PreCourse WHERE courseId = " + courseId;
+    sql = "SELECT * from PreCourse WHERE courseId ='" + courseId + "' ";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
@@ -83,7 +82,7 @@ public class PreCourseDao {
 
   public boolean updatePreCourseRecord(String courseId, String preCourseId) {
     try {
-      sql = "UPDATE PreCourse SET precourseId= '" + preCourseId + "' WHERE courseId = " + courseId;
+      sql = "UPDATE PreCourse SET precourseId= '" + preCourseId +  "' WHERE courseId ='" + courseId + "' ";
       PreparedStatement pstmt = null;
       pstmt = (PreparedStatement) conn.prepareStatement(sql);
       pstmt.executeUpdate();
@@ -95,7 +94,7 @@ public class PreCourseDao {
 
   }
 
-  public boolean deletepreCourseRecord(String courseId,String preCourseId) {
+  public boolean deletePreCourseRecord(String courseId,String preCourseId) {
     try {
       sql = "DELETE FROM PreCourse " + " WHERE courseId = ? AND precourseId = ?";
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);

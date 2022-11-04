@@ -40,6 +40,14 @@ public class PreCourseService {
     }
   }
 
+  public ArrayList<String> searchPreCourse(String courseId) {
+    try {
+      return this.clientStub.searchPreCourseData(courseId);
+    } catch (RemoteException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public boolean updatePreCourse(String courseId, String preCourseId) {
     try {
       return this.clientStub.updatePreCourseData(courseId, preCourseId);
