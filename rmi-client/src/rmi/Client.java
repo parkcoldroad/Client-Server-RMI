@@ -33,9 +33,7 @@ public class Client {
   }
 
 
-  public static void start() {
-    boolean isStop = false;
-    while (!isStop) {
+  public static void goMain() {
       MainMenu.printMenu();
       String input = Input.readLine();
 
@@ -44,12 +42,7 @@ public class Client {
           .findFirst();
 
       optionalMainMenu.ifPresentOrElse(MainMenu::execute,
-          () -> System.out.println("invalid enter"));
-
-      if (input.equals("6")) {
-        isStop = true;
-      }
-    }
+          () -> {System.out.println("invalid enter"); goMain();});
   }
 
   public static void quit() {

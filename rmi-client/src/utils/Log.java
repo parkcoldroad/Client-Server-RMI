@@ -42,11 +42,10 @@ public class Log {
   public static void readLog() {
     try {
       ArrayList<LogDto> logResults = Client.getStub().readLog();
-
       for (LogDto logDto : logResults) {
         logDto.print();
       }
-
+      Client.goMain();
     } catch (RemoteException e) {
       throw new RuntimeException(e);
     }

@@ -2,6 +2,7 @@ package utils;
 
 import command.AuthCmd;
 import dto.UserDto;
+import java.util.Objects;
 import rmi.Client;
 
 public class Session {
@@ -26,8 +27,8 @@ public class Session {
       AuthCmd.initialize();
     }
     this.userDto = userDto;
-    System.out.printf("\n%s님 환영합니다!%n", this.userDto.getName());
-    Client.start();
+    System.out.printf("\n%s님 환영합니다!%n", Objects.requireNonNull(this.userDto).getName());
+    Client.goMain();
   }
 
   public void exit() {

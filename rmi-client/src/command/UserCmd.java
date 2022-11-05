@@ -4,6 +4,7 @@ import command.menu.UserMenu;
 import dto.UserDto;
 import java.util.ArrayList;
 import java.util.Arrays;
+import rmi.Client;
 import service.UserService;
 import utils.Input;
 import utils.Message;
@@ -18,13 +19,14 @@ public class UserCmd {
         .filter(userMenu -> userMenu.getChoice().equals(choice))
         .findFirst()
         .ifPresentOrElse(UserMenu::execute,
-            () -> System.out.println("invalid enter"));
+            () ->  {System.out.println("invalid enter"); initialize();});
   }
 
   public static void printUsersList() {
     ArrayList<UserDto> userList = UserService.getInstance().printUsersList();
     Message.print(userList);
     Log.createLog("printList");
+    Client.goMain();
   }
 
 
@@ -34,12 +36,14 @@ public class UserCmd {
     String seachedResult = UserService.getInstance().searchUser(userId);
     Message.print(seachedResult);
     Log.createLog("searchuser");
+    Client.goMain();
   }
 
   public static void updateUser() {
     boolean result = UserService.getInstance().updateUser(getUserScannerResult());
     Message.print(result);
     Log.createLog("updateuser");
+    Client.goMain();
   }
 
   public static void deleteUser() {
@@ -48,6 +52,7 @@ public class UserCmd {
     boolean result = UserService.getInstance().deleteUser(userId);
     Message.print(result);
     Log.createLog("deleteuser");
+    Client.goMain();
   }
 
 

@@ -37,7 +37,7 @@ public class AuthCmd {
       System.out.println("duplicate Id, please enter another id");
       initialize();
     }
-    Session.getSession().register( userDto);
+    Session.getSession().register(userDto);
     Log.createLog("signUpCompleted");
   }
 }

@@ -4,6 +4,7 @@ import command.menu.PreCourseMenu;
 import dto.PreCourseDto;
 import java.util.ArrayList;
 import java.util.Arrays;
+import rmi.Client;
 import service.PreCourseService;
 import utils.Input;
 import utils.Log;
@@ -18,7 +19,7 @@ public class PreCourseCmd {
         .filter(preCourseMenu -> preCourseMenu.getChoice().equals(choice))
         .findFirst()
         .ifPresentOrElse(PreCourseMenu::execute,
-            () -> System.out.println("invalid enter"));
+            () ->  {System.out.println("invalid enter"); initialize();});
   }
 
 
@@ -28,12 +29,14 @@ public class PreCourseCmd {
     String createdResult = PreCourseService.getInstance().registerPreCourse(courseId,preCourseId);
     Message.print(createdResult);
     Log.createLog("preCourseRegistrationiscompleted");
+    Client.goMain();
   }
 
   public static void readPreCoursesList() {
     ArrayList<PreCourseDto> preCourseList = PreCourseService.getInstance().readPreCoursesList();
     Message.print(preCourseList);
     Log.createLog("readPreCourse");
+    Client.goMain();
   }
 
   public static void searchPreCourse() {
@@ -41,6 +44,7 @@ public class PreCourseCmd {
     ArrayList<String> searchedResult = PreCourseService.getInstance().searchPreCourse(courseId);
     Message.print(searchedResult.toString());
     Log.createLog("searchPreCourse");
+    Client.goMain();
   }
 
   public static void updatePreCourse() {
@@ -49,6 +53,7 @@ public class PreCourseCmd {
     boolean result = PreCourseService.getInstance().updatePreCourse(courseId,precourseId);
     Message.print(result);
     Log.createLog("updatePreCourse");
+    Client.goMain();
   }
 
   public static void deletePreCourse() {
@@ -57,5 +62,6 @@ public class PreCourseCmd {
     boolean result = PreCourseService.getInstance().deletePreCourse(courseId,preCourseId);
     Message.print(result);
     Log.createLog("deletePreCourse");
+    Client.goMain();
   }
 }

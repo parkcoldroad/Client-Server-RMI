@@ -4,6 +4,7 @@ import command.menu.CourseMenu;
 import dto.CourseDto;
 import java.util.ArrayList;
 import java.util.Arrays;
+import rmi.Client;
 import service.CourseService;
 import utils.Input;
 import utils.Log;
@@ -18,25 +19,28 @@ public class CourseCmd {
         .filter(courseMenu -> courseMenu.getChoice().equals(choice))
         .findFirst()
         .ifPresentOrElse(CourseMenu::execute,
-            () -> System.out.println("invalid enter"));
+            () ->  {System.out.println("invalid enter"); initialize();});
   }
 
   public static void createCourse() {
     boolean result = CourseService.getInstance().createCourse(getCourseScannerResult());
     Message.print(result);
     Log.createLog("createCourse");
+    Client.goMain();
   }
 
   public static void printCoursesList() {
     ArrayList<CourseDto> courseList = CourseService.getInstance().printCoursesList();
     Message.print(courseList);
     Log.createLog("printCourseList");
+    Client.goMain();
   }
 
   public static void updateCourse() {
     boolean result =  CourseService.getInstance().updateCourse(getCourseScannerResult());
     Message.print(result);
     Log.createLog("updateCourse");
+    Client.goMain();
   }
 
   public static void deleteCourse() {
@@ -45,6 +49,7 @@ public class CourseCmd {
     boolean result = CourseService.getInstance().deleteCourse(courseId);
     Message.print(result);
     Log.createLog("deleteCourse");
+    Client.goMain();
   }
 
   public static void searchCourse() {
@@ -53,6 +58,7 @@ public class CourseCmd {
     String seachedResult = CourseService.getInstance().searchCourse(courseId);
     Message.print(seachedResult);
     Log.createLog("searchCourse");
+    Client.goMain();
   }
 
   public static ArrayList<CourseDto> getCourseScannerResult() {

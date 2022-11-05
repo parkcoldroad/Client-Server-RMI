@@ -4,6 +4,7 @@ import command.menu.EnrollmentMenu;
 import dto.EnrollmentDto;
 import java.util.ArrayList;
 import java.util.Arrays;
+import rmi.Client;
 import service.EnrollmentService;
 import utils.Input;
 import utils.Log;
@@ -18,7 +19,7 @@ public class EnrollmentCmd {
         .filter(enrollmentMenu -> enrollmentMenu.getChoice().equals(choice))
         .findFirst()
         .ifPresentOrElse(EnrollmentMenu::execute,
-            () -> System.out.println("invalid enter"));
+            () ->  {System.out.println("invalid enter"); initialize();});
   }
 
   public static void applyCourse() {
@@ -30,12 +31,14 @@ public class EnrollmentCmd {
     String result = EnrollmentService.getInstance().applyCourse(courseId);
     Message.print(result);
     Log.createLog("Enrollmentiscompleted");
+    Client.goMain();
   }
 
   public static void displayApplyHistory() {
     ArrayList<EnrollmentDto> enrollmentList = EnrollmentService.getInstance().displayApplyHistory();
     Message.print(enrollmentList);
     Log.createLog("displayEnrollmentHistory");
+    Client.goMain();
   }
 
 
@@ -45,5 +48,6 @@ public class EnrollmentCmd {
     boolean result = EnrollmentService.getInstance().removeApplyHistory(courseId);
     Message.print(result);
     Log.createLog("removeEnrollmentHistory");
+    Client.goMain();
   }
 }
