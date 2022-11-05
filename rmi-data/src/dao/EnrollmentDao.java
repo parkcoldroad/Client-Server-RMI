@@ -1,6 +1,8 @@
 package dao;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import dto.EnrollmentDto;
+import exception.IntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +20,7 @@ public class EnrollmentDao {
     conn = DBConfig.getConnection();
   }
 
-  public void createEnrollment(String userId, String courseId) {
+  public void createEnrollment(String userId, String courseId) throws IntegrityConstraintViolationException {
     sql = "INSERT INTO Enrollment(userId,courseId) VALUES (?,?)";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
@@ -28,6 +30,9 @@ public class EnrollmentDao {
 
       pstmt.executeUpdate();
       pstmt.close();
+
+    } catch (MySQLIntegrityConstraintViolationException ee) {
+      throw new IntegrityConstraintViolationException("This course has already been registered");
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
@@ -54,7 +59,9 @@ public class EnrollmentDao {
 
   public ArrayList<EnrollmentDto> getEnrollmentData(String userId) {
     ArrayList<EnrollmentDto> enrollmentDtos = new ArrayList<>();
-    sql = "SELECT * from Enrollment INNER JOIN Course ON Enrollment.courseId  = Course.courseId AND userId ='" + userId + "' ";
+    sql =
+        "SELECT * from Enrollment INNER JOIN Course ON Enrollment.courseId  = Course.courseId AND userId ='"
+            + userId + "' ";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 

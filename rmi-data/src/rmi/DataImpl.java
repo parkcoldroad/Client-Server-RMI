@@ -11,6 +11,7 @@ import dto.PreCourseDto;
 import dto.UserDto;
 import exception.DuplicateUserIdException;
 import exception.IllegalValueIdException;
+import exception.IntegrityConstraintViolationException;
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -18,7 +19,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import log.LogWriter;
+import log.Log;
 
 @SuppressWarnings("serial")
 public class DataImpl extends UnicastRemoteObject implements DataStub {
@@ -29,7 +30,7 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   private EnrollmentDao enrollmentDao;
   private PreCourseDao preCourseDao;
 
-  private LogWriter logWriter;
+  private Log log;
   private Registry registry;
 
   public static DataImpl getInstance() {
@@ -60,7 +61,7 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
       userDao = new UserDao();
       enrollmentDao = new EnrollmentDao();
       preCourseDao = new PreCourseDao();
-      logWriter = new LogWriter();
+      log = new Log();
       System.out.println("data Server is ready");
     } catch (RemoteException | AlreadyBoundException e) {
       e.printStackTrace();
@@ -70,11 +71,12 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
 
   @Override
   public void createLog(ArrayList<LogDto> logList) {
-    logWriter.createLog(logList);
+    log.createLog(logList);
   }
 
   @Override
-  public ArrayList<LogDto> readLog() {return logWriter.readLog();
+  public ArrayList<LogDto> readLog() {
+    return log.readLog();
   }
 
   @Override
@@ -104,8 +106,12 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   public String createEnrollment(String userId, String courseId) throws RemoteException {
-    enrollmentDao.createEnrollment(userId, courseId);
-    return "Enrollment is completed";
+    try {
+      enrollmentDao.createEnrollment(userId, courseId);
+      return "Enrollment is completed";
+    } catch (IntegrityConstraintViolationException e) {
+      return "This course has already been registered";
+    }
   }
 
   @Override
@@ -185,8 +191,8 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public boolean deletePreCourse(String courseId,String preCourseId) throws RemoteException {
-    return preCourseDao.deletePreCourseRecord(courseId,preCourseId);
+  public boolean deletePreCourse(String courseId, String preCourseId) throws RemoteException {
+    return preCourseDao.deletePreCourseRecord(courseId, preCourseId);
   }
 
 }

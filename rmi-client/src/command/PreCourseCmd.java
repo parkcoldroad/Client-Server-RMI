@@ -44,19 +44,16 @@ public class PreCourseCmd {
   }
 
   public static void updatePreCourse() {
-    System.out.println("enter your courseId to update preCourse");
-    String courseId = Input.readLine();
-    String precourseId = Input.readLine();
+    System.out.println("enter your courseId to update preCourse"); String courseId = Input.readLine();
+    System.out.println("enter your preCourseId to apply"); String precourseId = Input.readLine();
     boolean result = PreCourseService.getInstance().updatePreCourse(courseId,precourseId);
     Message.print(result);
     Log.createLog("updatePreCourse");
   }
 
   public static void deletePreCourse() {
-    System.out.println("enter your courseId to delete");
-    String courseId = Input.readLine();
-    System.out.println("enter your preCourseId to delete");
-    String preCourseId = Input.readLine();
+    System.out.println("enter your courseId to delete"); String courseId = Input.readLine();
+    System.out.println("enter your preCourseId to delete"); String preCourseId = Input.readLine();
     boolean result = PreCourseService.getInstance().deletePreCourse(courseId,preCourseId);
     Message.print(result);
     Log.createLog("deletePreCourse");

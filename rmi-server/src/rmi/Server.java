@@ -111,8 +111,7 @@ public class Server extends UnicastRemoteObject implements ClientStub {
   }
 
   @Override
-  public ArrayList<EnrollmentDto> getEnrollmentData(String userId)
-      throws RemoteException, NullDataException {
+  public ArrayList<EnrollmentDto> getEnrollmentData(String userId) throws RemoteException, NullDataException {
     return dataServer.getEnrollmentData(userId);
   }
 
