@@ -4,6 +4,7 @@ import command.menu.UserMenu;
 import dto.UserDto;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 import rmi.Client;
 import service.UserService;
 import utils.Input;
@@ -33,8 +34,8 @@ public class UserCmd {
   public static void searchUser() {
     System.out.println("enter your userId to search");
     String userId = Input.readLine();
-    String seachedResult = UserService.getInstance().searchUser(userId);
-    Message.print(seachedResult);
+    String searchedResult = UserService.getInstance().searchUser(userId);
+    Message.print(searchedResult);
     Log.createLog("searchuser");
     Client.goMain();
   }

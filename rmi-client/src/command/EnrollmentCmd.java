@@ -1,10 +1,12 @@
 package command;
 
 import command.menu.EnrollmentMenu;
+import dto.CourseDto;
 import dto.EnrollmentDto;
 import java.util.ArrayList;
 import java.util.Arrays;
 import rmi.Client;
+import service.CourseService;
 import service.EnrollmentService;
 import utils.Input;
 import utils.Log;
@@ -24,7 +26,8 @@ public class EnrollmentCmd {
 
   public static void applyCourse() {
     System.out.println("------------Courses List------------");
-    CourseCmd.printCoursesList();
+    ArrayList<CourseDto> courseList = CourseService.getInstance().printCoursesList();
+    Message.print(courseList);
 
     System.out.println("\n enter courseId to apply");
     System.out.println("CourseId : "); String courseId = Input.readLine();

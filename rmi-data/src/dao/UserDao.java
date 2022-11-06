@@ -113,14 +113,17 @@ public class UserDao {
     return userDtos;
   }
 
-  public String searchUserRecords(String userId) {
-    sql = "SELECT * from user WHERE userId = " + userId;
+  public String searchUserRecords(String userId) throws IllegalValueIdException {
+    sql = "SELECT * from user WHERE userId ='" + userId + "' ";
     String result;
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       rs = pstmt.executeQuery();
-      rs.next();
+      if(!rs.next()) {
+        throw new IllegalValueIdException("invalid id is entered");
+      }
+
       String userid = rs.getString("userId");
       String userName = rs.getString("userName");
       String department = rs.getString("department");

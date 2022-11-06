@@ -32,6 +32,7 @@ public class EnrollmentDao {
       pstmt.close();
 
     } catch (MySQLIntegrityConstraintViolationException ee) {
+      ee.printStackTrace();
       throw new IntegrityConstraintViolationException("This course has already been registered");
     } catch (SQLException e) {
       throw new RuntimeException(e);

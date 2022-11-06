@@ -146,7 +146,12 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
 
   @Override
   public String searchUserData(String userId) throws RemoteException {
-    return userDao.searchUserRecords(userId);
+    try {
+      return userDao.searchUserRecords(userId);
+    } catch (IllegalValueIdException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   @Override

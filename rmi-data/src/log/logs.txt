@@ -129,3 +129,14 @@ aswi35 logOutCompleted.. exit 2022.10.29.21:27:17
 60181894 readPreCourse readPreCoursesList 2022.11.05.13:05:22
 60181894 printList printUsersList 2022.11.05.13:05:35
 60181894 printList printUsersList 2022.11.05.13:05:47
+60181894 displayEnrollmentHistory displayApplyHistory 2022.11.06.23:47:03
+60181894 printCourseList printCoursesList 2022.11.06.23:47:09
+60181894 printCourseList printCoursesList 2022.11.06.23:47:18
+60181894 Enrollmentiscompleted applyCourse 2022.11.06.23:49:24
+60181894 Enrollmentiscompleted applyCourse 2022.11.06.23:51:06
+60181894 printList printUsersList 2022.11.07.00:16:39
+60181894 printList printUsersList 2022.11.07.00:16:42
+60181894 updateuser updateUser 2022.11.07.00:16:59
+60181894 updateuser updateUser 2022.11.07.00:17:42
+60181894 deleteuser deleteUser 2022.11.07.00:17:46
+60181894 searchuser searchUser 2022.11.07.00:58:21
