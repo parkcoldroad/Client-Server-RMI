@@ -1,6 +1,7 @@
 package service;
 
 import dto.EnrollmentDto;
+import exception.IllegalValueIdException;
 import exception.NullDataException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class EnrollmentService {
   }
 
 
-  public String applyCourse(String courseId) {
+  public String applyCourse(String courseId) throws IllegalValueIdException {
     try {
       return this.clientStub.createEnrollment(Session.getSession().getUserId(), courseId);
     } catch (RemoteException e) {

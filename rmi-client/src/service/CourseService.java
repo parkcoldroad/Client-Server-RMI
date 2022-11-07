@@ -1,6 +1,7 @@
 package service;
 
 import dto.CourseDto;
+import exception.IllegalValueIdException;
 import exception.NullDataException;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -57,7 +58,7 @@ public class CourseService {
     }
   }
 
-  public String searchCourse(String courseId) {
+  public String searchCourse(String courseId) throws IllegalValueIdException {
     try {
       return this.clientStub.searchCourseData(courseId);
     } catch (IOException e) {

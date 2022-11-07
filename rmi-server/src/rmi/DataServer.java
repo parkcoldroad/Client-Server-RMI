@@ -5,6 +5,8 @@ import dto.EnrollmentDto;
 import dto.LogDto;
 import dto.PreCourseDto;
 import dto.UserDto;
+import exception.DuplicateUserIdException;
+import exception.IllegalValueIdException;
 import exception.NullDataException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -54,12 +56,12 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<UserDto> signIn(String userId) throws RemoteException {
+  public ArrayList<UserDto> signIn(String userId) throws RemoteException, IllegalValueIdException {
     return data.signIn(userId);
   }
 
   @Override
-  public UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+  public UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException, DuplicateUserIdException {
     return data.createUserData(userDtos);
   }
 
@@ -104,17 +106,17 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public String searchUserData(String userId) throws RemoteException {
+  public String searchUserData(String userId) throws RemoteException, IllegalValueIdException {
     return data.searchUserData(userId);
   }
 
   @Override
-  public String searchCourseData(String courseId) throws RemoteException {
+  public String searchCourseData(String courseId) throws RemoteException, IllegalValueIdException {
     return data.searchCourseData(courseId);
   }
 
   @Override
-  public ArrayList<String> searchPreCourse(String courseId) throws RemoteException {
+  public ArrayList<String> searchPreCourse(String courseId) throws RemoteException, IllegalValueIdException {
     return data.searchPreCourse(courseId);
   }
 

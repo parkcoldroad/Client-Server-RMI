@@ -2,6 +2,7 @@ package command;
 
 import command.menu.CourseMenu;
 import dto.CourseDto;
+import exception.IllegalValueIdException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import rmi.Client;
@@ -55,7 +56,13 @@ public class CourseCmd {
   public static void searchCourse() {
     System.out.println("enter your courseId to search");
     String courseId = Input.readLine();
-    String seachedResult = CourseService.getInstance().searchCourse(courseId);
+    String seachedResult = null;
+    try {
+      seachedResult = CourseService.getInstance().searchCourse(courseId);
+    } catch (IllegalValueIdException e) {
+      System.out.println(e.getMessage());
+      initialize();
+    }
     Message.print(seachedResult);
     Log.createLog("searchCourse");
     Client.goMain();

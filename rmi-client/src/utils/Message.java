@@ -15,10 +15,6 @@ public class Message {
     }
   }
   public static void print(String result) {
-    if(result == null){
-      System.out.println("error occurred");
-      return;
-    }
     System.out.println(result);
   }
 }

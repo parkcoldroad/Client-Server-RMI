@@ -22,12 +22,8 @@ public class Session {
   }
 
   public void register(UserDto userDto) {
-    if (userDto == null) {
-      System.out.println("Invalid id or pw , Please re-enter.");
-      AuthCmd.initialize();
-    }
     this.userDto = userDto;
-    System.out.printf("\n%s님 환영합니다!%n", Objects.requireNonNull(this.userDto).getName());
+    System.out.printf("\n%s님 환영합니다!%n",this.userDto.getName());
     Client.goMain();
   }
 

@@ -1,6 +1,7 @@
 package service;
 
 import dto.UserDto;
+import exception.IllegalValueIdException;
 import exception.NullDataException;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -35,7 +36,7 @@ public class UserService {
   }
 
 
-  public String searchUser(String UserId) {
+  public String searchUser(String UserId) throws IllegalValueIdException {
     try {
       return this.clientStub.searchUserData(UserId);
     } catch (IOException e) {

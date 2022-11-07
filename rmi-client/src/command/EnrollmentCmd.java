@@ -3,6 +3,7 @@ package command;
 import command.menu.EnrollmentMenu;
 import dto.CourseDto;
 import dto.EnrollmentDto;
+import exception.IllegalValueIdException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import rmi.Client;
@@ -31,7 +32,13 @@ public class EnrollmentCmd {
 
     System.out.println("\n enter courseId to apply");
     System.out.println("CourseId : "); String courseId = Input.readLine();
-    String result = EnrollmentService.getInstance().applyCourse(courseId);
+    String result = null;
+    try {
+      result = EnrollmentService.getInstance().applyCourse(courseId);
+    } catch (IllegalValueIdException e) {
+      System.out.println(e.getMessage());
+      initialize();
+    }
     Message.print(result);
     Log.createLog("Enrollmentiscompleted");
     Client.goMain();

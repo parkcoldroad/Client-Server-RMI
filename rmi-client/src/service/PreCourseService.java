@@ -1,6 +1,7 @@
 package service;
 
 import dto.PreCourseDto;
+import exception.IllegalValueIdException;
 import exception.NullDataException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class PreCourseService {
     }
   }
 
-  public ArrayList<String> searchPreCourse(String courseId) {
+  public ArrayList<String> searchPreCourse(String courseId) throws IllegalValueIdException {
     try {
       return this.clientStub.searchPreCourseData(courseId);
     } catch (RemoteException e) {

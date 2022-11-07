@@ -80,24 +80,14 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<UserDto> signIn(String userId) throws RemoteException {
-    try {
+  public ArrayList<UserDto> signIn(String userId) throws RemoteException, IllegalValueIdException {
       return userDao.signIn(userId);
-    } catch (IllegalValueIdException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 
 
   @Override
-  public UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException {
-    try {
+  public UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException, DuplicateUserIdException {
       return userDao.createUserRecords(userDtos);
-    } catch (DuplicateUserIdException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 
   @Override
@@ -145,27 +135,17 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public String searchUserData(String userId) throws RemoteException {
-    try {
+  public String searchUserData(String userId) throws RemoteException, IllegalValueIdException {
       return userDao.searchUserRecords(userId);
-    } catch (IllegalValueIdException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 
   @Override
-  public String searchCourseData(String userId) throws RemoteException {
-    try {
+  public String searchCourseData(String userId) throws RemoteException, IllegalValueIdException {
       return courseDao.searchCourseRecord(userId);
-    } catch (IllegalValueIdException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 
   @Override
-  public ArrayList<String> searchPreCourse(String courseId) throws RemoteException {
+  public ArrayList<String> searchPreCourse(String courseId) throws RemoteException, IllegalValueIdException {
     return preCourseDao.searchPreCourse(courseId);
   }
 

@@ -5,6 +5,9 @@ import dto.EnrollmentDto;
 import dto.LogDto;
 import dto.PreCourseDto;
 import dto.UserDto;
+import exception.DuplicateUserIdException;
+import exception.IllegalValueIdException;
+import exception.IllegalValuePwException;
 import exception.NullDataException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -16,13 +19,13 @@ public interface ClientStub extends Remote {
 
   ArrayList<LogDto> readLog() throws RemoteException;
 
-  UserDto signIn(String userId, String password) throws RemoteException;
+  UserDto signIn(String userId, String password) throws RemoteException, IllegalValueIdException, IllegalValuePwException;
 
-  UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException;
+  UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException, DuplicateUserIdException;
 
   boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
 
-  String createEnrollment(String userId, String courseId) throws RemoteException;
+  String createEnrollment(String userId, String courseId) throws RemoteException, IllegalValueIdException;
 
   String createPreCourseData(String courseId, String precourseId) throws RemoteException;
 
@@ -35,11 +38,11 @@ public interface ClientStub extends Remote {
 
   ArrayList<PreCourseDto> getAllPreCourseData() throws RemoteException, NullDataException;
 
-  String searchUserData(String userId) throws RemoteException;
+  String searchUserData(String userId) throws RemoteException, IllegalValueIdException;
 
-  String searchCourseData(String courseId) throws RemoteException;
+  String searchCourseData(String courseId) throws RemoteException, IllegalValueIdException;
 
-  ArrayList<String>  searchPreCourseData(String courseId) throws RemoteException;
+  ArrayList<String>  searchPreCourseData(String courseId) throws RemoteException, IllegalValueIdException;
 
   boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException;
 

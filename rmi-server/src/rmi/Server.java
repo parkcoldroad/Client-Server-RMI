@@ -5,6 +5,9 @@ import dto.EnrollmentDto;
 import dto.LogDto;
 import dto.PreCourseDto;
 import dto.UserDto;
+import exception.DuplicateUserIdException;
+import exception.IllegalValueIdException;
+import exception.IllegalValuePwException;
 import exception.NullDataException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -60,20 +63,17 @@ public class Server extends UnicastRemoteObject implements ClientStub {
 
 
   @Override
-  public UserDto signIn(String userId, String password) throws RemoteException {
+  public UserDto signIn(String userId, String password) throws RemoteException, IllegalValueIdException, IllegalValuePwException {
     ArrayList<UserDto> userList = dataServer.signIn(userId);
-    if(userList == null){
-      return null;
-    }
-
     Optional<UserDto> OptionalUser = userList.stream()
         .filter(user -> user.getUserId().equals(userId) && user.getPassword().equals(password))
         .findFirst();
 
-    return OptionalUser.orElse(null);
+    if(OptionalUser.isPresent()) return OptionalUser.get();
+    else throw new IllegalValuePwException("password is invalid");
   }
 
-  public UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+  public UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException, DuplicateUserIdException {
     return dataServer.createUserData(userDtos);
   }
 
@@ -82,7 +82,7 @@ public class Server extends UnicastRemoteObject implements ClientStub {
     return dataServer.createCourseData(courseData);
   }
 
-  public String createEnrollment(String userId, String courseId) throws RemoteException {
+  public String createEnrollment(String userId, String courseId) throws RemoteException, IllegalValueIdException {
     boolean isReady = true;
     ArrayList<String> preCourseLists = dataServer.searchPreCourse(courseId);
     ArrayList<String> completedCourseList = dataServer.getCompletedCourseList(userId);
@@ -120,17 +120,17 @@ public class Server extends UnicastRemoteObject implements ClientStub {
     return dataServer.getAllPreCourseData();
   }
 
-  public String searchUserData(String userId) throws RemoteException {
+  public String searchUserData(String userId) throws RemoteException, IllegalValueIdException {
     return dataServer.searchUserData(userId);
   }
 
   @Override
-  public String searchCourseData(String courseId) throws RemoteException {
+  public String searchCourseData(String courseId) throws RemoteException, IllegalValueIdException {
     return dataServer.searchCourseData(courseId);
   }
 
   @Override
-  public ArrayList<String> searchPreCourseData(String courseId) throws RemoteException {
+  public ArrayList<String> searchPreCourseData(String courseId) throws RemoteException, IllegalValueIdException {
     return dataServer.searchPreCourse(courseId);
   }
 

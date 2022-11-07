@@ -2,6 +2,7 @@ package command;
 
 import command.menu.UserMenu;
 import dto.UserDto;
+import exception.IllegalValueIdException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
@@ -34,7 +35,13 @@ public class UserCmd {
   public static void searchUser() {
     System.out.println("enter your userId to search");
     String userId = Input.readLine();
-    String searchedResult = UserService.getInstance().searchUser(userId);
+    String searchedResult = null;
+    try {
+      searchedResult = UserService.getInstance().searchUser(userId);
+    } catch (IllegalValueIdException e) {
+      System.out.println(e.getMessage());
+      initialize();
+    }
     Message.print(searchedResult);
     Log.createLog("searchuser");
     Client.goMain();

@@ -18,9 +18,9 @@ public interface DataStub extends Remote {
 
   ArrayList<LogDto> readLog() throws RemoteException;
 
-  ArrayList<UserDto> signIn(String userId) throws RemoteException;
+  ArrayList<UserDto> signIn(String userId) throws RemoteException, IllegalValueIdException;
 
-  UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException;
+  UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException, DuplicateUserIdException;
 
   boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
 
@@ -34,16 +34,15 @@ public interface DataStub extends Remote {
 
   ArrayList<String> getCompletedCourseList(String userId) throws RemoteException;
 
-  ArrayList<EnrollmentDto> getEnrollmentData(String userId)
-      throws RemoteException, NullDataException;
+  ArrayList<EnrollmentDto> getEnrollmentData(String userId) throws RemoteException, NullDataException;
 
   ArrayList<PreCourseDto> getAllPreCourseData() throws RemoteException, NullDataException;
 
-  String searchUserData(String userId) throws RemoteException;
+  String searchUserData(String userId) throws RemoteException, IllegalValueIdException;
 
-  String searchCourseData(String userId) throws RemoteException;
+  String searchCourseData(String userId) throws RemoteException, IllegalValueIdException;
 
-  ArrayList<String> searchPreCourse(String courseId) throws RemoteException;
+  ArrayList<String> searchPreCourse(String courseId) throws RemoteException, IllegalValueIdException;
 
   boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException;
 

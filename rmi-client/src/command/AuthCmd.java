@@ -4,6 +4,9 @@ import static command.UserCmd.getUserScannerResult;
 
 import command.menu.AuthMenu;
 import dto.UserDto;
+import exception.DuplicateUserIdException;
+import exception.IllegalValueIdException;
+import exception.IllegalValuePwException;
 import java.util.Arrays;
 import service.AuthService;
 import utils.Input;
@@ -26,15 +29,22 @@ public class AuthCmd {
   public static void signIn() {
     System.out.println("enter your userId to sign in"); String userId = Input.readLine();
     System.out.println("enter your password"); String password = Input.readLine();
-    Session.getSession().register(AuthService.getInstance().signIn(userId, password));
+    try {
+      Session.getSession().register(AuthService.getInstance().signIn(userId, password));
+    } catch (IllegalValueIdException | IllegalValuePwException e) {
+     System.out.println(e.getMessage());
+     initialize();
+    }
     Log.createLog("signInCompleted");
   }
 
 
   public static void signUp() {
-    UserDto userDto = AuthService.getInstance().signUp(getUserScannerResult());
-    if (userDto == null)  {
-      System.out.println("duplicate Id, please enter another id");
+    UserDto userDto = null;
+    try {
+      userDto = AuthService.getInstance().signUp(getUserScannerResult());
+    } catch (DuplicateUserIdException e) {
+      System.out.println(e.getMessage());
       initialize();
     }
     Session.getSession().register(userDto);

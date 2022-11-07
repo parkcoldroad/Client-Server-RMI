@@ -2,6 +2,7 @@ package command;
 
 import command.menu.PreCourseMenu;
 import dto.PreCourseDto;
+import exception.IllegalValueIdException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import rmi.Client;
@@ -41,7 +42,13 @@ public class PreCourseCmd {
 
   public static void searchPreCourse() {
     System.out.println("enter your courseId to search preCourse"); String courseId = Input.readLine();
-    ArrayList<String> searchedResult = PreCourseService.getInstance().searchPreCourse(courseId);
+    ArrayList<String> searchedResult = null;
+    try {
+      searchedResult = PreCourseService.getInstance().searchPreCourse(courseId);
+    } catch (IllegalValueIdException e) {
+      System.out.println(e.getMessage());
+      initialize();
+    }
     Message.print(searchedResult.toString());
     Log.createLog("searchPreCourse");
     Client.goMain();
