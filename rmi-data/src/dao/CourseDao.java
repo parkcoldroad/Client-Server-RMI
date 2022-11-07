@@ -1,6 +1,7 @@
 package dao;
 
 import dto.CourseDto;
+import exception.IllegalValueIdException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,14 +66,17 @@ public class CourseDao {
     return courseDtos;
   }
 
-  public String searchCourseRecord(String courseId) {
+  public String searchCourseRecord(String courseId) throws IllegalValueIdException {
     sql = "SELECT * from Course WHERE courseId = '" + courseId + "' ";
     String result;
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       rs = pstmt.executeQuery();
-      rs.next();
+      if(!rs.next()) {
+        throw new IllegalValueIdException("invalid id is entered");
+      }
+
       String courseid = rs.getString("courseId");
       String professorName = rs.getString("professorName");
       String courseName = rs.getString("courseName");
