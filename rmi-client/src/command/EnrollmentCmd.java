@@ -3,6 +3,7 @@ package command;
 import command.menu.EnrollmentMenu;
 import dto.CourseDto;
 import dto.EnrollmentDto;
+import exception.DuplicateEnrollmentException;
 import exception.IllegalValueIdException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public class EnrollmentCmd {
     String result = null;
     try {
       result = EnrollmentService.getInstance().applyCourse(courseId);
-    } catch (IllegalValueIdException e) {
+    } catch (IllegalValueIdException | DuplicateEnrollmentException e) {
       System.out.println(e.getMessage());
       initialize();
     }
@@ -55,7 +56,13 @@ public class EnrollmentCmd {
   public static void removeApplyHistory() {
     System.out.println("enter your courseId to delete");
     System.out.println("CourseId : "); String courseId = Input.readLine();
-    boolean result = EnrollmentService.getInstance().removeApplyHistory(courseId);
+    boolean result = false;
+    try {
+      result = EnrollmentService.getInstance().removeApplyHistory(courseId);
+    } catch (IllegalValueIdException e) {
+      System.out.println(e.getMessage());
+      initialize();
+    }
     Message.print(result);
     Log.createLog("removeEnrollmentHistory");
     Client.goMain();

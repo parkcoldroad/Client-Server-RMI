@@ -5,7 +5,9 @@ import dto.EnrollmentDto;
 import dto.LogDto;
 import dto.PreCourseDto;
 import dto.UserDto;
+import exception.DuplicateEnrollmentException;
 import exception.DuplicateUserIdException;
+import exception.DuplicatedCourseIdException;
 import exception.IllegalValueIdException;
 import exception.IllegalValuePwException;
 import exception.NullDataException;
@@ -23,9 +25,11 @@ public interface ClientStub extends Remote {
 
   UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException, DuplicateUserIdException;
 
-  boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
+  boolean createCourseData(ArrayList<CourseDto> courseDtos)
+      throws RemoteException, DuplicatedCourseIdException;
 
-  String createEnrollment(String userId, String courseId) throws RemoteException, IllegalValueIdException;
+  String createEnrollment(String userId, String courseId)
+      throws RemoteException, IllegalValueIdException, DuplicateEnrollmentException;
 
   String createPreCourseData(String courseId, String precourseId) throws RemoteException;
 
@@ -44,17 +48,22 @@ public interface ClientStub extends Remote {
 
   ArrayList<String>  searchPreCourseData(String courseId) throws RemoteException, IllegalValueIdException;
 
-  boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException;
+  boolean updateUserData(ArrayList<UserDto> userDtos)
+      throws RemoteException, DuplicateUserIdException;
 
-  boolean updateCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException;
+  boolean updateCourseData(ArrayList<CourseDto> courseDtos)
+      throws RemoteException, DuplicatedCourseIdException;
 
-  boolean updatePreCourseData(String courseId, String preCourseId) throws RemoteException;
+  boolean updatePreCourseData(String courseId, String preCourseId)
+      throws RemoteException, IllegalValueIdException;
 
-  boolean deleteUserData(String userId) throws RemoteException;
+  boolean deleteUserData(String userId) throws RemoteException, DuplicateUserIdException;
 
-  boolean deleteCourseData(String courseId) throws RemoteException;
+  boolean deleteCourseData(String courseId) throws RemoteException, DuplicatedCourseIdException;
 
-  boolean deleteEnrollment(String userId, String courseId) throws RemoteException;
+  boolean deleteEnrollment(String userId, String courseId)
+      throws RemoteException, IllegalValueIdException;
 
-  boolean deletePreCourse(String courseId,String preCourseId) throws RemoteException;
+  boolean deletePreCourse(String courseId,String preCourseId)
+      throws RemoteException, IllegalValueIdException;
 }

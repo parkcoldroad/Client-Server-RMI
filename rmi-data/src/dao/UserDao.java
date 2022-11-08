@@ -31,10 +31,9 @@ public class UserDao {
       UserDto userDto = new UserDto();
 
       rs = pstmt.executeQuery();
-      if(!rs.next()) {
+      if (!rs.next()) {
         throw new IllegalValueIdException("invalid id is entered");
       }
-
 
       String userid = rs.getString("userId");
       String userName = rs.getString("userName");
@@ -54,9 +53,9 @@ public class UserDao {
       pstmt.close();
       return userDtos;
     } catch (SQLException e) {
-        throw new RuntimeException(e);
-      }
+      throw new RuntimeException(e);
     }
+  }
 
 
   public UserDto createUserRecords(ArrayList<UserDto> userList) throws DuplicateUserIdException {
@@ -120,8 +119,8 @@ public class UserDao {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       rs = pstmt.executeQuery();
-      if(!rs.next()) {
-        throw new IllegalValueIdException("invalid id is entered");
+      if (!rs.next()) {
+        throw new IllegalValueIdException("invalid id is entered to search");
       }
 
       String userid = rs.getString("userId");
@@ -138,7 +137,7 @@ public class UserDao {
 
   }
 
-  public boolean updateUserRecord(ArrayList<UserDto> userList) {
+  public boolean updateUserRecord(ArrayList<UserDto> userList) throws DuplicateUserIdException {
     String userid = null;
     String userName = null;
     String department = null;
@@ -159,8 +158,13 @@ public class UserDao {
           + "' WHERE userId ='" + userid + "' ";
       PreparedStatement pstmt = null;
       pstmt = (PreparedStatement) conn.prepareStatement(sql);
-      pstmt.executeUpdate();
+      int state = pstmt.executeUpdate();
       pstmt.close();
+
+      if (state == 0) {
+        throw new DuplicateUserIdException("invalid id is entered to update");
+      }
+
       return true;
     } catch (SQLException e) {
       throw new RuntimeException(e);
@@ -168,18 +172,21 @@ public class UserDao {
 
   }
 
-  public boolean deleteUserRecords(String userId) {
+  public boolean deleteUserRecords(String userId) throws DuplicateUserIdException {
     try {
-      sql = "DELETE FROM user " + " WHERE userId = ? ";
+      sql = "DELETE FROM User " + " WHERE userId = ? ";
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
-
       pstmt.setString(1, userId);
-      pstmt.executeUpdate();
-
+      int state = pstmt.executeUpdate();
       pstmt.close();
+
+      if (state == 0) {
+        throw new DuplicateUserIdException("invalid id is entered to delete");
+      }
+
       return true;
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (SQLException e) {
+      System.out.println(e.getErrorCode());
     }
     return false;
   }

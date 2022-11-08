@@ -1,6 +1,7 @@
 package service;
 
 import dto.UserDto;
+import exception.DuplicateUserIdException;
 import exception.IllegalValueIdException;
 import exception.NullDataException;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class UserService {
     }
   }
 
-  public boolean updateUser(ArrayList<UserDto> UserScannerResult) {
+  public boolean updateUser(ArrayList<UserDto> UserScannerResult) throws DuplicateUserIdException {
     try {
       return this.clientStub.updateUserData(UserScannerResult);
     } catch (IOException e) {
@@ -52,7 +53,7 @@ public class UserService {
     }
   }
 
-  public boolean deleteUser(String userId) {
+  public boolean deleteUser(String userId) throws DuplicateUserIdException {
     try {
       return this.clientStub.deleteUserData(userId);
     } catch (RemoteException e) {

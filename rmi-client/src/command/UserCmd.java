@@ -2,15 +2,15 @@ package command;
 
 import command.menu.UserMenu;
 import dto.UserDto;
+import exception.DuplicateUserIdException;
 import exception.IllegalValueIdException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
 import rmi.Client;
 import service.UserService;
 import utils.Input;
-import utils.Message;
 import utils.Log;
+import utils.Message;
 
 public class UserCmd {
 
@@ -48,7 +48,13 @@ public class UserCmd {
   }
 
   public static void updateUser() {
-    boolean result = UserService.getInstance().updateUser(getUserScannerResult());
+    boolean result = false;
+    try {
+      result = UserService.getInstance().updateUser(getUserScannerResult());
+    } catch (DuplicateUserIdException e) {
+      System.out.println(e.getMessage());
+      initialize();
+    }
     Message.print(result);
     Log.createLog("updateuser");
     Client.goMain();
@@ -57,7 +63,13 @@ public class UserCmd {
   public static void deleteUser() {
     System.out.println("enter userId to delete");
     String userId = Input.readLine();
-    boolean result = UserService.getInstance().deleteUser(userId);
+    boolean result = false;
+    try {
+      result = UserService.getInstance().deleteUser(userId);
+    } catch (DuplicateUserIdException e) {
+      System.out.println(e.getMessage());
+      initialize();
+    }
     Message.print(result);
     Log.createLog("deleteuser");
     Client.goMain();

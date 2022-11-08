@@ -1,6 +1,9 @@
 package dao;
 
+import com.mysql.jdbc.MysqlErrorNumbers;
 import dto.CourseDto;
+import exception.DuplicateUserIdException;
+import exception.DuplicatedCourseIdException;
 import exception.IllegalValueIdException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +23,8 @@ public class CourseDao {
   }
 
 
-  public boolean createCourseRecord(ArrayList<CourseDto> courseList) {
+  public boolean createCourseRecord(ArrayList<CourseDto> courseList)
+      throws DuplicatedCourseIdException {
     sql = "INSERT INTO Course(courseId,professorName,courseName) VALUES (?,?,?)";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
@@ -35,7 +39,11 @@ public class CourseDao {
       pstmt.close();
       return true;
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      if (e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY) {
+        throw new DuplicatedCourseIdException("duplicate courseId, please enter another Id");
+      } else {
+        throw new RuntimeException(e);
+      }
     }
   }
 
@@ -68,13 +76,12 @@ public class CourseDao {
 
   public String searchCourseRecord(String courseId) throws IllegalValueIdException {
     sql = "SELECT * from Course WHERE courseId = '" + courseId + "' ";
-    String result;
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       rs = pstmt.executeQuery();
       if(!rs.next()) {
-        throw new IllegalValueIdException("invalid id is entered");
+        throw new IllegalValueIdException("invalid id is entered to search");
       }
 
       String courseid = rs.getString("courseId");
@@ -90,7 +97,8 @@ public class CourseDao {
 
   }
 
-  public boolean updateCourseRecord(ArrayList<CourseDto> courseList) {
+  public boolean updateCourseRecord(ArrayList<CourseDto> courseList)
+      throws DuplicatedCourseIdException {
     String courseId = null;
     String professorName = null;
     String courseName = null;
@@ -104,10 +112,13 @@ public class CourseDao {
     try {
       sql = "UPDATE Course SET courseName= '" + courseName + "'," + "professorName = '" + professorName
           + "' WHERE courseId ='" + courseId + "' ";
-      PreparedStatement pstmt = null;
+      PreparedStatement pstmt ;
       pstmt = (PreparedStatement) conn.prepareStatement(sql);
-      pstmt.executeUpdate();
+      int state = pstmt.executeUpdate();
       pstmt.close();
+      if (state == 0) {
+        throw new DuplicatedCourseIdException("invalid courseId is entered to update");
+      }
       return true;
     } catch (SQLException e) {
       throw new RuntimeException(e);
@@ -115,20 +126,22 @@ public class CourseDao {
 
   }
 
-  public boolean deleteCourseRecord(String courseId) {
+  public boolean deleteCourseRecord(String courseId) throws DuplicatedCourseIdException {
     try {
       sql = "DELETE FROM Course " + " WHERE courseId = ? ";
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       pstmt.setString(1, courseId);
-      pstmt.executeUpdate();
-
+      int state = pstmt.executeUpdate();
       pstmt.close();
+      if (state == 0) {
+        throw new DuplicatedCourseIdException("invalid courseId is entered to delete");
+      }
       return true;
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (SQLException e) {
+      System.out.println(e.getErrorCode());
+      throw new RuntimeException(e);
     }
-    return false;
   }
 }
 

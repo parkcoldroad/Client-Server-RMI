@@ -5,7 +5,9 @@ import dto.EnrollmentDto;
 import dto.LogDto;
 import dto.PreCourseDto;
 import dto.UserDto;
+import exception.DuplicateEnrollmentException;
 import exception.DuplicateUserIdException;
+import exception.DuplicatedCourseIdException;
 import exception.IllegalValueIdException;
 import exception.NullDataException;
 import java.rmi.NotBoundException;
@@ -66,12 +68,14 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public boolean createCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException {
+  public boolean createCourseData(ArrayList<CourseDto> courseDtos)
+      throws RemoteException, DuplicatedCourseIdException {
     return data.createCourseData(courseDtos);
   }
 
   @Override
-  public String createEnrollment(String userId, String courseId) throws RemoteException {
+  public String createEnrollment(String userId, String courseId)
+      throws RemoteException, DuplicateEnrollmentException {
     return data.createEnrollment(userId,courseId);
   }
 
@@ -121,37 +125,43 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+  public boolean updateUserData(ArrayList<UserDto> userDtos)
+      throws RemoteException, DuplicateUserIdException {
     return data.updateUserData(userDtos);
   }
 
   @Override
-  public boolean updateCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException {
+  public boolean updateCourseData(ArrayList<CourseDto> courseDtos)
+      throws RemoteException, DuplicatedCourseIdException {
     return data.updateCourseData(courseDtos);
   }
 
   @Override
-  public boolean updatePreCourseData(String courseId, String preCourseId) throws RemoteException {
+  public boolean updatePreCourseData(String courseId, String preCourseId)
+      throws RemoteException, IllegalValueIdException {
     return data.updatePreCourseData(courseId,preCourseId);
   }
 
   @Override
-  public boolean deleteUserData(String userId) throws RemoteException {
+  public boolean deleteUserData(String userId) throws RemoteException, DuplicateUserIdException {
     return data.deleteUserData(userId);
   }
 
   @Override
-  public boolean deleteCourseData(String courseId) throws RemoteException {
+  public boolean deleteCourseData(String courseId)
+      throws RemoteException, DuplicatedCourseIdException {
     return data.deleteCourseData(courseId);
   }
 
   @Override
-  public boolean deleteEnrollment(String userId, String courseId) throws RemoteException {
+  public boolean deleteEnrollment(String userId, String courseId)
+      throws RemoteException, IllegalValueIdException {
     return data.deleteEnrollment(userId,courseId);
   }
 
   @Override
-  public boolean deletePreCourse(String courseId,String preCourseId) throws RemoteException {
+  public boolean deletePreCourse(String courseId,String preCourseId)
+      throws RemoteException, IllegalValueIdException {
     return data.deletePreCourse(courseId,preCourseId);
   }
 }

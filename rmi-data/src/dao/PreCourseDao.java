@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class PreCourseDao {
 
-  private Connection conn ;
+  private Connection conn;
 
   private ResultSet rs = null;
   private String sql;
@@ -68,8 +68,8 @@ public class PreCourseDao {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       rs = pstmt.executeQuery();
-      if(!rs.next()) {
-        throw new IllegalValueIdException("invalid id is entered");
+      if (!rs.next()) {
+        throw new IllegalValueIdException("invalid preCourseId is entered to search");
       }
 
       while (rs.next()) {
@@ -85,13 +85,18 @@ public class PreCourseDao {
     return preCourseList;
   }
 
-  public boolean updatePreCourseRecord(String courseId, String preCourseId) {
+  public boolean updatePreCourseRecord(String courseId, String preCourseId)
+      throws IllegalValueIdException {
     try {
-      sql = "UPDATE PreCourse SET precourseId= '" + preCourseId +  "' WHERE courseId ='" + courseId + "' ";
+      sql = "UPDATE PreCourse SET precourseId= '" + preCourseId + "' WHERE courseId ='" + courseId
+          + "' ";
       PreparedStatement pstmt = null;
       pstmt = (PreparedStatement) conn.prepareStatement(sql);
-      pstmt.executeUpdate();
+      int state = pstmt.executeUpdate();
       pstmt.close();
+      if (state == 0) {
+        throw new IllegalValueIdException("invalid preCourseId is entered to update");
+      }
       return true;
     } catch (SQLException e) {
       throw new RuntimeException(e);
@@ -99,21 +104,24 @@ public class PreCourseDao {
 
   }
 
-  public boolean deletePreCourseRecord(String courseId,String preCourseId) {
+  public boolean deletePreCourseRecord(String courseId, String preCourseId)
+      throws IllegalValueIdException {
     try {
       sql = "DELETE FROM PreCourse " + " WHERE courseId = ? AND precourseId = ?";
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       pstmt.setString(1, courseId);
       pstmt.setString(2, preCourseId);
-      pstmt.executeUpdate();
-
+      int state = pstmt.executeUpdate();
       pstmt.close();
+
+      if (state == 0) {
+        throw new IllegalValueIdException("invalid preCourseId is entered to delete");
+      }
       return true;
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
-    return false;
   }
 }
 

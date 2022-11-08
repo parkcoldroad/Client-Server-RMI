@@ -1,6 +1,7 @@
 package service;
 
 import dto.CourseDto;
+import exception.DuplicatedCourseIdException;
 import exception.IllegalValueIdException;
 import exception.NullDataException;
 import java.io.IOException;
@@ -26,7 +27,8 @@ public class CourseService {
   }
 
 
-  public boolean createCourse(ArrayList<CourseDto> courseScannerResult) {
+  public boolean createCourse(ArrayList<CourseDto> courseScannerResult)
+      throws DuplicatedCourseIdException {
     try {
       return this.clientStub.createCourseData(courseScannerResult);
     } catch (IOException e) {
@@ -42,7 +44,8 @@ public class CourseService {
     }
   }
 
-  public boolean updateCourse(ArrayList<CourseDto> courseScannerResult) {
+  public boolean updateCourse(ArrayList<CourseDto> courseScannerResult)
+      throws DuplicatedCourseIdException {
     try {
       return this.clientStub.updateCourseData(courseScannerResult);
     } catch (IOException e) {
@@ -50,7 +53,7 @@ public class CourseService {
     }
   }
 
-  public boolean deleteCourse(String courseId) {
+  public boolean deleteCourse(String courseId) throws DuplicatedCourseIdException {
     try {
       return this.clientStub.deleteCourseData(courseId);
     } catch (RemoteException e) {

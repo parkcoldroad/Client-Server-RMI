@@ -5,7 +5,9 @@ import dto.EnrollmentDto;
 import dto.LogDto;
 import dto.PreCourseDto;
 import dto.UserDto;
+import exception.DuplicateEnrollmentException;
 import exception.DuplicateUserIdException;
+import exception.DuplicatedCourseIdException;
 import exception.IllegalValueIdException;
 import exception.IllegalValuePwException;
 import exception.NullDataException;
@@ -78,12 +80,15 @@ public class Server extends UnicastRemoteObject implements ClientStub {
   }
 
   @Override
-  public boolean createCourseData(ArrayList<CourseDto> courseData) throws RemoteException {
+  public boolean createCourseData(ArrayList<CourseDto> courseData)
+      throws RemoteException, DuplicatedCourseIdException {
     return dataServer.createCourseData(courseData);
   }
 
-  public String createEnrollment(String userId, String courseId) throws RemoteException, IllegalValueIdException {
+  public String createEnrollment(String userId, String courseId)
+      throws RemoteException, IllegalValueIdException, DuplicateEnrollmentException {
     boolean isReady = true;
+    String enrollmentResult = null;
     ArrayList<String> preCourseLists = dataServer.searchPreCourse(courseId);
     ArrayList<String> completedCourseList = dataServer.getCompletedCourseList(userId);
 
@@ -91,9 +96,9 @@ public class Server extends UnicastRemoteObject implements ClientStub {
       isReady = completedCourseList.contains(precourse);
     }
     if (isReady) {
-      return dataServer.createEnrollment(userId, courseId);
+      enrollmentResult = dataServer.createEnrollment(userId, courseId);
     }
-    return "Enrollment is failed.. you didn't take preCourses";
+    return enrollmentResult;
   }
 
   @Override
@@ -134,37 +139,43 @@ public class Server extends UnicastRemoteObject implements ClientStub {
     return dataServer.searchPreCourse(courseId);
   }
 
-  public boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+  public boolean updateUserData(ArrayList<UserDto> userDtos)
+      throws RemoteException, DuplicateUserIdException {
     return dataServer.updateUserData(userDtos);
   }
 
   @Override
-  public boolean updateCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException {
+  public boolean updateCourseData(ArrayList<CourseDto> courseDtos)
+      throws RemoteException, DuplicatedCourseIdException {
     return dataServer.updateCourseData(courseDtos);
   }
 
   @Override
-  public boolean updatePreCourseData(String courseId, String preCourseId) throws RemoteException {
+  public boolean updatePreCourseData(String courseId, String preCourseId)
+      throws RemoteException, IllegalValueIdException {
     return dataServer.updatePreCourseData(courseId, preCourseId);
   }
 
-  public boolean deleteUserData(String userId) throws RemoteException {
+  public boolean deleteUserData(String userId) throws RemoteException, DuplicateUserIdException {
     return dataServer.deleteUserData(userId);
   }
 
 
   @Override
-  public boolean deleteCourseData(String courseId) throws RemoteException {
+  public boolean deleteCourseData(String courseId)
+      throws RemoteException, DuplicatedCourseIdException {
     return dataServer.deleteCourseData(courseId);
   }
 
 
-  public boolean deleteEnrollment(String userId, String courseId) throws RemoteException {
+  public boolean deleteEnrollment(String userId, String courseId)
+      throws RemoteException, IllegalValueIdException {
     return dataServer.deleteEnrollment(userId, courseId);
   }
 
   @Override
-  public boolean deletePreCourse(String courseId, String preCourseId) throws RemoteException {
+  public boolean deletePreCourse(String courseId, String preCourseId)
+      throws RemoteException, IllegalValueIdException {
     return dataServer.deletePreCourse(courseId, preCourseId);
   }
 }

@@ -49,7 +49,8 @@ public class PreCourseService {
     }
   }
 
-  public boolean updatePreCourse(String courseId, String preCourseId) {
+  public boolean updatePreCourse(String courseId, String preCourseId)
+      throws IllegalValueIdException {
     try {
       return this.clientStub.updatePreCourseData(courseId, preCourseId);
     } catch (RemoteException e) {
@@ -57,7 +58,8 @@ public class PreCourseService {
     }
   }
 
-  public boolean deletePreCourse(String courseId,String preCourseId) {
+  public boolean deletePreCourse(String courseId,String preCourseId)
+      throws IllegalValueIdException {
     try {
      return this.clientStub.deletePreCourse(courseId,preCourseId);
     } catch (RemoteException e) {

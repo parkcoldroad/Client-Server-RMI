@@ -2,6 +2,7 @@ package command;
 
 import command.menu.CourseMenu;
 import dto.CourseDto;
+import exception.DuplicatedCourseIdException;
 import exception.IllegalValueIdException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +25,13 @@ public class CourseCmd {
   }
 
   public static void createCourse() {
-    boolean result = CourseService.getInstance().createCourse(getCourseScannerResult());
+    boolean result = false;
+    try {
+      result = CourseService.getInstance().createCourse(getCourseScannerResult());
+    } catch (DuplicatedCourseIdException e) {
+     System.out.println(e.getMessage());
+     initialize();
+    }
     Message.print(result);
     Log.createLog("createCourse");
     Client.goMain();
@@ -38,7 +45,13 @@ public class CourseCmd {
   }
 
   public static void updateCourse() {
-    boolean result =  CourseService.getInstance().updateCourse(getCourseScannerResult());
+    boolean result = false;
+    try {
+      result = CourseService.getInstance().updateCourse(getCourseScannerResult());
+    } catch (DuplicatedCourseIdException e) {
+      System.out.println(e.getMessage());
+      initialize();
+    }
     Message.print(result);
     Log.createLog("updateCourse");
     Client.goMain();
@@ -47,7 +60,13 @@ public class CourseCmd {
   public static void deleteCourse() {
     System.out.println("enter your courseId to delete");
     String courseId = Input.readLine();
-    boolean result = CourseService.getInstance().deleteCourse(courseId);
+    boolean result = false;
+    try {
+      result = CourseService.getInstance().deleteCourse(courseId);
+    } catch (DuplicatedCourseIdException e) {
+      System.out.println(e.getMessage());
+      initialize();
+    }
     Message.print(result);
     Log.createLog("deleteCourse");
     Client.goMain();

@@ -2,7 +2,8 @@ package dao;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import dto.EnrollmentDto;
-import exception.IntegrityConstraintViolationException;
+import exception.DuplicateEnrollmentException;
+import exception.IllegalValueIdException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,7 @@ public class EnrollmentDao {
     conn = DBConfig.getConnection();
   }
 
-  public void createEnrollment(String userId, String courseId) throws IntegrityConstraintViolationException {
+  public void createEnrollment(String userId, String courseId) throws DuplicateEnrollmentException {
     sql = "INSERT INTO Enrollment(userId,courseId) VALUES (?,?)";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
@@ -31,9 +32,9 @@ public class EnrollmentDao {
       pstmt.executeUpdate();
       pstmt.close();
 
-    } catch (MySQLIntegrityConstraintViolationException ee) {
-      ee.printStackTrace();
-      throw new IntegrityConstraintViolationException("This course has already been registered");
+    } catch (MySQLIntegrityConstraintViolationException e) {
+      e.printStackTrace();
+      throw new DuplicateEnrollmentException("This course has already been registered");
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
@@ -89,21 +90,22 @@ public class EnrollmentDao {
   }
 
 
-  public boolean deleteEnrollment(String userId, String courseId) {
+  public boolean deleteEnrollment(String userId, String courseId) throws IllegalValueIdException {
     try {
       sql = "DELETE FROM Enrollment " + " WHERE userId = ? AND courseId = ? ";
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       pstmt.setString(1, userId);
       pstmt.setString(2, courseId);
-      pstmt.executeUpdate();
-
+      int state = pstmt.executeUpdate();
       pstmt.close();
-      return true;
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return false;
 
+      if (state == 0) {
+        throw new IllegalValueIdException("invalid courseId is entered to delete");
+      }
+      return true;
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
   }
 }
