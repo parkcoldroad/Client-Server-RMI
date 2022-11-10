@@ -34,7 +34,7 @@ public class EnrollmentDao {
 
     } catch (MySQLIntegrityConstraintViolationException e) {
       e.printStackTrace();
-      throw new DuplicateEnrollmentException("This course has already been registered");
+      throw new DuplicateEnrollmentException("No courseId or already applied courseId");
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }

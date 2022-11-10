@@ -143,7 +143,7 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<String> searchPreCourse(String courseId) throws RemoteException, IllegalValueIdException {
+  public ArrayList<String> searchPreCourse(String courseId) throws RemoteException {
     return preCourseDao.searchPreCourse(courseId);
   }
 

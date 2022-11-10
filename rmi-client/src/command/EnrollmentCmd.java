@@ -1,17 +1,16 @@
 package command;
 
+import static command.Cmd.validateResponse;
+
 import command.menu.EnrollmentMenu;
 import dto.CourseDto;
 import dto.EnrollmentDto;
-import exception.DuplicateEnrollmentException;
-import exception.IllegalValueIdException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import rmi.Client;
+import response.Response;
 import service.CourseService;
 import service.EnrollmentService;
 import utils.Input;
-import utils.Log;
 import utils.Message;
 
 public class EnrollmentCmd {
@@ -28,43 +27,26 @@ public class EnrollmentCmd {
 
   public static void applyCourse() {
     System.out.println("------------Courses List------------");
-    ArrayList<CourseDto> courseList = CourseService.getInstance().printCoursesList();
-    Message.print(courseList);
+    Response<ArrayList<CourseDto>> courseResponse = CourseService.getInstance().printCoursesList();
+    Message.print(courseResponse.getData());
 
     System.out.println("\n enter courseId to apply");
     System.out.println("CourseId : "); String courseId = Input.readLine();
-    String result = null;
-    try {
-      result = EnrollmentService.getInstance().applyCourse(courseId);
-    } catch (IllegalValueIdException | DuplicateEnrollmentException e) {
-      System.out.println(e.getMessage());
-      initialize();
-    }
-    Message.print(result);
-    Log.createLog("Enrollmentiscompleted");
-    Client.goMain();
+    Response<String> applyResponse = EnrollmentService.getInstance().applyCourse(courseId);
+    validateResponse(applyResponse);
   }
 
   public static void displayApplyHistory() {
-    ArrayList<EnrollmentDto> enrollmentList = EnrollmentService.getInstance().displayApplyHistory();
-    Message.print(enrollmentList);
-    Log.createLog("displayEnrollmentHistory");
-    Client.goMain();
+    Response<ArrayList<EnrollmentDto>> displayResponse = EnrollmentService.getInstance().displayApplyHistory();
+    validateResponse(displayResponse);
   }
 
 
   public static void removeApplyHistory() {
     System.out.println("enter your courseId to delete");
     System.out.println("CourseId : "); String courseId = Input.readLine();
-    boolean result = false;
-    try {
-      result = EnrollmentService.getInstance().removeApplyHistory(courseId);
-    } catch (IllegalValueIdException e) {
-      System.out.println(e.getMessage());
-      initialize();
-    }
-    Message.print(result);
-    Log.createLog("removeEnrollmentHistory");
-    Client.goMain();
+    Response<Boolean> removeResponse = EnrollmentService.getInstance().removeApplyHistory(courseId);
+    validateResponse(removeResponse);
   }
+
 }

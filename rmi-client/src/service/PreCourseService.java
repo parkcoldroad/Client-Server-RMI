@@ -1,10 +1,9 @@
 package service;
 
 import dto.PreCourseDto;
-import exception.IllegalValueIdException;
-import exception.NullDataException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import response.Response;
 import rmi.Client;
 import rmi.ClientStub;
 
@@ -25,7 +24,7 @@ public class PreCourseService {
   }
 
 
-  public String registerPreCourse(String courseId, String preCourseId) {
+  public Response<String> registerPreCourse(String courseId, String preCourseId) {
     try {
       return this.clientStub.createPreCourseData(courseId, preCourseId);
     } catch (RemoteException e) {
@@ -33,15 +32,15 @@ public class PreCourseService {
     }
   }
 
-  public ArrayList<PreCourseDto> readPreCoursesList() {
+  public Response<ArrayList<PreCourseDto>> readPreCoursesList() {
     try {
       return this.clientStub.getAllPreCourseData();
-    } catch (RemoteException | NullDataException e) {
+    } catch (RemoteException  e) {
       throw new RuntimeException(e);
     }
   }
 
-  public ArrayList<String> searchPreCourse(String courseId) throws IllegalValueIdException {
+  public Response<ArrayList<String>> searchPreCourse(String courseId) {
     try {
       return this.clientStub.searchPreCourseData(courseId);
     } catch (RemoteException e) {
@@ -49,8 +48,7 @@ public class PreCourseService {
     }
   }
 
-  public boolean updatePreCourse(String courseId, String preCourseId)
-      throws IllegalValueIdException {
+  public Response<Boolean> updatePreCourse(String courseId, String preCourseId) {
     try {
       return this.clientStub.updatePreCourseData(courseId, preCourseId);
     } catch (RemoteException e) {
@@ -58,8 +56,7 @@ public class PreCourseService {
     }
   }
 
-  public boolean deletePreCourse(String courseId,String preCourseId)
-      throws IllegalValueIdException {
+  public Response<Boolean> deletePreCourse(String courseId,String preCourseId) {
     try {
      return this.clientStub.deletePreCourse(courseId,preCourseId);
     } catch (RemoteException e) {

@@ -1,16 +1,14 @@
 package command;
 
+import static command.Cmd.validateResponse;
+
 import command.menu.CourseMenu;
 import dto.CourseDto;
-import exception.DuplicatedCourseIdException;
-import exception.IllegalValueIdException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import rmi.Client;
+import response.Response;
 import service.CourseService;
 import utils.Input;
-import utils.Log;
-import utils.Message;
 
 public class CourseCmd {
 
@@ -21,71 +19,37 @@ public class CourseCmd {
         .filter(courseMenu -> courseMenu.getChoice().equals(choice))
         .findFirst()
         .ifPresentOrElse(CourseMenu::execute,
-            () ->  {System.out.println("invalid enter"); initialize();});
+            () -> {System.out.println("invalid enter");initialize();});
   }
 
   public static void createCourse() {
-    boolean result = false;
-    try {
-      result = CourseService.getInstance().createCourse(getCourseScannerResult());
-    } catch (DuplicatedCourseIdException e) {
-     System.out.println(e.getMessage());
-     initialize();
-    }
-    Message.print(result);
-    Log.createLog("createCourse");
-    Client.goMain();
+    Response<Boolean> createResponse = CourseService.getInstance().createCourse(getCourseScannerResult());
+    validateResponse(createResponse);
   }
 
+
   public static void printCoursesList() {
-    ArrayList<CourseDto> courseList = CourseService.getInstance().printCoursesList();
-    Message.print(courseList);
-    Log.createLog("printCourseList");
-    Client.goMain();
+    Response<ArrayList<CourseDto>> printResponse = CourseService.getInstance().printCoursesList();
+    validateResponse(printResponse);
   }
 
   public static void updateCourse() {
-    boolean result = false;
-    try {
-      result = CourseService.getInstance().updateCourse(getCourseScannerResult());
-    } catch (DuplicatedCourseIdException e) {
-      System.out.println(e.getMessage());
-      initialize();
-    }
-    Message.print(result);
-    Log.createLog("updateCourse");
-    Client.goMain();
+    Response<Boolean> updateResponse = CourseService.getInstance().updateCourse(getCourseScannerResult());
+    validateResponse(updateResponse);
   }
 
   public static void deleteCourse() {
-    System.out.println("enter your courseId to delete");
-    String courseId = Input.readLine();
-    boolean result = false;
-    try {
-      result = CourseService.getInstance().deleteCourse(courseId);
-    } catch (DuplicatedCourseIdException e) {
-      System.out.println(e.getMessage());
-      initialize();
-    }
-    Message.print(result);
-    Log.createLog("deleteCourse");
-    Client.goMain();
+    System.out.println("enter your courseId to delete"); String courseId = Input.readLine();
+    Response<Boolean> deleteResponse = CourseService.getInstance().deleteCourse(courseId);
+    validateResponse(deleteResponse);
   }
 
   public static void searchCourse() {
-    System.out.println("enter your courseId to search");
-    String courseId = Input.readLine();
-    String seachedResult = null;
-    try {
-      seachedResult = CourseService.getInstance().searchCourse(courseId);
-    } catch (IllegalValueIdException e) {
-      System.out.println(e.getMessage());
-      initialize();
-    }
-    Message.print(seachedResult);
-    Log.createLog("searchCourse");
-    Client.goMain();
+    System.out.println("enter your courseId to search");String courseId = Input.readLine();
+    Response<String> searchResponse = CourseService.getInstance().searchCourse(courseId);
+    validateResponse(searchResponse);
   }
+
 
   public static ArrayList<CourseDto> getCourseScannerResult() {
     System.out.println("------------Course Information------------");

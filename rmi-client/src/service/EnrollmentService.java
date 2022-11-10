@@ -1,11 +1,9 @@
 package service;
 
 import dto.EnrollmentDto;
-import exception.DuplicateEnrollmentException;
-import exception.IllegalValueIdException;
-import exception.NullDataException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import response.Response;
 import rmi.Client;
 import rmi.ClientStub;
 import utils.Session;
@@ -27,8 +25,7 @@ public class EnrollmentService {
   }
 
 
-  public String applyCourse(String courseId)
-      throws IllegalValueIdException, DuplicateEnrollmentException {
+  public Response<String> applyCourse(String courseId) {
     try {
       return this.clientStub.createEnrollment(Session.getSession().getUserId(), courseId);
     } catch (RemoteException e) {
@@ -36,16 +33,16 @@ public class EnrollmentService {
     }
   }
 
-  public ArrayList<EnrollmentDto> displayApplyHistory() {
+  public Response<ArrayList<EnrollmentDto>> displayApplyHistory() {
     try {
       return this.clientStub.getEnrollmentData(Session.getSession().getUserId());
-    } catch (RemoteException | NullDataException e) {
+    } catch (RemoteException  e) {
       throw new RuntimeException(e);
     }
   }
 
 
-  public boolean removeApplyHistory(String courseId) throws IllegalValueIdException {
+  public Response<Boolean> removeApplyHistory(String courseId) {
     try {
       return this.clientStub.deleteEnrollment(Session.getSession().getUserId(), courseId);
     } catch (RemoteException e) {

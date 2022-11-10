@@ -1,16 +1,17 @@
 package command;
 
+import static command.Cmd.validateResponse;
 import static command.UserCmd.getUserScannerResult;
 
 import command.menu.AuthMenu;
 import dto.UserDto;
-import exception.DuplicateUserIdException;
-import exception.IllegalValueIdException;
-import exception.IllegalValuePwException;
 import java.util.Arrays;
+import response.Response;
+import rmi.Client;
 import service.AuthService;
 import utils.Input;
 import utils.Log;
+import utils.Message;
 import utils.Session;
 
 public class AuthCmd {
@@ -29,25 +30,26 @@ public class AuthCmd {
   public static void signIn() {
     System.out.println("enter your userId to sign in"); String userId = Input.readLine();
     System.out.println("enter your password"); String password = Input.readLine();
-    try {
-      Session.getSession().register(AuthService.getInstance().signIn(userId, password));
-    } catch (IllegalValueIdException | IllegalValuePwException e) {
-     System.out.println(e.getMessage());
-     initialize();
+    Response<UserDto> signInResponse = AuthService.getInstance().signIn(userId, password);
+
+    if (signInResponse.isSuccess()){
+      Session.getSession().register(signInResponse.getData());
+      Log.createLog(signInResponse.getMessage());
+    }else{
+      Message.print(signInResponse.getMessage());
+      initialize();
     }
-    Log.createLog("signInCompleted");
   }
 
 
   public static void signUp() {
-    UserDto userDto = null;
-    try {
-      userDto = AuthService.getInstance().signUp(getUserScannerResult());
-    } catch (DuplicateUserIdException e) {
-      System.out.println(e.getMessage());
+    Response<UserDto> signUpResponse = AuthService.getInstance().signUp(getUserScannerResult());
+    if (signUpResponse.isSuccess()){
+      Session.getSession().register(signUpResponse.getData());
+      Log.createLog(signUpResponse.getMessage());
+    }else{
+      Message.print(signUpResponse.getMessage());
       initialize();
     }
-    Session.getSession().register(userDto);
-    Log.createLog("signUpCompleted");
   }
 }

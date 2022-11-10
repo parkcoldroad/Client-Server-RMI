@@ -9,7 +9,6 @@ import exception.DuplicateEnrollmentException;
 import exception.DuplicateUserIdException;
 import exception.DuplicatedCourseIdException;
 import exception.IllegalValueIdException;
-import exception.IllegalValuePwException;
 import exception.NullDataException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -18,6 +17,9 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Optional;
+import response.FailedResponse;
+import response.Response;
+import response.SuccessResponse;
 
 public class Server extends UnicastRemoteObject implements ClientStub {
 
@@ -54,8 +56,8 @@ public class Server extends UnicastRemoteObject implements ClientStub {
   }
 
   @Override
-  public ArrayList<LogDto> readLog() throws RemoteException {
-    return dataServer.readLog();
+  public Response<ArrayList<LogDto>> readLog() throws RemoteException {
+     return new SuccessResponse<>(dataServer.readLog());
   }
 
   @Override
@@ -65,117 +67,184 @@ public class Server extends UnicastRemoteObject implements ClientStub {
 
 
   @Override
-  public UserDto signIn(String userId, String password) throws RemoteException, IllegalValueIdException, IllegalValuePwException {
-    ArrayList<UserDto> userList = dataServer.signIn(userId);
+  public Response<UserDto> signIn(String userId, String password) {
+    ArrayList<UserDto> userList;
+    try {
+      userList = dataServer.signIn(userId);
+    } catch (RemoteException | IllegalValueIdException e) {
+      e.printStackTrace();
+      return new FailedResponse<>(e.getMessage());
+    }
+
     Optional<UserDto> OptionalUser = userList.stream()
         .filter(user -> user.getUserId().equals(userId) && user.getPassword().equals(password))
         .findFirst();
 
-    if(OptionalUser.isPresent()) return OptionalUser.get();
-    else throw new IllegalValuePwException("password is invalid");
+    if (OptionalUser.isPresent()) {
+      return new SuccessResponse<>(OptionalUser.get());
+    } else {
+      return new FailedResponse<>("your pw is invalid");
+    }
   }
 
-  public UserDto createUserData(ArrayList<UserDto> userDtos) throws RemoteException, DuplicateUserIdException {
-    return dataServer.createUserData(userDtos);
+  public Response<UserDto> createUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.createUserData(userDtos));
+    } catch (DuplicateUserIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
   }
 
   @Override
-  public boolean createCourseData(ArrayList<CourseDto> courseData)
-      throws RemoteException, DuplicatedCourseIdException {
-    return dataServer.createCourseData(courseData);
+  public Response<Boolean> createCourseData(ArrayList<CourseDto> courseData) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.createCourseData(courseData));
+    } catch (DuplicatedCourseIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
   }
 
-  public String createEnrollment(String userId, String courseId)
-      throws RemoteException, IllegalValueIdException, DuplicateEnrollmentException {
+  public Response<String> createEnrollment(String userId, String courseId) throws RemoteException {
     boolean isReady = true;
     String enrollmentResult = null;
-    ArrayList<String> preCourseLists = dataServer.searchPreCourse(courseId);
-    ArrayList<String> completedCourseList = dataServer.getCompletedCourseList(userId);
 
+    ArrayList<String> preCourseLists = dataServer.searchPreCourse(courseId);
+
+    ArrayList<String> completedCourseList = dataServer.getCompletedCourseList(userId);
     for (String precourse : preCourseLists) {
       isReady = completedCourseList.contains(precourse);
     }
     if (isReady) {
-      enrollmentResult = dataServer.createEnrollment(userId, courseId);
+      try {
+        enrollmentResult = dataServer.createEnrollment(userId, courseId);
+      } catch (DuplicateEnrollmentException e) {
+        return new FailedResponse<>(e.getMessage());
+      }
     }
-    return enrollmentResult;
+    return new SuccessResponse<>(enrollmentResult);
   }
 
   @Override
-  public String createPreCourseData(String courseId, String precourseId) throws RemoteException {
-    return dataServer.createPreCourseData(courseId, precourseId);
+  public Response<String> createPreCourseData(String courseId, String precourseId) throws RemoteException {
+    return new SuccessResponse<>(dataServer.createPreCourseData(courseId, precourseId));
   }
 
-  public ArrayList<UserDto> getAllUserData() throws RemoteException, NullDataException {
-    return dataServer.getAllUserData();
-  }
-
-  @Override
-  public ArrayList<CourseDto> getAllCourseData() throws RemoteException, NullDataException {
-    return dataServer.getAllCourseData();
-  }
-
-  @Override
-  public ArrayList<EnrollmentDto> getEnrollmentData(String userId) throws RemoteException, NullDataException {
-    return dataServer.getEnrollmentData(userId);
+  public Response<ArrayList<UserDto>> getAllUserData() throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.getAllUserData());
+    } catch (NullDataException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
   }
 
   @Override
-  public ArrayList<PreCourseDto> getAllPreCourseData() throws RemoteException, NullDataException {
-    return dataServer.getAllPreCourseData();
-  }
-
-  public String searchUserData(String userId) throws RemoteException, IllegalValueIdException {
-    return dataServer.searchUserData(userId);
-  }
-
-  @Override
-  public String searchCourseData(String courseId) throws RemoteException, IllegalValueIdException {
-    return dataServer.searchCourseData(courseId);
+  public Response<ArrayList<CourseDto>> getAllCourseData() throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.getAllCourseData());
+    } catch (NullDataException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
   }
 
   @Override
-  public ArrayList<String> searchPreCourseData(String courseId) throws RemoteException, IllegalValueIdException {
-    return dataServer.searchPreCourse(courseId);
-  }
-
-  public boolean updateUserData(ArrayList<UserDto> userDtos)
-      throws RemoteException, DuplicateUserIdException {
-    return dataServer.updateUserData(userDtos);
-  }
-
-  @Override
-  public boolean updateCourseData(ArrayList<CourseDto> courseDtos)
-      throws RemoteException, DuplicatedCourseIdException {
-    return dataServer.updateCourseData(courseDtos);
+  public Response<ArrayList<EnrollmentDto>> getEnrollmentData(String userId) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.getEnrollmentData(userId));
+    } catch (NullDataException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
   }
 
   @Override
-  public boolean updatePreCourseData(String courseId, String preCourseId)
-      throws RemoteException, IllegalValueIdException {
-    return dataServer.updatePreCourseData(courseId, preCourseId);
+  public Response<ArrayList<PreCourseDto>> getAllPreCourseData() throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.getAllPreCourseData());
+    } catch (NullDataException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
   }
 
-  public boolean deleteUserData(String userId) throws RemoteException, DuplicateUserIdException {
-    return dataServer.deleteUserData(userId);
+  public Response<String> searchUserData(String userId) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.searchUserData(userId));
+    } catch (IllegalValueIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
+  }
+
+  @Override
+  public Response<String> searchCourseData(String courseId) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.searchCourseData(courseId));
+    } catch (IllegalValueIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
+  }
+
+  @Override
+  public Response<ArrayList<String>> searchPreCourseData(String courseId) throws RemoteException {
+      return new SuccessResponse<>(dataServer.searchPreCourse(courseId));
+  }
+
+  public Response<Boolean> updateUserData(ArrayList<UserDto> userDtos) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.updateUserData(userDtos));
+    } catch (DuplicateUserIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
+  }
+
+  @Override
+  public Response<Boolean> updateCourseData(ArrayList<CourseDto> courseDtos) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.updateCourseData(courseDtos));
+    } catch (DuplicatedCourseIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
+  }
+
+  @Override
+  public Response<Boolean> updatePreCourseData(String courseId, String preCourseId) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.updatePreCourseData(courseId, preCourseId));
+    } catch (IllegalValueIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
+  }
+
+  public Response<Boolean> deleteUserData(String userId) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.deleteUserData(userId));
+    } catch (DuplicateUserIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
   }
 
 
   @Override
-  public boolean deleteCourseData(String courseId)
-      throws RemoteException, DuplicatedCourseIdException {
-    return dataServer.deleteCourseData(courseId);
+  public Response<Boolean> deleteCourseData(String courseId) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.deleteCourseData(courseId));
+    } catch (DuplicatedCourseIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
   }
 
 
-  public boolean deleteEnrollment(String userId, String courseId)
-      throws RemoteException, IllegalValueIdException {
-    return dataServer.deleteEnrollment(userId, courseId);
+  public Response<Boolean> deleteEnrollment(String userId, String courseId) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.deleteEnrollment(userId, courseId));
+    } catch (IllegalValueIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
   }
 
   @Override
-  public boolean deletePreCourse(String courseId, String preCourseId)
-      throws RemoteException, IllegalValueIdException {
-    return dataServer.deletePreCourse(courseId, preCourseId);
+  public Response<Boolean> deletePreCourse(String courseId, String preCourseId) throws RemoteException {
+    try {
+      return new SuccessResponse<>(dataServer.deletePreCourse(courseId, preCourseId));
+    } catch (IllegalValueIdException e) {
+      return new FailedResponse<>(e.getMessage());
+    }
   }
 }

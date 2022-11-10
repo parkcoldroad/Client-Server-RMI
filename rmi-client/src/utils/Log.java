@@ -1,16 +1,18 @@
 package utils;
 
 import dto.LogDto;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import response.Response;
 import rmi.Client;
 
-public class Log {
-
+public class Log implements Serializable {
+  private static final long serialVersionUID = 1L;
   public static void createLog(String message) {
 
     String userId = Session.getSession().getUserId();
@@ -41,8 +43,8 @@ public class Log {
 
   public static void readLog() {
     try {
-      ArrayList<LogDto> logResults = Client.getStub().readLog();
-      for (LogDto logDto : logResults) {
+      Response<ArrayList<LogDto>> readResponse = Client.getStub().readLog();
+      for (LogDto logDto : readResponse.getData()) {
         logDto.print();
       }
       Client.goMain();

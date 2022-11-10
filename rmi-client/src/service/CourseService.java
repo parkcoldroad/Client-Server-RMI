@@ -7,6 +7,7 @@ import exception.NullDataException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import response.Response;
 import rmi.Client;
 import rmi.ClientStub;
 
@@ -27,33 +28,31 @@ public class CourseService {
   }
 
 
-  public boolean createCourse(ArrayList<CourseDto> courseScannerResult)
-      throws DuplicatedCourseIdException {
+  public Response<Boolean> createCourse(ArrayList<CourseDto> courseScannerResult) {
     try {
       return this.clientStub.createCourseData(courseScannerResult);
-    } catch (IOException e) {
+    } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public ArrayList<CourseDto> printCoursesList() {
+  public Response<ArrayList<CourseDto>> printCoursesList() {
     try {
       return this.clientStub.getAllCourseData();
-    } catch (RemoteException | NullDataException e) {
+    } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public boolean updateCourse(ArrayList<CourseDto> courseScannerResult)
-      throws DuplicatedCourseIdException {
+  public Response<Boolean> updateCourse(ArrayList<CourseDto> courseScannerResult) {
     try {
       return this.clientStub.updateCourseData(courseScannerResult);
-    } catch (IOException e) {
+    } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public boolean deleteCourse(String courseId) throws DuplicatedCourseIdException {
+  public Response<Boolean> deleteCourse(String courseId) {
     try {
       return this.clientStub.deleteCourseData(courseId);
     } catch (RemoteException e) {
@@ -61,7 +60,7 @@ public class CourseService {
     }
   }
 
-  public String searchCourse(String courseId) throws IllegalValueIdException {
+  public Response<String> searchCourse(String courseId) {
     try {
       return this.clientStub.searchCourseData(courseId);
     } catch (IOException e) {

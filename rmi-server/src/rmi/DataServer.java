@@ -120,7 +120,7 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public ArrayList<String> searchPreCourse(String courseId) throws RemoteException, IllegalValueIdException {
+  public ArrayList<String> searchPreCourse(String courseId) throws RemoteException {
     return data.searchPreCourse(courseId);
   }
 

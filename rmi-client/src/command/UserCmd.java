@@ -1,19 +1,18 @@
 package command;
 
+import static command.Cmd.validateResponse;
+
 import command.menu.UserMenu;
 import dto.UserDto;
-import exception.DuplicateUserIdException;
-import exception.IllegalValueIdException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import rmi.Client;
+import response.Response;
 import service.UserService;
 import utils.Input;
-import utils.Log;
-import utils.Message;
 
-public class UserCmd {
-
+public class UserCmd implements Serializable {
+  private static final long serialVersionUID = 1L;
   public static void initialize() {
     UserMenu.printMenu();
     String choice = Input.readLine();
@@ -25,56 +24,27 @@ public class UserCmd {
   }
 
   public static void printUsersList() {
-    ArrayList<UserDto> userList = UserService.getInstance().printUsersList();
-    Message.print(userList);
-    Log.createLog("printList");
-    Client.goMain();
+    Response<ArrayList<UserDto>> printResponse = UserService.getInstance().printUsersList();
+    validateResponse(printResponse);
   }
 
 
   public static void searchUser() {
-    System.out.println("enter your userId to search");
-    String userId = Input.readLine();
-    String searchedResult = null;
-    try {
-      searchedResult = UserService.getInstance().searchUser(userId);
-    } catch (IllegalValueIdException e) {
-      System.out.println(e.getMessage());
-      initialize();
-    }
-    Message.print(searchedResult);
-    Log.createLog("searchuser");
-    Client.goMain();
+    System.out.println("enter your userId to search");String userId = Input.readLine();
+    Response<String> searchResponse = UserService.getInstance().searchUser(userId);
+    validateResponse(searchResponse);
   }
 
   public static void updateUser() {
-    boolean result = false;
-    try {
-      result = UserService.getInstance().updateUser(getUserScannerResult());
-    } catch (DuplicateUserIdException e) {
-      System.out.println(e.getMessage());
-      initialize();
-    }
-    Message.print(result);
-    Log.createLog("updateuser");
-    Client.goMain();
+    Response<Boolean> updateResponse = UserService.getInstance().updateUser(getUserScannerResult());
+    validateResponse(updateResponse);
   }
 
   public static void deleteUser() {
-    System.out.println("enter userId to delete");
-    String userId = Input.readLine();
-    boolean result = false;
-    try {
-      result = UserService.getInstance().deleteUser(userId);
-    } catch (DuplicateUserIdException e) {
-      System.out.println(e.getMessage());
-      initialize();
-    }
-    Message.print(result);
-    Log.createLog("deleteuser");
-    Client.goMain();
+    System.out.println("enter userId to delete");String userId = Input.readLine();
+    Response<Boolean> deleteResponse = UserService.getInstance().deleteUser(userId);
+    validateResponse(deleteResponse);
   }
-
 
   public static ArrayList<UserDto> getUserScannerResult() {
     System.out.println("------------user Information------------");

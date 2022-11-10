@@ -3,13 +3,12 @@ package service;
 import dto.UserDto;
 import exception.DuplicateUserIdException;
 import exception.IllegalValueIdException;
-import exception.NullDataException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import response.Response;
 import rmi.Client;
 import rmi.ClientStub;
-import utils.Input;
 
 public class UserService {
 
@@ -28,16 +27,16 @@ public class UserService {
   }
 
 
-  public ArrayList<UserDto> printUsersList() {
+  public Response<ArrayList<UserDto>> printUsersList() {
     try {
       return this.clientStub.getAllUserData();
-    } catch (RemoteException | NullDataException e) {
+    } catch (RemoteException e) {
       throw new RuntimeException(e);
     }
   }
 
 
-  public String searchUser(String UserId) throws IllegalValueIdException {
+  public Response<String> searchUser(String UserId)  {
     try {
       return this.clientStub.searchUserData(UserId);
     } catch (IOException e) {
@@ -45,7 +44,7 @@ public class UserService {
     }
   }
 
-  public boolean updateUser(ArrayList<UserDto> UserScannerResult) throws DuplicateUserIdException {
+  public Response<Boolean> updateUser(ArrayList<UserDto> UserScannerResult) {
     try {
       return this.clientStub.updateUserData(UserScannerResult);
     } catch (IOException e) {
@@ -53,7 +52,7 @@ public class UserService {
     }
   }
 
-  public boolean deleteUser(String userId) throws DuplicateUserIdException {
+  public Response<Boolean> deleteUser(String userId)  {
     try {
       return this.clientStub.deleteUserData(userId);
     } catch (RemoteException e) {

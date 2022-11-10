@@ -3,6 +3,7 @@ package utils;
 import dto.Dto;
 import java.util.List;
 import java.util.function.Consumer;
+import response.Response;
 
 public class Message {
   public static void print(boolean result){
@@ -14,6 +15,7 @@ public class Message {
       dto.print();
     }
   }
+
   public static void print(String result) {
     System.out.println(result);
   }

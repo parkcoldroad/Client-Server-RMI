@@ -3,6 +3,7 @@ package dto;
 import java.io.Serializable;
 
 public class PreCourseDto extends Dto implements Serializable {
+  private static final long serialVersionUID = 1L;
   private String courseId;
   private String preCourseId;
 

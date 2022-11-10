@@ -2,7 +2,6 @@ package utils;
 
 import command.AuthCmd;
 import dto.UserDto;
-import java.util.Objects;
 import rmi.Client;
 
 public class Session {

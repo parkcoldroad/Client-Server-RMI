@@ -44,7 +44,7 @@ public interface DataStub extends Remote {
 
   String searchCourseData(String userId) throws RemoteException, IllegalValueIdException;
 
-  ArrayList<String> searchPreCourse(String courseId) throws RemoteException, IllegalValueIdException;
+  ArrayList<String> searchPreCourse(String courseId) throws RemoteException;
 
   boolean updateUserData(ArrayList<UserDto> userDtos) throws RemoteException, DuplicateUserIdException;
 

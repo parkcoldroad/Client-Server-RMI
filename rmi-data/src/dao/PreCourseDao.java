@@ -61,17 +61,13 @@ public class PreCourseDao {
     return preCourseDtos;
   }
 
-  public ArrayList<String> searchPreCourse(String courseId) throws IllegalValueIdException {
+  public ArrayList<String> searchPreCourse(String courseId) {
     ArrayList<String> preCourseList = new ArrayList<>();
     sql = "SELECT * from PreCourse WHERE courseId ='" + courseId + "' ";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
 
       rs = pstmt.executeQuery();
-      if (!rs.next()) {
-        throw new IllegalValueIdException("invalid preCourseId is entered to search");
-      }
-
       while (rs.next()) {
         String precourseId = rs.getString("precourseId");
         preCourseList.add(precourseId);
