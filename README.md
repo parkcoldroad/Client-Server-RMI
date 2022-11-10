@@ -1,1 +1,1 @@
-# Client-Server-rmi
+# Client-Server-lms.rmi

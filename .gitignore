@@ -159,7 +159,7 @@ modules.xml
 *.class
 
 # Log file
-*.log
+*.lms.log
 
 # BlueJ files
 *.ctxt
