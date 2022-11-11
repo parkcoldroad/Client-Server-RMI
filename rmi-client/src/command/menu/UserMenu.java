@@ -1,12 +1,14 @@
 package command.menu;
 
 import command.UserCmd;
+import rmi.Client;
 
 public enum UserMenu implements Menu {
   READ(UserCmd::printUsersList, "1"),
   UPDATE(UserCmd::updateUser, "2"),
   DELETE(UserCmd::deleteUser, "3"),
-  SEARCH(UserCmd::searchUser, "4");
+  SEARCH(UserCmd::searchUser, "4"),
+  GO_HOME(Client::goMain,"5");
 
   private final Runnable runnable;
   private final String keyword;
@@ -33,5 +35,6 @@ public enum UserMenu implements Menu {
     System.out.println("2.Update User ");
     System.out.println("3.Delete User ");
     System.out.println("4.Search User ");
+    System.out.println("5.Go MainMenu");
   }
 }

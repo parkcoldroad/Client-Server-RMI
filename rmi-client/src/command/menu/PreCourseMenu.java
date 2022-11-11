@@ -1,13 +1,15 @@
 package command.menu;
 
 import command.PreCourseCmd;
+import rmi.Client;
 
 public enum PreCourseMenu implements Menu {
   REGISTER_PRECOURSE(PreCourseCmd::registerPreCourse, "1"),
   READ_PRECOURSE(PreCourseCmd::readPreCoursesList, "2"),
   UPDATE_PRECOURSE(PreCourseCmd::updatePreCourse, "3"),
   DELETE_PRECOURSE(PreCourseCmd::deletePreCourse, "4"),
-  SEARCH_PRECOURSE(PreCourseCmd::searchPreCourse, "5");
+  SEARCH_PRECOURSE(PreCourseCmd::searchPreCourse, "5"),
+  GO_HOME(Client::goMain,"6");
 
 
   private final Runnable runnable;
@@ -36,5 +38,6 @@ public enum PreCourseMenu implements Menu {
     System.out.println("3.Update PreCourse");
     System.out.println("4.Delete PreCourse");
     System.out.println("5.Search PreCourse");
+    System.out.println("6.Go MainMenu");
   }
 }

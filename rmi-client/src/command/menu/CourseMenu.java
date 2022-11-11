@@ -2,6 +2,7 @@ package command.menu;
 
 import command.CourseCmd;
 import command.PreCourseCmd;
+import rmi.Client;
 
 public enum CourseMenu implements Menu {
   CREATE(CourseCmd::createCourse,"1"),
@@ -9,7 +10,8 @@ public enum CourseMenu implements Menu {
   UPDATE(CourseCmd::updateCourse,"3"),
   DELETE(CourseCmd::deleteCourse,"4"),
   SEARCH(CourseCmd::searchCourse,"5"),
-  ADMINISTRATE_PRECOURSE(PreCourseCmd::initialize,"6");
+  ADMINISTRATE_PRECOURSE(PreCourseCmd::initialize,"6"),
+  GO_HOME(Client::goMain,"7");
 
 
   private final Runnable runnable;
@@ -37,5 +39,6 @@ public enum CourseMenu implements Menu {
     System.out.println("4.Delete Course");
     System.out.println("5.Search Course");
     System.out.println("6.Administrate PreCourse");
+    System.out.println("7.Go MainMenu");
   }
 }
