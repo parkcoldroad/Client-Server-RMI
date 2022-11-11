@@ -4,15 +4,14 @@ import static command.Cmd.validateResponse;
 
 import command.menu.UserMenu;
 import dto.UserDto;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import response.Response;
 import service.UserService;
 import utils.Input;
 
-public class UserCmd implements Serializable {
-  private static final long serialVersionUID = 1L;
+public class UserCmd {
+
   public static void initialize() {
     UserMenu.printMenu();
     String choice = Input.readLine();
@@ -32,18 +31,18 @@ public class UserCmd implements Serializable {
   public static void searchUser() {
     System.out.println("enter your userId to search");String userId = Input.readLine();
     Response<String> searchResponse = UserService.getInstance().searchUser(userId);
-    validateResponse(searchResponse);
+    validateResponse( searchResponse);
   }
 
   public static void updateUser() {
     Response<Boolean> updateResponse = UserService.getInstance().updateUser(getUserScannerResult());
-    validateResponse(updateResponse);
+    validateResponse( updateResponse);
   }
 
   public static void deleteUser() {
     System.out.println("enter userId to delete");String userId = Input.readLine();
     Response<Boolean> deleteResponse = UserService.getInstance().deleteUser(userId);
-    validateResponse(deleteResponse);
+    validateResponse( deleteResponse);
   }
 
   public static ArrayList<UserDto> getUserScannerResult() {

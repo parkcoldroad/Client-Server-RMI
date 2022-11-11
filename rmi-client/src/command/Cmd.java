@@ -1,8 +1,10 @@
 package command;
 
 import dto.UserDto;
-import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import response.Response;
 import rmi.Client;
@@ -10,8 +12,7 @@ import utils.Log;
 import utils.Message;
 import utils.Session;
 
-public class Cmd implements Serializable {
-  private static final long serialVersionUID = 1L;
+public class Cmd {
 
   public static void validateResponse(Response<?> response) {
     if (response.isSuccess()) {
@@ -19,20 +20,35 @@ public class Cmd implements Serializable {
       if (responseData instanceof Boolean) {
         boolean data = (Boolean) responseData;
         Message.print(data);
+        Log.createLog(response.getMessage());
+        Client.goMain();
       } else if (responseData instanceof String) {
         String data = (String) responseData;
         Message.print(data);
+        Log.createLog(response.getMessage());
+        Client.goMain();
       } else if (responseData instanceof UserDto) {
-        UserDto userData = (UserDto) responseData;
-        Session.getSession().register((UserDto) response.getData());
+        Session.getSession().register((UserDto) responseData);
+        Log.createLog(response.getMessage());
       } else {
         List data = (ArrayList) responseData;
         Message.print(data);
+        Log.createLog(response.getMessage());
+        Client.goMain();
       }
     } else {
       Message.print(response.getMessage());
+      try {
+        StackTraceElement[] ste = new Throwable().getStackTrace();
+        List<StackTraceElement> stackTraceElements = Arrays.asList(ste);
+        String className = stackTraceElements.get(1).getClassName();
+        Class<?> selfClass = Class.forName(className);
+        Method initializeMethod = selfClass.getDeclaredMethod("initialize");
+        initializeMethod.invoke(selfClass);
+      } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException |
+               ClassNotFoundException e) {
+        throw new RuntimeException(e);
+      }
     }
-    Log.createLog(response.getMessage());
-    Client.goMain();
   }
 }

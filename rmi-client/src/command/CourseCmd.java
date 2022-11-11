@@ -24,30 +24,30 @@ public class CourseCmd {
 
   public static void createCourse() {
     Response<Boolean> createResponse = CourseService.getInstance().createCourse(getCourseScannerResult());
-    validateResponse(createResponse);
+    validateResponse( createResponse);
   }
 
 
   public static void printCoursesList() {
     Response<ArrayList<CourseDto>> printResponse = CourseService.getInstance().printCoursesList();
-    validateResponse(printResponse);
+    validateResponse( printResponse);
   }
 
   public static void updateCourse() {
     Response<Boolean> updateResponse = CourseService.getInstance().updateCourse(getCourseScannerResult());
-    validateResponse(updateResponse);
+    validateResponse( updateResponse);
   }
 
   public static void deleteCourse() {
     System.out.println("enter your courseId to delete"); String courseId = Input.readLine();
     Response<Boolean> deleteResponse = CourseService.getInstance().deleteCourse(courseId);
-    validateResponse(deleteResponse);
+    validateResponse( deleteResponse);
   }
 
   public static void searchCourse() {
     System.out.println("enter your courseId to search");String courseId = Input.readLine();
     Response<String> searchResponse = CourseService.getInstance().searchCourse(courseId);
-    validateResponse(searchResponse);
+    validateResponse( searchResponse);
   }
 
 
