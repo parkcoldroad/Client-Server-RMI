@@ -105,6 +105,7 @@ public class EnrollmentDao {
       }
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
       throw new RuntimeException(e);
     }
   }

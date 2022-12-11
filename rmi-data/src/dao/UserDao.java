@@ -186,7 +186,7 @@ public class UserDao {
 
       return true;
     } catch (SQLException e) {
-      System.out.println(e.getErrorCode());
+        e.printStackTrace();
     }
     return false;
   }

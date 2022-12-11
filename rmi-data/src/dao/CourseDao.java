@@ -139,7 +139,7 @@ public class CourseDao {
       }
       return true;
     } catch (SQLException e) {
-      System.out.println(e.getErrorCode());
+      e.printStackTrace();
       throw new RuntimeException(e);
     }
   }

@@ -116,6 +116,7 @@ public class PreCourseDao {
       }
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
       throw new RuntimeException(e);
     }
   }
