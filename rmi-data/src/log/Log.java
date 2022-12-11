@@ -23,7 +23,7 @@ public class Log {
   private ArrayList<LogDto> logList;
   private LogDto logDto;
 
-  String fileName = "Client-Server-pRMI/rmi-data/src/log/logs.txt";
+  String fileName = "Client-Server-RMI/rmi-data/src/log/logs.txt";
 
   public Log() {
     logList = new ArrayList<>();
