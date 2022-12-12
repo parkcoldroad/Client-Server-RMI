@@ -21,7 +21,7 @@ public class EnrollmentDao {
     conn = DBConfig.getConnection();
   }
 
-  public void createEnrollment(String userId, String courseId) throws DuplicateEnrollmentException {
+  public String createEnrollment(String userId, String courseId) throws DuplicateEnrollmentException {
     sql = "INSERT INTO Enrollment(userId,courseId) VALUES (?,?)";
     try {
       PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
@@ -31,13 +31,13 @@ public class EnrollmentDao {
 
       pstmt.executeUpdate();
       pstmt.close();
-
     } catch (MySQLIntegrityConstraintViolationException e) {
       e.printStackTrace();
       throw new DuplicateEnrollmentException("No courseId or already applied courseId");
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+    return "Enrollment is completed";
   }
 
   public ArrayList<String> getCompletedCourseList(String userId) {

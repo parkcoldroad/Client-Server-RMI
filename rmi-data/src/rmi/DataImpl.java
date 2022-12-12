@@ -96,10 +96,8 @@ public class DataImpl extends UnicastRemoteObject implements DataStub {
     return courseDao.createCourseRecord(courseData);
   }
 
-  public String createEnrollment(String userId, String courseId)
-      throws RemoteException, DuplicateEnrollmentException {
-      enrollmentDao.createEnrollment(userId, courseId);
-      return "Enrollment is completed";
+  public String createEnrollment(String userId, String courseId) throws RemoteException, DuplicateEnrollmentException {
+      return enrollmentDao.createEnrollment(userId, courseId);
   }
 
   @Override

@@ -74,8 +74,7 @@ public class DataServer extends UnicastRemoteObject implements DataStub {
   }
 
   @Override
-  public String createEnrollment(String userId, String courseId)
-      throws RemoteException, DuplicateEnrollmentException {
+  public String createEnrollment(String userId, String courseId) throws RemoteException, DuplicateEnrollmentException {
     return data.createEnrollment(userId,courseId);
   }
 

@@ -106,7 +106,7 @@ public class Server extends UnicastRemoteObject implements ClientStub {
 
   public Response<String> createEnrollment(String userId, String courseId) throws RemoteException {
     boolean isReady = true;
-    String enrollmentResult = null;
+    String enrollmentResult;
 
     ArrayList<String> preCourseLists = dataServer.searchPreCourse(courseId);
 
@@ -117,11 +117,12 @@ public class Server extends UnicastRemoteObject implements ClientStub {
     if (isReady) {
       try {
         enrollmentResult = dataServer.createEnrollment(userId, courseId);
+        return new SuccessResponse<>(enrollmentResult);
       } catch (DuplicateEnrollmentException e) {
         return new FailedResponse<>(e.getMessage());
       }
     }
-    return new SuccessResponse<>(enrollmentResult);
+    return new FailedResponse<>("you didn't take PreCourse");
   }
 
   @Override

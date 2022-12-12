@@ -33,20 +33,21 @@ public class EnrollmentCmd {
     System.out.println("\n enter courseId to apply");
     System.out.println("CourseId : "); String courseId = Input.readLine();
     Response<String> applyResponse = EnrollmentService.getInstance().applyCourse(courseId);
-    validateResponse( applyResponse);
+    validateResponse(applyResponse);
   }
 
   public static void displayApplyHistory() {
     Response<ArrayList<EnrollmentDto>> displayResponse = EnrollmentService.getInstance().displayApplyHistory();
-    validateResponse( displayResponse);
+    validateResponse(displayResponse);
   }
 
+  //TODO displayCompletdCourseHistory()
 
   public static void removeApplyHistory() {
     System.out.println("enter your courseId to delete");
     System.out.println("CourseId : "); String courseId = Input.readLine();
     Response<Boolean> removeResponse = EnrollmentService.getInstance().removeApplyHistory(courseId);
-    validateResponse( removeResponse);
+    validateResponse(removeResponse);
   }
 
 }
